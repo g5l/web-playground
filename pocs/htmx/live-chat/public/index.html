@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Chat System</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/htmx.org"></script>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+</head>
+<body>
+<div id="chat-container">
+    <h1>Live Chat</h1>
+    <div id="chat-messages" hx-ext="ws" ws-connect="/ws">
+        <!-- Messages will be dynamically inserted here -->
+    </div>
+    <form id="chat-form" ws-send>
+        <input type="text" id="message-input" name="message" placeholder="Type your message..." required>
+        <button type="submit">Send</button>
+    </form>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
