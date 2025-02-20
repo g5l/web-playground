@@ -1,14 +1,14 @@
-import {Alert, AlertDescription} from '@/components/ui/alert';
-import {Button} from '@/components/ui/button';
-import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card';
-import {Input} from '@/components/ui/input';
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
+import {Alert, AlertDescription} from '@/components/ui/alert.tsx';
+import {Button} from '@/components/ui/button.tsx';
+import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card.tsx';
+import {Input} from '@/components/ui/input.tsx';
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select.tsx';
+import {Coordinates, WeatherData} from "@/domain/interfaces/IWeatherService.ts";
+import {WeatherService} from "@/domain/WeatherService.ts";
 import {OpenWeatherAdapter} from "@/infrastructure/adapters/OpenWeatherAdapter.ts";
 import {unitType} from "@/types";
 import {Loader, MapPin} from 'lucide-react';
 import {useEffect, useState} from 'react';
-import {Coordinates, WeatherData} from '../domain/interfaces/IWeatherService';
-import {WeatherService} from '../domain/WeatherService';
 
 const weatherAdapter = new OpenWeatherAdapter(import.meta.env.VITE_WEATHER_API_KEY);
 const weatherService = new WeatherService(weatherAdapter);

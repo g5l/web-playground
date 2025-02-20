@@ -1,5 +1,5 @@
 import './App.css';
-import {WeatherDisplay} from "@/presentation/WeatherDisplay.tsx";
+import {WeatherDisplay} from "@/components/WeatherDisplay.tsx";
 
 function App() {
 
