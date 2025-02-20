@@ -1,4 +1,5 @@
 import {Coordinates, IWeatherService, WeatherData} from '@/domain/interfaces/IWeatherService';
+import {unitType} from "@/types";
 
 export class OpenWeatherAdapter implements IWeatherService {
   private readonly API_KEY: string;
@@ -8,12 +9,12 @@ export class OpenWeatherAdapter implements IWeatherService {
     this.API_KEY = apiKey;
   }
 
-  private async fetchWeatherData(url: string, unit: 'celsius' | 'fahrenheit'): Promise<WeatherData> {
+  private async fetchWeatherData(url: string, unit: unitType): Promise<WeatherData> {
     try {
       const response = await fetch(url);
 
       if (!response.ok) {
-        throw new Error('Weather data fetch failed');
+        console.log('OpenWeatherAdapter:fetchWeatherData response error', {url, response});
       }
 
       const data = await response.json();
@@ -31,14 +32,13 @@ export class OpenWeatherAdapter implements IWeatherService {
     }
   }
 
-  async getWeatherByCity(location: string, unit: 'celsius' | 'fahrenheit'): Promise<WeatherData> {
-    console.log({API_KEY: this.API_KEY, location});
+  async getWeatherByCity(location: string, unit: unitType): Promise<WeatherData> {
     const unitSystem = unit === 'celsius' ? 'metric' : 'imperial';
     const url = `${this.BASE_URL}/weather?q=${location}&units=${unitSystem}&appid=${this.API_KEY}`;
     return this.fetchWeatherData(url, unit);
   }
 
-  async getWeatherByCoordinates(coords: Coordinates, unit: 'celsius' | 'fahrenheit'): Promise<WeatherData> {
+  async getWeatherByCoordinates(coords: Coordinates, unit: unitType): Promise<WeatherData> {
     const unitSystem = unit === 'celsius' ? 'metric' : 'imperial';
     const url = `${this.BASE_URL}/weather?lat=${coords.latitude}&lon=${coords.longitude}&units=${unitSystem}&appid=${this.API_KEY}`;
     return this.fetchWeatherData(url, unit);

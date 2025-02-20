@@ -3,23 +3,24 @@ import {Button} from '@/components/ui/button';
 import {Card, CardContent, CardHeader, CardTitle} from '@/components/ui/card';
 import {Input} from '@/components/ui/input';
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from '@/components/ui/select';
+import {OpenWeatherAdapter} from "@/infrastructure/adapters/OpenWeatherAdapter.ts";
+import {unitType} from "@/types";
 import {Loader, MapPin} from 'lucide-react';
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {Coordinates, WeatherData} from '../domain/interfaces/IWeatherService';
 import {WeatherService} from '../domain/WeatherService';
 
+const weatherAdapter = new OpenWeatherAdapter(import.meta.env.VITE_WEATHER_API_KEY);
+const weatherService = new WeatherService(weatherAdapter);
+
 interface Props {
-  weatherService: WeatherService;
   defaultLocation?: string;
 }
 
-export const WeatherDisplay = ({
-                                 weatherService,
-                                 defaultLocation = 'London'
-                               }: Props) => {
+export const WeatherDisplay = ({defaultLocation = 'London'}: Props) => {
   const [weather, setWeather] = useState<WeatherData | null>(null);
-  const [location, setLocation] = useState(defaultLocation);
-  const [unit, setUnit] = useState<'celsius' | 'fahrenheit'>('celsius');
+  const [location, setLocation] = useState<string>(defaultLocation!);
+  const [unit, setUnit] = useState<unitType>('celsius');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [usingGeolocation, setUsingGeolocation] = useState(false);
@@ -30,8 +31,8 @@ export const WeatherDisplay = ({
       setError(null);
       const data = await weatherService.getWeatherByCity(location, unit);
       setWeather(data);
-    } catch (err) {
-      setError(err.message);
+    } catch (error: unknown) {
+      setError(`Failed to get weather for ${location}. ${error.name}: ${error.message}`);
     } finally {
       setLoading(false);
     }
@@ -100,7 +101,7 @@ export const WeatherDisplay = ({
 
         <Select
           value={unit}
-          onValueChange={(value: 'celsius' | 'fahrenheit') => setUnit(value)}
+          onValueChange={(value: unitType) => setUnit(value)}
         >
           <SelectTrigger>
             <SelectValue placeholder="Select unit"/>
@@ -127,12 +128,12 @@ export const WeatherDisplay = ({
           <div className="space-y-2">
             <h2 className="text-2xl font-semibold">{weather.location}</h2>
             <p className="text-4xl font-bold">
-              {weather.temperature.toFixed(1)}°{unit === 'celsius' ? 'C' : 'F'}
+              {weather.temperature.toFixed(0)}°{unit === 'celsius' ? 'C' : 'F'}
             </p>
             <p className="capitalize text-lg">{weather.description}</p>
             <div className="text-sm text-muted-foreground">
               <p>Humidity: {weather.humidity}%</p>
-              <p>Wind Speed: {weather.windSpeed} {unit === 'celsius' ? 'm/s' : 'mph'}</p>
+              <p>Wind Speed: {weather.windSpeed.toFixed(0)} {unit === 'celsius' ? 'm/s' : 'mph'}</p>
             </div>
           </div>
         )}
