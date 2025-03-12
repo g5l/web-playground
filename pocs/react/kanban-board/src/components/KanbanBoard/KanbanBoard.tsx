@@ -3,35 +3,18 @@ import {DragDropContext} from "react-beautiful-dnd";
 import "./KanbanBoard.css";
 import Column from "../Column/Column";
 
-const initialData = {
-  columns: {
-    "column-1": {
-      id: "column-1",
-      title: "To Do",
-      cardIds: ["card-1", "card-2"],
-    },
-    "column-2": {
-      id: "column-2",
-      title: "In Progress",
-      cardIds: [],
-    },
-    "column-3": {
-      id: "column-3",
-      title: "Done",
-      cardIds: [],
-    },
-  },
-  cards: {
-    "card-1": {id: "card-1", content: "Learn React"},
-    "card-2": {id: "card-2", content: "Build Kanban Board"},
-  },
-  columnOrder: ["column-1", "column-2", "column-3"],
-};
+interface KanbanBoardProps {
+  initialData: {
+    columns: Record<string, { id: string; title: string; cardIds: string[] }>;
+    cards: Record<string, { id: string; content: string }>;
+    columnOrder: string[];
+  };
+}
 
-const KanbanBoard = () => {
+const KanbanBoard = ({initialData}: KanbanBoardProps) => {
   const [data, setData] = useState(initialData);
 
-  const onDragEnd = (result) => {
+  const onDragEnd = (result: any) => {
     const {source, destination, draggableId} = result;
     if (!destination) return;
 

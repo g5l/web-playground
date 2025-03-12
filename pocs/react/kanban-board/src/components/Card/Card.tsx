@@ -10,7 +10,7 @@ interface CardProps {
   index: number;
 }
 
-const Card: React.FC<CardProps> = ({card, index}) => {
+const Card = ({card, index}: CardProps) => {
   return (
     <Draggable draggableId={card.id} index={index}>
       {(provided) => (
