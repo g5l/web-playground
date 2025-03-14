@@ -1,31 +1,38 @@
-import React from "react";
-import {Draggable} from "react-beautiful-dnd";
+import React, {useState} from "react";
 import "./card.css";
 
-interface CardProps {
-  card: {
-    id: string;
-    content: string;
-  };
-  index: number;
-}
+const Card = ({card, onDragStart, updateCardTitle}) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [newTitle, setNewTitle] = useState(card.content);
 
-const Card = ({card, index}: CardProps) => {
+  const handleEdit = () => {
+    setIsEditing(true);
+  };
+
+  const handleChange = (event) => {
+    setNewTitle(event.target.value);
+  };
+
+  const handleBlur = () => {
+    setIsEditing(false);
+    updateCardTitle(card.id, newTitle);
+  };
+
   return (
-    <Draggable draggableId={card.id} index={index}>
-      {(provided) => (
-        <div
-          className="card"
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-        >
-          {card.content}
-        </div>
+    <div className="card" draggable onDragStart={(e) => onDragStart(e, card.id)}>
+      {isEditing ? (
+        <input
+          type="text"
+          value={newTitle}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          autoFocus
+        />
+      ) : (
+        <span onClick={handleEdit}>{card.content}</span>
       )}
-    </Draggable>
+    </div>
   );
 };
 
 export default Card;
-2

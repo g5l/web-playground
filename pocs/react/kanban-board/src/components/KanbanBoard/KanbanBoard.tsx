@@ -1,61 +1,68 @@
-import React, {useState} from "react";
-import {DragDropContext} from "react-beautiful-dnd";
-import "./KanbanBoard.css";
+import React, { useState } from "react";
 import Column from "../Column/Column";
+import "./kanbanBoard.css";
 
-interface KanbanBoardProps {
-  initialData: {
-    columns: Record<string, { id: string; title: string; cardIds: string[] }>;
-    cards: Record<string, { id: string; content: string }>;
-    columnOrder: string[];
-  };
-}
-
-const KanbanBoard = ({initialData}: KanbanBoardProps) => {
+const KanbanBoard = ({ initialData }) => {
   const [data, setData] = useState(initialData);
 
-  const onDragEnd = (result: any) => {
-    const {source, destination, draggableId} = result;
-    if (!destination) return;
+  const onDragStart = (event, cardId) => {
+    event.dataTransfer.setData("cardId", cardId);
+  };
 
-    const startCol = data.columns[source.droppableId];
-    const endCol = data.columns[destination.droppableId];
+  const onDrop = (event, columnId) => {
+    const cardId = event.dataTransfer.getData("cardId");
 
-    if (startCol === endCol) {
-      const newCardIds = Array.from(startCol.cardIds);
-      newCardIds.splice(source.index, 1);
-      newCardIds.splice(destination.index, 0, draggableId);
+    const sourceColumnId = Object.keys(data.columns).find((colId) =>
+      data.columns[colId].cardIds.includes(cardId)
+    );
 
-      const newColumn = {...startCol, cardIds: newCardIds};
-      setData((prev) => ({
-        ...prev,
-        columns: {...prev.columns, [newColumn.id]: newColumn},
-      }));
-      return;
-    }
+    if (sourceColumnId === columnId) return;
 
-    const startCardIds = Array.from(startCol.cardIds);
-    startCardIds.splice(source.index, 1);
-    const newStartCol = {...startCol, cardIds: startCardIds};
+    const newColumns = { ...data.columns };
+    newColumns[sourceColumnId].cardIds = newColumns[sourceColumnId].cardIds.filter(
+      (id) => id !== cardId
+    );
+    newColumns[columnId].cardIds.push(cardId);
 
-    const endCardIds = Array.from(endCol.cardIds);
-    endCardIds.splice(destination.index, 0, draggableId);
-    const newEndCol = {...endCol, cardIds: endCardIds};
+    setData({ ...data, columns: newColumns });
+  };
 
-    setData((prev) => ({
-      ...prev,
-      columns: {...prev.columns, [newStartCol.id]: newStartCol, [newEndCol.id]: newEndCol},
-    }));
+  const addCard = (columnId) => {
+    const newCardId = `card-${Date.now()}`;
+    const newCard = { id: newCardId, content: "New Card" };
+    const newColumns = { ...data.columns };
+    newColumns[columnId].cardIds.push(newCardId);
+
+    setData({
+      ...data,
+      cards: { ...data.cards, [newCardId]: newCard },
+      columns: newColumns,
+    });
+  };
+
+  const updateCardTitle = (cardId, newTitle) => {
+    const updatedCards = { ...data.cards, [cardId]: { ...data.cards[cardId], content: newTitle } };
+    setData({ ...data, cards: updatedCards });
   };
 
   return (
-    <DragDropContext onDragEnd={onDragEnd}>
-      <div className="kanban-board">
-        {data.columnOrder.map((columnId) => (
-          <Column key={columnId} column={data.columns[columnId]} cards={data.cards}/>
-        ))}
-      </div>
-    </DragDropContext>
+    <div className="kanban-board">
+      {data.columnOrder.map((columnId) => {
+        const column = data.columns[columnId];
+        const cards = column.cardIds.map((cardId) => data.cards[cardId]);
+        return (
+          <Column
+            key={columnId}
+            column={column}
+            cards={cards}
+            onDragStart={onDragStart}
+            onDrop={onDrop}
+            addCard={addCard}
+            updateCardTitle={updateCardTitle}
+          />
+        );
+      })}
+    </div>
   );
 };
 

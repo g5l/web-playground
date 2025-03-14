@@ -1,33 +1,19 @@
 import React from "react";
-import {Droppable} from "react-beautiful-dnd";
 import Card from "../Card/Card";
-import "./Column.css";
+import "./column.css";
 
-interface ColumnProps {
-  column: {
-    id: string;
-    title: string;
-    cardIds: string[];
-  },
-  cards: {
-    [key: string]: { id: string; content: string };
-  }
-}
-
-const Column = ({column, cards}: ColumnProps) => {
+const Column = ({ column, cards, onDragStart, onDrop, addCard, updateCardTitle }) => {
   return (
-    <div className="column">
-      <h2 className="column-title">{column.title}</h2>
-      <Droppable droppableId={column.id}>
-        {(provided) => (
-          <div ref={provided.innerRef} {...provided.droppableProps} className="column-cards">
-            {column.cardIds.map((cardId, index) => (
-              <Card key={cardId} card={cards[cardId]} index={index}/>
-            ))}
-            {provided.placeholder}
-          </div>
-        )}
-      </Droppable>
+    <div
+      className="column"
+      onDragOver={(e) => e.preventDefault()}
+      onDrop={(e) => onDrop(e, column.id)}
+    >
+      <h2>{column.title}</h2>
+      {cards.map((card) => (
+        <Card key={card.id} card={card} onDragStart={onDragStart} updateCardTitle={updateCardTitle} />
+      ))}
+      <button onClick={() => addCard(column.id)}>Add Card</button>
     </div>
   );
 };
