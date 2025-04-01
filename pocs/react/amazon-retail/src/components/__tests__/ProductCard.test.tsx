@@ -1,4 +1,3 @@
-import {MemoryRouter} from 'react-router-dom';
 import {render, screen} from '../../utils/testing';
 import {ProductCard} from '../ProductCard';
 
@@ -14,9 +13,7 @@ const mockProduct = {
 describe('ProductCard Component', () => {
   test('renders product name, price, and description', () => {
     render(
-      <MemoryRouter>
-        <ProductCard product={mockProduct}/>
-      </MemoryRouter>
+      <ProductCard product={mockProduct}/>
     );
 
     expect(screen.getByText(mockProduct.name)).toBeInTheDocument();

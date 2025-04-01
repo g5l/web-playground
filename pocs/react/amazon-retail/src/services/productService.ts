@@ -1,4 +1,9 @@
-import { Product } from '../types/product';
+import {Product} from '../types/product';
+
+type ReturnType<T> = {
+  data: T | null;
+  error: Error | null;
+};
 
 const mockProducts: Product[] = [
   {
@@ -39,21 +44,26 @@ const mockProducts: Product[] = [
   },
 ];
 
-export const getProducts = async (): Promise<Product[]> => {
-  return new Promise((resolve) => {
+export const getProducts = async (): Promise<ReturnType<Product[]>> => {
+  return new Promise<ReturnType<Product[]>>((resolve) => {
     setTimeout(() => {
-      resolve(mockProducts);
+      resolve({data: mockProducts, error: null});
     }, 500);
   });
 };
 
-export const getRelatedProducts = async (category: string, currentProductId: string): Promise<Product[]> => {
-  return new Promise((resolve) => {
+export const getRelatedProducts = async (
+  category: string,
+  currentProductId: string
+): Promise<ReturnType<Product[]>> => {
+  return new Promise<ReturnType<Product[]>>((resolve) => {
     setTimeout(() => {
-      const related = mockProducts.filter(
-        product => product.category === category && product.id !== currentProductId
-      );
-      resolve(related);
+      resolve({
+        value: mockProducts.filter(
+          product => product.category === category && product.id !== currentProductId
+        ),
+        error: null
+      });
     }, 500);
   });
-}; 
+};
