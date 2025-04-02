@@ -1,5 +1,5 @@
-import {render, screen} from '../../utils/testing';
-import {ProductCard} from '../ProductCard';
+import { render, screen } from '../../utils/testing';
+import { ProductCard } from '../ProductCard';
 
 const mockProduct = {
   id: '1',
@@ -11,13 +11,16 @@ const mockProduct = {
 };
 
 describe('ProductCard Component', () => {
-  test('renders product name, price, and description', () => {
-    render(
-      <ProductCard product={mockProduct}/>
-    );
+  it('should render product details correctly', () => {
+    render(<ProductCard product={mockProduct} />);
 
     expect(screen.getByText(mockProduct.name)).toBeInTheDocument();
-    expect(screen.getByText(`$${mockProduct.price.toFixed(2)}`)).toBeInTheDocument();
     expect(screen.getByText(mockProduct.description)).toBeInTheDocument();
+    expect(screen.getByText(`$${mockProduct.price.toFixed(2)}`)).toBeInTheDocument();
+    
+    const productImage = screen.getByRole('img', { name: mockProduct.name });
+    expect(productImage).toBeInTheDocument();
+    expect(productImage).toHaveAttribute('src', mockProduct.image);
+    expect(screen.getByText(mockProduct.rating.toFixed(1))).toBeInTheDocument();
   });
 });

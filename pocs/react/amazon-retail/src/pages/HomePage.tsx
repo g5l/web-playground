@@ -13,8 +13,8 @@ export const HomePage = () => {
   useEffect(() => {
     dispatch(setLoading(true));
     getProducts()
-      .then(products => {
-        dispatch(setProducts(products));
+      .then(({data}) => {
+        dispatch(setProducts(data));
         dispatch(setLoading(false));
       })
       .catch(err => {
