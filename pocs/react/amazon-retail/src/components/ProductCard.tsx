@@ -1,14 +1,14 @@
-import { Card, Image, Text, Badge, Group, Rating } from '@mantine/core';
-import { Product } from '../types/product';
-import { Link } from 'react-router-dom';
+import {Badge, Card, Group, Image, Rating, Text} from '@mantine/core';
+import {Link} from 'react-router-dom';
+import {Product} from '../types/product';
 
 interface ProductCardProps {
   product: Product;
 }
 
-export const ProductCard = ({ product }: ProductCardProps) => {
+export const ProductCard = ({product}: ProductCardProps) => {
   return (
-    <Card shadow="sm" padding="lg" radius="md" withBorder component={Link} to={`/product/${product.id}`}>
+    <Card shadow="sm" padding="lg" radius="md" withBorder component={Link} to={`/product/${product.id}`} data-testid="product-card">
       <Card.Section>
         <Image
           src={product.image}
@@ -29,7 +29,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
       </Text>
 
       <Group justify="flex-start" mt="md">
-        <Rating value={product.rating} readOnly fractions={2} />
+        <Rating value={product.rating} readOnly fractions={2}/>
         <Text size="sm" c="dimmed">
           {product.rating.toFixed(1)}
         </Text>
