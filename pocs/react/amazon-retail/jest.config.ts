@@ -1,16 +1,14 @@
 export default {
-  preset: 'ts-jest',
-  testEnvironment: 'jsdom',
+  preset: "ts-jest",
+  testEnvironment: "jsdom",
   moduleNameMapper: {
-    '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
-    '^@/(.*)$': '<rootDir>/src/$1',
+    "\\.(css|less|scss|sass)$": "identity-obj-proxy",
+    "^@/(.*)$": "<rootDir>/src/$1",
   },
-  setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts'],
+  setupFilesAfterEnv: ["<rootDir>/src/setupTests.ts"],
   collectCoverage: true,
-  collectCoverageFrom: [
-    'src/__tests__/**/*.{ts,tsx}',
-  ],
-  testMatch: ['**/__tests__/**/*.[jt]s?(x)'],
+  collectCoverageFrom: ["src/**/*.{ts,tsx}"],
+  testMatch: ["**/__tests__/**/*.[jt]s?(x)"],
   coverageThreshold: {
     global: {
       branches: 80,
