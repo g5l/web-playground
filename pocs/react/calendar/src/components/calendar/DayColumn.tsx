@@ -1,10 +1,9 @@
 import React from 'react';
-import { Box, Flex, Text } from '@chakra-ui/react';
 import { format } from 'date-fns';
-import { Droppable, Draggable } from 'react-beautiful-dnd';
 import { DayColumn as DayColumnType } from '../../types';
 import CalendarEvent from './CalendarEvent';
 import { useCalendar } from '../../context/CalendarContext';
+import './styles.css';
 
 interface DayColumnProps {
   column: DayColumnType;
@@ -21,6 +20,7 @@ const DayColumn: React.FC<DayColumnProps> = ({ column, columnIndex }) => {
   // Handle drop event
   const handleDrop = (e: React.DragEvent<HTMLDivElement>, hour: number, minute: number) => {
     e.preventDefault();
+    e.currentTarget.classList.remove('drag-over');
     
     try {
       // Get the dragged event data
@@ -63,7 +63,7 @@ const DayColumn: React.FC<DayColumnProps> = ({ column, columnIndex }) => {
     );
     
     // Create event elements that start at this time
-    const eventElements = startingEvents.map((event, eventIndex) => (
+    const eventElements = startingEvents.map((event) => (
       <CalendarEvent 
         key={event.id}
         event={event}
@@ -115,8 +115,8 @@ const DayColumn: React.FC<DayColumnProps> = ({ column, columnIndex }) => {
                   event={event}
                 />
               ))}
-          </Box>
-        </Box>
+          </div>
+        </div>
       );
     }
   });

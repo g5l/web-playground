@@ -1,23 +1,26 @@
-import React from 'react';
-import { Button, useDisclosure } from '@chakra-ui/react';
+import React, {useState} from 'react';
+import { Button } from '@chakra-ui/react';
 import { AddIcon } from '@chakra-ui/icons';
 import EventModal from './EventModal';
 
 const EventFormButton = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [isOpen, setIsOpen] = useState(false);
+  
+  const handleOpen = () => setIsOpen(true);
+  const handleClose = () => setIsOpen(false);
 
   return (
     <>
       <Button 
         leftIcon={<AddIcon />} 
         colorScheme="blue" 
-        onClick={onOpen}
+        onClick={handleOpen}
       >
         Add Event
       </Button>
       <EventModal 
         isOpen={isOpen} 
-        onClose={onClose} 
+        onClose={handleClose} 
         initialDate={new Date()}
       />
     </>

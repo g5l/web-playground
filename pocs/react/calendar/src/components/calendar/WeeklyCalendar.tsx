@@ -59,19 +59,21 @@ const WeeklyCalendar: React.FC = () => {
         <Flex align="center">
           <IconButton
             aria-label="Previous week"
-            icon={<ChevronLeftIcon />}
             onClick={handlePreviousWeek}
             size="sm"
             mr={2}
-          />
+          >
+            <ChevronLeftIcon />
+          </IconButton>
           <Heading size="md">{weekRange}</Heading>
           <IconButton
             aria-label="Next week"
-            icon={<ChevronRightIcon />}
             onClick={handleNextWeek}
             size="sm"
             ml={2}
-          />
+          >
+            <ChevronRightIcon />
+          </IconButton>
         </Flex>
       </Flex>
 

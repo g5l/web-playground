@@ -2,8 +2,6 @@ import React, { useState, useCallback, ReactNode } from 'react';
 import CalendarContext, { CalendarContextType } from './CalendarContext';
 import { CalendarEvent, UserAvailability, MeetingSuggestion } from '../types';
 import { findBestMeetingTimes } from '../utils/dateUtils';
-import { MantineProvider } from '@mantine/core';
-
 
 interface CalendarProviderProps {
   children: ReactNode;
@@ -101,9 +99,7 @@ export const CalendarProvider: React.FC<CalendarProviderProps> = ({ children }) 
 
   return (
     <CalendarContext.Provider value={contextValue}>
-      <MantineProvider>
-        {children}
-      </MantineProvider>
+      {children}
     </CalendarContext.Provider>
   );
 };

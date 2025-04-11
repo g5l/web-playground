@@ -1,10 +1,11 @@
-import React from 'react';
-import { Box, Text, Flex, IconButton, useDisclosure } from '@chakra-ui/react';
-import { EditIcon, DeleteIcon } from '@chakra-ui/icons';
-import { formatTime } from '../../utils/dateUtils';
-import { CalendarEvent as CalendarEventType } from '../../types';
+import {DeleteIcon, EditIcon} from '@chakra-ui/icons';
+import {Box, Flex, IconButton, Text} from '@chakra-ui/react';
+import React, {useState} from 'react';
+import {useCalendar} from '../../context/CalendarContext';
+import {CalendarEvent as CalendarEventType} from '../../types';
+import {formatTime} from '../../utils/dateUtils';
 import EventModal from './EventModal';
-import { useCalendar } from '../../context/CalendarContext';
+import './styles.css';
 
 interface CalendarEventProps {
   event: CalendarEventType;
@@ -12,30 +13,35 @@ interface CalendarEventProps {
   onDragEnd?: (e: React.DragEvent<HTMLDivElement>) => void;
 }
 
-const CalendarEvent: React.FC<CalendarEventProps> = ({ 
-  event,
-  onDragStart,
-  onDragEnd
-}) => {
-  const { deleteEvent } = useCalendar();
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  
+const CalendarEvent: React.FC<CalendarEventProps> = ({
+                                                       event,
+                                                       onDragStart,
+                                                       onDragEnd
+                                                     }) => {
+  const {deleteEvent} = useCalendar();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   // Calculate the display height based on event duration (in minutes)
   const durationMinutes = (event.end.getTime() - event.start.getTime()) / (60 * 1000);
   const heightPercentage = Math.min(100, (durationMinutes / 30) * 100); // 30 min = 100% of a slot
-  
+
   // Handle edit button click
   const handleEdit = (e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent triggering drag
-    onOpen();
+    setIsModalOpen(true);
   };
-  
+
   // Handle delete button click
   const handleDelete = (e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent triggering drag
     if (window.confirm(`Are you sure you want to delete "${event.title}"?`)) {
       deleteEvent(event.id);
     }
+  };
+
+  // Handle modal close
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
   };
 
   // Handle drag start
@@ -47,20 +53,20 @@ const CalendarEvent: React.FC<CalendarEventProps> = ({
     }));
     // Set the drag image/effect
     e.dataTransfer.effectAllowed = 'move';
-    
+
     // Call the parent's onDragStart handler if provided
     if (onDragStart) {
       onDragStart(e, event.id);
     }
   };
-  
+
   // Handle drag end
   const handleDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
     if (onDragEnd) {
       onDragEnd(e);
     }
   };
-  
+
   return (
     <>
       <Box
@@ -73,9 +79,9 @@ const CalendarEvent: React.FC<CalendarEventProps> = ({
         mb={1}
         position="relative"
         cursor="grab"
-        _hover={{ 
+        _hover={{
           boxShadow: 'md',
-          '& .event-actions': { display: 'flex' } 
+          '& .event-actions': {display: 'flex'}
         }}
         overflow="hidden"
         zIndex={2}
@@ -84,52 +90,54 @@ const CalendarEvent: React.FC<CalendarEventProps> = ({
         onDragEnd={handleDragEnd}
         data-event-id={event.id}
       >
-        <Flex 
-          height="100%" 
+        <Flex
+          height="100%"
           direction="column"
           justify="space-between"
         >
           <Box>
-            <Text fontSize="xs" fontWeight="bold" noOfLines={1}>
+            <Text fontSize="xs" fontWeight="bold" maxWidth="100%" overflow="hidden" textOverflow="ellipsis" whiteSpace="nowrap">
               {event.title}
             </Text>
-            <Text fontSize="xs" noOfLines={1}>
+            <Text fontSize="xs" maxWidth="100%" overflow="hidden" textOverflow="ellipsis" whiteSpace="nowrap">
               {formatTime(event.start)} - {formatTime(event.end)}
             </Text>
           </Box>
-          
+
           {/* Actions (show on hover) */}
-          <Flex 
-            className="event-actions" 
-            position="absolute" 
-            top={0} 
-            right={0} 
-            bg="rgba(0,0,0,0.3)" 
+          <Flex
+            className="event-actions"
+            position="absolute"
+            top={0}
+            right={0}
+            bg="rgba(0,0,0,0.3)"
             borderRadius="sm"
             display="none"
           >
             <IconButton
               aria-label="Edit event"
-              icon={<EditIcon />}
               size="xs"
               variant="ghost"
               color="white"
               onClick={handleEdit}
-            />
+            >
+              <EditIcon/>
+            </IconButton>
             <IconButton
               aria-label="Delete event"
-              icon={<DeleteIcon />}
               size="xs"
               variant="ghost"
               color="white"
               onClick={handleDelete}
-            />
+            >
+              <DeleteIcon/>
+            </IconButton>
           </Flex>
         </Flex>
       </Box>
-      
+
       {/* Edit Modal */}
-      <EventModal isOpen={isOpen} onClose={onClose} eventToEdit={event} />
+      <EventModal isOpen={isModalOpen} onClose={handleCloseModal} eventToEdit={event}/>
     </>
   );
 };
