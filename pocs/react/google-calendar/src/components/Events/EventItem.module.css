@@ -1,0 +1,15 @@
+.eventItem {
+  position: absolute;
+  padding: 4px 8px;
+  color: white;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.controlsContainer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 0 0 0 4px;
+}

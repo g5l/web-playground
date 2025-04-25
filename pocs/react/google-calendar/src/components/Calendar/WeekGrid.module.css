@@ -1,0 +1,34 @@
+.timeSlot {
+  height: 60px;
+  border-bottom: 1px solid var(--gray-border);
+  border-right: 1px solid var(--gray-border);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.dayHeader {
+  height: 30px;
+  background-color: var(--day-header-bg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.weekContainer {
+  margin-top: 30px;
+}
+
+.dayColumn {
+  position: relative;
+  height: 1440px;
+}
+
+.hourCell {
+  height: 60px;
+  border-bottom: 1px solid var(--gray-border);
+}
+
+.rightBorder {
+  border-right: 1px solid var(--gray-border);
+}
