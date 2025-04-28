@@ -8,3 +8,8 @@ export interface Event {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface TimeSlot {
+  start: string;
+  end: string;
+}

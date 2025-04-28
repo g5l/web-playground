@@ -9,10 +9,8 @@
 
 .dayHeader {
   height: 30px;
+  padding: 5px;
   background-color: var(--day-header-bg);
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .weekContainer {

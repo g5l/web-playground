@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import {useState, useEffect} from 'react';
 import {
   Modal,
   TextInput,
@@ -9,9 +9,10 @@ import {
   Flex,
   ColorPicker
 } from '@mantine/core';
-import { TimeInput, DatePicker } from '@mantine/dates';
+import {TimeInput, DatePicker} from '@mantine/dates';
+import {addOneHour, getTimeFromDate} from "../../utils/dateUtils.ts";
 import colors from "../../assets/colors";
-import { CalendarEvent } from '../../types';
+import {CalendarEvent} from '../../types';
 
 interface EventModalProps {
   open: boolean;
@@ -20,25 +21,23 @@ interface EventModalProps {
   onSave: (event: CalendarEvent | Omit<CalendarEvent, 'id'>) => void;
 }
 
-export default function EventModal({ open, onClose, event, onSave }: EventModalProps) {
+export default function EventModal({open, onClose, event, onSave}: EventModalProps) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [startDate, setStartDate] = useState<[Date | null, Date | null]>([null, null]);
+  const [startDate, setStartDate] = useState<Date>(new Date());
   const [endDate, setEndDate] = useState<Date>(new Date());
-  const [startTime, setStartTime] = useState<Date>(new Date());
-  const [endTime, setEndTime] = useState<Date>(
-    new Date(new Date().setHours(new Date().getHours() + 1))
-  );
+  const [startTime, setStartTime] = useState<string>('');
+  const [endTime, setEndTime] = useState<string>(addOneHour(startTime));
   const [color, setColor] = useState(colors.blue);
 
   useEffect(() => {
     if (event) {
       setTitle(event.title);
       setDescription(event.description || '');
-      // setStartDate(event.start);
+      setStartDate(event.start);
       setEndDate(event.end);
-      setStartTime(event.start);
-      setEndTime(event.end);
+      setStartTime(getTimeFromDate(event.start));
+      setEndTime(getTimeFromDate(event.end));
       setColor(event.color || colors.blue);
     } else {
       const now = new Date();
@@ -47,21 +46,25 @@ export default function EventModal({ open, onClose, event, onSave }: EventModalP
 
       setTitle('');
       setDescription('');
-      // setStartDate(now);
+      setStartDate(now);
       setEndDate(now);
-      setStartTime(now);
-      setEndTime(oneHourLater);
+      setStartTime(getTimeFromDate(now));
+      setEndTime(getTimeFromDate(oneHourLater));
       setColor(colors.blue);
     }
   }, [event, open]);
 
   const handleSave = () => {
-    const start = startDate[0] || new Date();
-    start.setHours(startTime.getHours(), startTime.getMinutes(), 0, 0);
+    const start = new Date(startDate);
+    const t = startTime.split(":");
+    start.setHours(parseInt(t[0]), parseInt(t[1]), 0, 0);
 
     const end = new Date(endDate);
-    end.setHours(endTime.getHours(), endTime.getMinutes(), 0, 0);
+    const tt = endTime.split(":");
+    end.setHours(parseInt(tt[0]), parseInt(tt[1]), 0, 0);
 
+    console.log({start, end});
+    
     if (end <= start) {
       alert('End time must be after start time');
       return;
@@ -73,14 +76,13 @@ export default function EventModal({ open, onClose, event, onSave }: EventModalP
       start,
       end,
       color,
-      ...(event ? { id: event.id } : {})
+      ...(event ? {id: event.id} : {})
     };
 
     onSave(eventData);
   };
   
-  
-  console.log({startDate})
+  console.log({startDate});
 
   return (
     <Modal
@@ -109,25 +111,31 @@ export default function EventModal({ open, onClose, event, onSave }: EventModalP
         <Flex direction="column">
           <DatePicker
             label="Start Date"
+            allowDeselect
             placeholder="Select date"
-            type="range"
             value={startDate}
-            onChange={setStartDate}
+            onChange={(date) => date && setStartDate(date)}
           />
           <TimeInput
             label="Start Time"
             format="12"
             value={startTime}
-            onChange={setStartTime}
+            onChange={(event) => setStartTime(event.currentTarget.value)}
           />
         </Flex>
 
         <Flex direction="column">
+          <DatePicker
+            label="End Date"
+            placeholder="Select date"
+            value={endDate}
+            onChange={(date) => date && setEndDate(date)}
+          />
           <TimeInput
             label="End Time"
             format="12"
             value={endTime}
-            onChange={setEndTime}
+            onChange={(event) => setEndTime(event.currentTarget.value)}
           />
         </Flex>
 

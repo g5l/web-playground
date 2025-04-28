@@ -83,8 +83,8 @@ export default function WeekGrid({ days, events, onEditEvent, onDeleteEvent }: W
 
         return (
           <Grid.Col key={index} span={1.57}>
-            <Paper p="xs" withBorder className={styles.dayHeader}>
-              <Text weight={500} size="sm">{formatDate(day)}</Text>
+            <Paper withBorder className={styles.dayHeader}>
+              <Text size="sm" ta="center">{formatDate(day)}</Text>
             </Paper>
 
             <Box className={`${styles.dayColumn} ${!isLastColumn ? styles.rightBorder : ''}`}>
@@ -92,7 +92,6 @@ export default function WeekGrid({ days, events, onEditEvent, onDeleteEvent }: W
                 <Box key={hour} className={styles.hourCell} />
               ))}
 
-              {/* Render events */}
               {dayEvents.map(event => {
                 const startHour = event.start.getHours();
                 const startMinute = event.start.getMinutes();

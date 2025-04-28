@@ -22,6 +22,10 @@ export default function CalendarView() {
   const fetchWeekEvents = async () => {
     const startOfWeek = weekDays[0];
     const endOfWeek = addDays(weekDays[6], 1);
+    startOfWeek.setHours(0, 0, 0, 0)
+    endOfWeek.setHours(23, 59, 59, 999) 
+    
+    console.log({startOfWeek, endOfWeek})
 
     try {
       const events = await eventService.getEvents(startOfWeek, endOfWeek);
