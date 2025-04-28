@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>WebGL Project</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            overflow: hidden;
+        }
+        canvas {
+            display: block;
+            margin: 0 auto;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <canvas id="webgl-canvas" width="800" height="600">
+        Your browser does not support the HTML5 canvas element.
+    </canvas>
+    
+    <script>
+        // JavaScript code for WebGL will go here
+        window.onload = function() {
+            const canvas = document.getElementById('webgl-canvas');
+            // Initialize WebGL context
+            const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+            
+            if (!gl) {
+                alert('Unable to initialize WebGL. Your browser may not support it.');
+                return;
+            }
+            
+            // Set clear color to black (RGBA)
+            gl.clearColor(0.0, 0.0, 0.0, 1.0);
+            // Clear the color buffer
+            gl.clear(gl.COLOR_BUFFER_BIT);
+            
+            console.log('WebGL initialized successfully!');
+        };
+    </script>
+</body>
+</html>
+

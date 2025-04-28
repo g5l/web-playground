@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive WebGL Presentation</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="presentation-container">
+    <canvas id="webgl-canvas"></canvas>
+
+    <div id="controls">
+        <button id="prev-slide">Previous</button>
+        <div id="slide-counter">Slide 1 / 5</div>
+        <button id="next-slide">Next</button>
+    </div>
+
+    <div id="slide-content">
+        <!-- Slide content will be displayed here -->
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.1/gsap.min.js"></script>
+<script src="presentation.js"></script>
+</body>
+</html>
