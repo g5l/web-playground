@@ -62,8 +62,6 @@ export default function EventModal({open, onClose, event, onSave}: EventModalPro
     const end = new Date(endDate);
     const tt = endTime.split(":");
     end.setHours(parseInt(tt[0]), parseInt(tt[1]), 0, 0);
-
-    console.log({start, end});
     
     if (end <= start) {
       alert('End time must be after start time');
@@ -81,8 +79,6 @@ export default function EventModal({open, onClose, event, onSave}: EventModalPro
 
     onSave(eventData);
   };
-  
-  console.log({startDate});
 
   return (
     <Modal
