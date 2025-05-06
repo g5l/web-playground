@@ -20,9 +20,19 @@ import {render} from './render';
 describe('EventModal Component', () => {
   const mockOnClose = vi.fn();
   const mockOnSave = vi.fn();
+  let mockDate = new Date();
+
+  const mockEvent = {
+    id: '123',
+    title: 'Test Event',
+    description: 'Test Description',
+    start: new Date('2023-09-15T10:00:00'),
+    end: new Date('2023-09-15T11:00:00'),
+    color: '#4dabf7'
+  };
 
   beforeAll(() => {
-    const mockDate = new Date('2023-09-15T10:00:00');
+    mockDate = new Date('2023-09-15T10:00:00');
     vi.setSystemTime(mockDate);
   });
 
@@ -55,30 +65,12 @@ describe('EventModal Component', () => {
   });
 
   it('should render modal with correct title for editing event', () => {
-    const mockEvent = {
-      id: '123',
-      title: 'Test Event',
-      description: 'Test Description',
-      start: new Date('2023-09-15T10:00:00'),
-      end: new Date('2023-09-15T11:00:00'),
-      color: '#4dabf7'
-    };
-
     renderEventModal({event: mockEvent});
 
     expect(screen.getByText('Edit Event')).toBeInTheDocument();
   });
 
   it('should initialize form fields with provided event data', () => {
-    const mockEvent = {
-      id: '123',
-      title: 'Test Event',
-      description: 'Test Description',
-      start: new Date('2023-09-15T10:00:00'),
-      end: new Date('2023-09-15T11:00:00'),
-      color: '#4dabf7'
-    };
-
     renderEventModal({event: mockEvent});
 
     expect(screen.getByLabelText(/Event Title/i)).toHaveValue('Test Event');
@@ -99,7 +91,7 @@ describe('EventModal Component', () => {
   it('should call onClose when Cancel button is clicked', () => {
     renderEventModal();
 
-    fireEvent.click(screen.getByText('Cancel'));
+    fireEvent.click(screen.getByRole('button', {name: 'Cancel'}));
     expect(mockOnClose).toHaveBeenCalledTimes(1);
   });
 
@@ -118,7 +110,7 @@ describe('EventModal Component', () => {
     const endTimeInput = screen.getByLabelText(/End Time/i);
     fireEvent.change(endTimeInput, {target: {value: '09:00'}});
 
-    fireEvent.click(screen.getByText('Save Event'));
+    fireEvent.click(screen.getByRole('button', {name: 'Save Event'}));
 
     expect(alertMock).toHaveBeenCalledWith('End time must be after start time');
     expect(mockOnSave).not.toHaveBeenCalled();
@@ -141,7 +133,7 @@ describe('EventModal Component', () => {
     const endTimeInput = screen.getByLabelText(/End Time/i);
     fireEvent.change(endTimeInput, {target: {value: '11:00'}});
 
-    fireEvent.click(screen.getByText('Save Event'));
+    fireEvent.click(screen.getByRole('button', {name: 'Save Event'}));
 
     expect(mockOnSave).toHaveBeenCalledTimes(1);
     expect(mockOnSave).toHaveBeenCalledWith(expect.objectContaining({
@@ -150,111 +142,74 @@ describe('EventModal Component', () => {
     }));
   });
 
-  // it('should update color when color picker is used', () => {
-  //   render(
-  //     <EventModal 
-  //       open={true}
-  //       onClose={mockOnClose}
-  //       event={null}
-  //       onSave={mockOnSave}
-  //     />
-  //   );
-  //
-  //   const colorSwatches = screen.getAllByRole('button', { name: /select color/i });
-  //   if (colorSwatches.length > 1) {
-  //     fireEvent.click(colorSwatches[1]);
-  //   }
-  //
-  //   fireEvent.click(screen.getByText('Save Event'));
-  //
-  //   expect(mockOnSave).toHaveBeenCalledTimes(1);
-  // });
-
   it('should handle date changes correctly', () => {
     renderEventModal();
+
+    const startValue = '14:30';
+    const endValue = '16:45';
 
     const titleInput = screen.getByLabelText(/Event Title/i);
     fireEvent.change(titleInput, {target: {value: 'Date Test Event'}});
 
     const startTimeInput = screen.getByLabelText(/Start Time/i);
-    fireEvent.change(startTimeInput, {target: {value: '14:30'}});
+    fireEvent.change(startTimeInput, {target: {value: startValue}});
 
     const endTimeInput = screen.getByLabelText(/End Time/i);
-    fireEvent.change(endTimeInput, {target: {value: '16:45'}});
+    fireEvent.change(endTimeInput, {target: {value: endValue}});
 
-    fireEvent.click(screen.getByText('Save Event'));
+    fireEvent.click(screen.getByRole('button', {name: 'Save Event'}));
+
+    const [sHours, sMinutes] = startValue.split(':').map(Number);
+    const startDate = new Date(mockDate);
+    startDate.setHours(sHours, sMinutes);
+
+    const [eHours, eMinutes] = endValue.split(':').map(Number);
+    const endDate = new Date(mockDate);
+    endDate.setHours(eHours, eMinutes);
 
     expect(mockOnSave).toHaveBeenCalledTimes(1);
 
-    const savedEvent = mockOnSave.mock.calls[0][0];
+    expect(mockOnSave).toHaveBeenCalledWith(
+      expect.objectContaining({
+        title: 'Date Test Event',
+        start: startDate,
+        end: endDate,
+      })
+    );
 
-    expect(mockOnSave).toHaveBeenCalledWith({
-      title: expect.any(String),
-      start: {
-        min,
-      },
-    });
-
-    expect(savedEvent.start.getHours()).toBe(14);
-    expect(savedEvent.start.getMinutes()).toBe(30);
-    expect(savedEvent.end.getHours()).toBe(16);
-    expect(savedEvent.end.getMinutes()).toBe(45);
+    // const savedEvent = mockOnSave.mock.calls[0][0];
+    // expect(savedEvent.start.getHours()).toBe(14);
+    // expect(savedEvent.start.getMinutes()).toBe(30);
+    // expect(savedEvent.end.getHours()).toBe(16);
+    // expect(savedEvent.end.getMinutes()).toBe(45);
   });
 
-  // it('preserves event ID when editing existing event', () => {
-  //   const mockEvent = {
-  //     id: 'event-123',
-  //     title: 'Existing Event',
-  //     description: 'Existing Description',
-  //     start: new Date('2023-09-15T10:00:00'),
-  //     end: new Date('2023-09-15T11:00:00'),
-  //     color: '#4dabf7'
-  //   };
-  //  
-  //   render(
-  //     <EventModal 
-  //       open={true}
-  //       onClose={mockOnClose}
-  //       event={mockEvent}
-  //       onSave={mockOnSave}
-  //     />
-  //   );
-  //  
-  //   // Make some changes
-  //   const titleInput = screen.getByLabelText(/Event Title/i);
-  //   fireEvent.change(titleInput, { target: { value: 'Updated Event' } });
-  //  
-  //   fireEvent.click(screen.getByText('Save Event'));
-  //  
-  //   // Check that the ID was preserved in the saved event
-  //   expect(mockOnSave).toHaveBeenCalledWith(expect.objectContaining({
-  //     id: 'event-123',
-  //     title: 'Updated Event'
-  //   }));
-  // });
-  //
-  // it('does not include ID when creating a new event', () => {
-  //   render(
-  //     <EventModal 
-  //       open={true}
-  //       onClose={mockOnClose}
-  //       event={null}
-  //       onSave={mockOnSave}
-  //     />
-  //   );
-  //  
-  //   // Fill required fields
-  //   const titleInput = screen.getByLabelText(/Event Title/i);
-  //   fireEvent.change(titleInput, { target: { value: 'New Event' } });
-  //  
-  //   // End time needs to be later than start time
-  //   const endTimeInput = screen.getByLabelText(/End Time/i);
-  //   fireEvent.change(endTimeInput, { target: { value: '12:00' } });
-  //  
-  //   fireEvent.click(screen.getByText('Save Event'));
-  //  
-  //   // Verify that the saved event doesn't have an ID property
-  //   const savedEvent = mockOnSave.mock.calls[0][0];
-  //   expect(savedEvent).not.toHaveProperty('id');
-  // });
+  it('should preserve event ID when editing existing event', () => {
+    renderEventModal({event: mockEvent});
+
+    const titleInput = screen.getByLabelText(/Event Title/i);
+    fireEvent.change(titleInput, {target: {value: 'Updated Event'}});
+
+    fireEvent.click(screen.getByRole('button', {name: 'Save Event'}));
+
+    expect(mockOnSave).toHaveBeenCalledWith(expect.objectContaining({
+      id: '123',
+      title: 'Updated Event'
+    }));
+  });
+
+  it('should not include ID when creating a new event', () => {
+    renderEventModal();
+    
+    const titleInput = screen.getByLabelText(/Event Title/i);
+    fireEvent.change(titleInput, { target: { value: 'New Event' } });
+
+    const endTimeInput = screen.getByLabelText(/End Time/i);
+    fireEvent.change(endTimeInput, { target: { value: '12:00' } });
+
+    fireEvent.click(screen.getByRole('button', {name: 'Save Event'}));
+
+    const savedEvent = mockOnSave.mock.calls[0][0];
+    expect(savedEvent).not.toHaveProperty('id');
+  });
 }); 
