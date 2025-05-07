@@ -3,20 +3,6 @@ import {beforeAll, beforeEach, describe, expect, it, vi} from 'vitest';
 import EventModal from '../components/Events/EventModal';
 import {render} from './render';
 
-// vi.mock('../utils/dateUtils.ts', () => ({
-//   addOneHour: vi.fn((time) => {
-//     if (!time) return '';
-//     const [hours, minutes] = time.split(':').map(Number);
-//     const newHours = (hours + 1) % 24;
-//     return `${newHours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
-//   }),
-//   getTimeFromDate: vi.fn((date) => {
-//     const hours = date.getHours();
-//     const minutes = date.getMinutes();
-//     return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
-//   })
-// }));
-
 describe('EventModal Component', () => {
   const mockOnClose = vi.fn();
   const mockOnSave = vi.fn();
