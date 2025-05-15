@@ -1,11 +1,12 @@
 # State Management POC
 
-This project demonstrates different state management approaches in React using Redux and Zustand.
+This project demonstrates different state management approaches in React using Redux, Zustand, and Jotai.
 
 ## Project Structure
 
 - `redux-counter`: A counter application using Redux for state management
 - `zustand-counter`: A counter application using Zustand for state management
+- `jotai-counter`: A counter application using Jotai for state management
 
 ## Getting Started
 
@@ -14,7 +15,7 @@ This project demonstrates different state management approaches in React using R
 npm run install-all
 ```
 
-2. Start both applications:
+2. Start all applications:
 ```bash
 npm start
 ```
@@ -22,15 +23,16 @@ npm start
 This will start:
 - Redux Counter on http://localhost:3000
 - Zustand Counter on http://localhost:3001
+- Jotai Counter on http://localhost:3002
 
 ## Available Scripts
 
-- `npm start`: Starts both applications concurrently
+- `npm start`: Starts all applications concurrently
 - `npm run install-all`: Installs dependencies for all projects
 
-# State Management in React: Redux vs Zustand
+# State Management in React: Redux vs Zustand vs Jotai
 
-This repository explores two popular state management libraries for React: **Redux** and **Zustand**. Each has its strengths and ideal use cases depending on the complexity and scale of your application.
+This repository explores three popular state management libraries for React: **Redux**, **Zustand**, and **Jotai**. Each has its strengths and ideal use cases depending on the complexity and scale of your application.
 
 ---
 
@@ -81,9 +83,31 @@ Zustand is a minimalistic, fast, and scalable state-management library tailored 
 
 ---
 
+## Jotai
+
+Jotai is a primitive and flexible state management library for React, based on atomic state units (atoms).
+
+### 🔑 Core Concepts
+
+- **Atoms**: Smallest units of state, can be shared and composed.
+- **Hooks**: Use atoms directly in components with hooks.
+
+### ✅ Pros
+
+- Minimal and flexible.
+- No boilerplate.
+- Fine-grained reactivity.
+
+### ❌ Cons
+
+- Less structure for large apps.
+- Smaller ecosystem compared to Redux.
+
+---
+
 ## 📌 Summary
 
-| Feature         | Redux                                | Zustand                               |
-|----------------|--------------------------------------|----------------------------------------|
-| Boilerplate     | High                                 | Low                                     |
-| Ecosystem       | Large                                | Smaller
+| Feature         | Redux                                | Zustand                               | Jotai                                 |
+|----------------|--------------------------------------|----------------------------------------|---------------------------------------|
+| Boilerplate     | High                                 | Low                                    | Low                                   |
+| Ecosystem       | Large                                | Smaller                                | Smaller                               |

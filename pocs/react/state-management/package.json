@@ -4,11 +4,12 @@
   "private": true,
   "workspaces": [
     "redux-counter",
-    "zustand-counter"
+    "zustand-counter",
+    "jotai-counter"
   ],
   "scripts": {
-    "start": "concurrently \"cd redux-counter && PORT=3000 npm start\" \"cd zustand-counter && PORT=3001 npm start\"",
-    "install-all": "npm install && cd redux-counter && npm install && cd ../zustand-counter && npm install"
+    "start": "concurrently \"cd redux-counter && PORT=3000 npm start\" \"cd zustand-counter && PORT=3001 npm start\" \"cd jotai-counter && PORT=3002 npm start\"",
+    "install-all": "npm install && cd redux-counter && npm install && cd ../zustand-counter && npm install && cd ../jotai-counter && npm install"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"
