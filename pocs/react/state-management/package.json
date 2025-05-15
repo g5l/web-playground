@@ -1,0 +1,16 @@
+{
+  "name": "state-management-poc",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "redux-counter",
+    "zustand-counter"
+  ],
+  "scripts": {
+    "start": "concurrently \"cd redux-counter && PORT=3000 npm start\" \"cd zustand-counter && PORT=3001 npm start\"",
+    "install-all": "npm install && cd redux-counter && npm install && cd ../zustand-counter && npm install"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+} 

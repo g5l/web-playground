@@ -11,13 +11,3 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
-.animated-item {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  background-color: #646cff;
-  border-radius: 50%;
-  will-change: transform;
-  transition: transform 0.1s linear;
-}
