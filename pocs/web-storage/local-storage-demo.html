@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Storage Demo</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 20px auto; padding: 20px; }
+        .storage-card { border: 1px solid #ddd; padding: 15px; margin: 10px 0; border-radius: 4px; }
+        .storage-list { margin: 10px 0; padding: 10px; background: #f9f9f9; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <h1>Local Storage Demo</h1>
+    <div class="storage-card">
+        <h2>Store Data</h2>
+        <input type="text" id="key" placeholder="Key" style="margin-right: 10px;">
+        <input type="text" id="value" placeholder="Value" style="margin-right: 10px;">
+        <button onclick="storeData()">Store</button>
+    </div>
+
+    <div class="storage-card">
+        <h2>Retrieve Data</h2>
+        <input type="text" id="retrieveKey" placeholder="Key">
+        <button onclick="retrieveData()">Retrieve</button>
+        <div id="retrievedValue"></div>
+    </div>
+
+    <div class="storage-card">
+        <h2>All Stored Data</h2>
+        <div id="storedDataList" class="storage-list"></div>
+        <button onclick="clearAllData()">Clear All Data</button>
+    </div>
+
+    <script>
+    function storeData() {
+        const key = document.getElementById('key').value;
+        const value = document.getElementById('value').value;
+        localStorage.setItem(key, value);
+        updateStorageList();
+    }
+
+    function retrieveData() {
+        const key = document.getElementById('retrieveKey').value;
+        const value = localStorage.getItem(key);
+        document.getElementById('retrievedValue').textContent = 
+            value ? `Value: ${value}` : "Key not found";
+    }
+
+    function updateStorageList() {
+        const list = document.getElementById('storedDataList');
+        const entries = [];
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            const value = localStorage.getItem(key);
+            entries.push(`${key}: ${value}`);
+        }
+        list.innerHTML = entries.join('<br>') || 'No stored data';
+    }
+
+    function clearAllData() {
+        localStorage.clear();
+        updateStorageList();
+    }
+
+    // Update list on page load
+    updateStorageList();
+
+    // Listen for storage changes
+    window.addEventListener('storage', updateStorageList);
+    </script>
+</body>
+</html>
