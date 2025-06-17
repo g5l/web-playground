@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IndexedDB Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin: 15px 0;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #34495e;
+        }
+        input, button {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+        .error {
+            color: #e74c3c;
+        }
+        .success {
+            color: #2ecc71;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>IndexedDB Demo</h1>
+        
+        <div class="form-group">
+            <label for="key">Key:</label>
+            <input type="text" id="key" placeholder="Enter a key">
+        </div>
+        
+        <div class="form-group">
+            <label for="value">Value:</label>
+            <input type="text" id="value" placeholder="Enter a value">
+        </div>
+        
+        <div class="form-group">
+            <button onclick="saveData()">Save Data</button>
+            <button onclick="getData()">Get Data</button>
+            <button onclick="deleteData()">Delete Data</button>
+        </div>
+        
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        // Initialize IndexedDB
+        const DB_NAME = 'demoDB';
+        const DB_VERSION = 1;
+        const STORE_NAME = 'demoStore';
+        let db = null;
+
+        // Open database connection
+        const request = indexedDB.open(DB_NAME, DB_VERSION);
+
+        request.onerror = (event) => {
+            console.error('Database error:', event.target.error);
+        };
+
+        request.onupgradeneeded = (event) => {
+            db = event.target.result;
+            if (!db.objectStoreNames.contains(STORE_NAME)) {
+                db.createObjectStore(STORE_NAME, { keyPath: 'id', autoIncrement: true });
+            }
+        };
+
+        request.onsuccess = (event) => {
+            db = event.target.result;
+        };
+
+        function saveData() {
+            const key = document.getElementById('key').value;
+            const value = document.getElementById('value').value;
+            
+            if (!key || !value) {
+                showResult('Please fill in both key and value', 'error');
+                return;
+            }
+
+            const transaction = db.transaction([STORE_NAME], 'readwrite');
+            const store = transaction.objectStore(STORE_NAME);
+            
+            store.put({ key, value });
+            
+            transaction.oncomplete = () => {
+                showResult('Data saved successfully!', 'success');
+            };
+            
+            transaction.onerror = (event) => {
+                showResult('Error saving data: ' + event.target.error.message, 'error');
+            };
+        }
+
+        function getData() {
+            const key = document.getElementById('key').value;
+            
+            if (!key) {
+                showResult('Please enter a key to retrieve data', 'error');
+                return;
+            }
+
+            const transaction = db.transaction([STORE_NAME], 'readonly');
+            const store = transaction.objectStore(STORE_NAME);
+            
+            const request = store.index('key').get(key);
+            
+            request.onsuccess = (event) => {
+                const result = event.target.result;
+                if (result) {
+                    showResult(`Value: ${result.value}`, 'success');
+                } else {
+                    showResult('No data found for this key', 'error');
+                }
+            };
+            
+            request.onerror = (event) => {
+                showResult('Error retrieving data: ' + event.target.error.message, 'error');
+            };
+        }
+
+        function deleteData() {
+            const key = document.getElementById('key').value;
+            
+            if (!key) {
+                showResult('Please enter a key to delete data', 'error');
+                return;
+            }
+
+            const transaction = db.transaction([STORE_NAME], 'readwrite');
+            const store = transaction.objectStore(STORE_NAME);
+            
+            store.index('key').get(key).onsuccess = (event) => {
+                const result = event.target.result;
+                if (result) {
+                    store.delete(result.id);
+                    transaction.oncomplete = () => {
+                        showResult('Data deleted successfully!', 'success');
+                    };
+                } else {
+                    showResult('No data found to delete', 'error');
+                }
+            };
+        }
+
+        function showResult(message, type = 'info') {
+            const resultDiv = document.getElementById('result');
+            resultDiv.className = `result ${type}`;
+            resultDiv.textContent = message;
+        }
+    </script>
+</body>
+</html>

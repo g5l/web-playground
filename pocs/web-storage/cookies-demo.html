@@ -38,13 +38,17 @@
         const name = document.getElementById('cookieName').value;
         const value = document.getElementById('cookieValue').value;
         const days = document.getElementById('cookieDays').value;
-        
+
         const d = new Date();
         d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
         const expires = "expires=" + d.toUTCString();
-        
+
         document.cookie = name + "=" + value + ";" + expires + ";path=/";
-        updateCookiesList();
+        console.log({name, value, days, cookie: document.cookie});
+
+      document.cookie = "username=John Smith; expires=Thu, 18 Dec 2013 12:00:00 UTC;";
+      console.log({cookie: document.cookie});
+      updateCookiesList();
     }
 
     function getCookie() {
