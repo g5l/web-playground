@@ -28,6 +28,14 @@ This repository demonstrates and explains the differences between three main web
 - **Cross-Origin**: Limited to same origin
 - **Usage**: Temporary data storage, form data, shopping cart
 
+### 4. IndexedDB
+- **Storage Location**: Browser storage
+- **Capacity**: Typically 50-100MB or more, depending on browser
+- **Persistence**: Persists until explicitly deleted
+- **Security**: Accessible only through JavaScript
+- **Cross-Origin**: Limited to same origin
+- **Usage**: Complex data storage, offline applications, caching
+
 ## Key Differences
 
 | Feature | Cookies | Local Storage | Session Storage |
@@ -41,10 +49,11 @@ This repository demonstrates and explains the differences between three main web
 
 ## Example Files
 
-This repository includes three example files demonstrating each storage mechanism:
+This repository includes four example files demonstrating each storage mechanism:
 1. `cookies-demo.html` - Shows how to work with cookies
 2. `local-storage-demo.html` - Demonstrates local storage usage
 3. `session-storage-demo.html` - Shows session storage implementation
+4. `indexeddb-demo.html` - Demonstrates IndexedDB usage for complex data storage
 
 ## Security Considerations
 
