@@ -1,0 +1,20 @@
+{
+  "name": "webgl-presentation",
+  "version": "1.0.0",
+  "description": "Interactive WebGL presentation using Three.js",
+  "main": "index.html",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "three": "^0.158.0"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
+  },
+  "keywords": ["webgl", "threejs", "presentation", "interactive"],
+  "author": "",
+  "license": "MIT"
+} 
