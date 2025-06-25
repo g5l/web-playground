@@ -96,6 +96,8 @@ export class PresentationManager {
     }
 
     clearScene() {
+        console.log('Clearing scene...');
+        
         // Remove all objects
         this.objects.forEach(obj => {
             this.scene.remove(obj);
@@ -108,6 +110,8 @@ export class PresentationManager {
         // Reset camera
         this.camera.position.set(0, 0, 5);
         this.camera.lookAt(0, 0, 0);
+        
+        console.log('Scene cleared');
     }
 
     createParticleSystem(count, color, size = 0.1) {

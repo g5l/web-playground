@@ -93,22 +93,32 @@ class WebGLPresentation {
     showSlide(index) {
         if (index < 0 || index >= this.slides.length) return;
         
-        // Clean up current slide
-        if (this.slides[this.currentSlide]) {
-            this.slides[this.currentSlide].cleanup();
+        console.log(`Transitioning from slide ${this.currentSlide} to slide ${index}`);
+        
+        try {
+            // Clean up current slide
+            if (this.slides[this.currentSlide]) {
+                this.slides[this.currentSlide].cleanup();
+            }
+            
+            this.currentSlide = index;
+            
+            // Initialize new slide
+            this.slides[this.currentSlide].init();
+            
+            // Update UI
+            this.updateUI();
+            
+            console.log(`Now on slide ${this.currentSlide}: ${this.slides[this.currentSlide].title}`);
+        } catch (error) {
+            console.error('Error during slide transition:', error);
         }
-        
-        this.currentSlide = index;
-        
-        // Initialize new slide
-        this.slides[this.currentSlide].init();
-        
-        // Update UI
-        this.updateUI();
     }
 
     updateUI() {
         const slide = this.slides[this.currentSlide];
+        
+        console.log('Updating UI for slide:', slide.title);
         
         // Update title and description
         document.getElementById('slide-title').textContent = slide.title;
@@ -125,6 +135,8 @@ class WebGLPresentation {
         // Update button states
         document.getElementById('prev-btn').disabled = this.currentSlide === 0;
         document.getElementById('next-btn').disabled = this.currentSlide === this.slides.length - 1;
+        
+        console.log('UI updated');
     }
 
     nextSlide() {
@@ -147,6 +159,11 @@ class WebGLPresentation {
 
     animate() {
         requestAnimationFrame(() => this.animate());
+        
+        // Update presentation manager (controls and animations)
+        if (this.presentationManager) {
+            this.presentationManager.update();
+        }
         
         // Update current slide
         if (this.slides[this.currentSlide]) {

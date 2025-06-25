@@ -5,7 +5,7 @@ export class Slide1 {
         this.presentationManager = presentationManager;
         this.title = "What is WebGL?";
         this.description = "WebGL (Web Graphics Library) is a JavaScript API that enables rendering high-performance 2D and 3D graphics directly in the browser, without the need for plugins.";
-        // this.interactiveHint = "Drag to rotate the GPU model • Scroll to zoom";
+        this.interactiveHint = "Drag to rotate the GPU model • Scroll to zoom";
         
         this.gpuComponents = [];
         this.dataParticles = [];
