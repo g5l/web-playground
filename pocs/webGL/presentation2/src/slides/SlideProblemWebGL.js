@@ -3,7 +3,7 @@ import * as THREE from 'three';
 export class SlideProblemWebGL {
     constructor(presentationManager) {
         this.presentationManager = presentationManager;
-        this.title = "What Problem Does WebGL Solve?";
+        this.title = "The problem it solves";
         this.description = `
             <div>
                 <div>Before WebGL, displaying rich graphics—especially 3D—in the browser was extremely limited.</div>
