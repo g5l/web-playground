@@ -3,10 +3,21 @@ import * as THREE from 'three';
 export class Slide1 {
     constructor(presentationManager) {
         this.presentationManager = presentationManager;
-        this.title = "What is WebGL?";
-        this.description = "WebGL (Web Graphics Library) is a JavaScript API that enables rendering high-performance 2D and 3D graphics directly in the browser, without the need for plugins.";
-        this.interactiveHint = "Drag to rotate the GPU model • Scroll to zoom";
-        
+        this.title = "The problem it solves";
+        this.description = `
+            <div>
+                <div>WebGL (Web Graphics Library) is a JavaScript API that enables rendering high-performance 2D and 3D graphics directly in the browser, without the need for plugins.</div>
+                <br/><br/>
+                <ul>
+                    <li>Runs on the GPU through the canvas element</li>
+                    <li>Use GLSL as a shader programming language</li>
+                    <li>Based on OpenGL ES 3.0</li>
+                    <li>Supported in all modern browsers</li>
+                    <li>No plugins required</li>
+                    <li>Enables real-time interactive visualizations</li>
+                </ul>
+            </div>
+        `;
         this.gpuComponents = [];
         this.dataParticles = [];
         this.startTime = Date.now();

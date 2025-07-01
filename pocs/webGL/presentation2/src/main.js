@@ -122,7 +122,7 @@ class WebGLPresentation {
         
         // Update title and description
         document.getElementById('slide-title').textContent = slide.title;
-        document.getElementById('slide-description').textContent = slide.description;
+        document.getElementById('slide-description').innerHTML = slide.description;
         document.getElementById('slide-number').textContent = `${this.currentSlide + 1} / ${this.slides.length}`;
         document.getElementById('interactive-hint').textContent = slide.interactiveHint;
         
