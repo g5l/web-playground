@@ -1,6 +1,62 @@
-# WebGL Presentation - Interactive Three.js Slides
+# WebGL Presentation
 
-An interactive presentation about WebGL built with Three.js, featuring animated 3D visualizations and interactive elements for each slide.
+A visually interactive WebGL/Three.js presentation explaining what WebGL solves, how it works, the role of shaders, and more—directly in your browser.
+
+**Live Demo:** [https://web-playground-gamma.vercel.app/](https://web-playground-gamma.vercel.app/)
+
+---
+
+## 🚀 Features & Slide Topics
+
+- **Slide 1:** The problem WebGL solves (limitations before WebGL, plugin issues, static graphics)
+- **Slide 2:** What Problem Does WebGL Solve? (transition from plugins/static to real-time, interactive 3D)
+- **Slide 3:** How Does It Work? (WebGL pipeline, shaders, GPU, real-time rendering)
+- **Slide 4:** Understanding Shaders (vertex/fragment shaders, programmable pipeline, real-time effects)
+- **Slide 5:** Advantages and Limitations (performance, accessibility, learning curve)
+- **Slide 6:** Thank You! (animated closing slide)
+
+Each slide features interactive or animated 3D elements to illustrate the concepts.
+
+---
+
+## 🖥️ Usage
+
+- **Navigate:** Use the arrow keys or on-screen buttons to move between slides.
+- **Interact:** Some slides allow you to drag/zoom or watch real-time 3D effects.
+
+---
+
+## 🛠️ Local Development
+
+1. Clone the repo:
+   ```sh
+   git clone <your-repo-url>
+   cd <project-folder>
+   ```
+2. Install dependencies (if any):
+   ```sh
+   npm install
+   ```
+3. Start a local server (e.g. with [serve](https://www.npmjs.com/package/serve) or Python):
+   ```sh
+   npx serve .
+   # or
+   python3 -m http.server 8080
+   ```
+4. Open your browser to `http://localhost:8080` (or the port shown).
+
+---
+
+## 🌐 Online Demo
+
+Access the latest version here:  
+👉 **[https://web-playground-gamma.vercel.app/](https://web-playground-gamma.vercel.app/)**
+
+---
+
+## ✨ Credits
+- Built with [Three.js](https://threejs.org/)
+- Deployed via [Vercel](https://vercel.com/)
 
 ## Features
 
