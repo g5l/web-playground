@@ -5,6 +5,7 @@ import { Slide2 } from './slides/Slide2.js';
 import { Slide3 } from './slides/Slide3.js';
 import { Slide4 } from './slides/Slide4.js';
 import { SlideProblemWebGL } from './slides/SlideProblemWebGL.js';
+import { Slide5 } from './slides/Slide5.js';
 
 class WebGLPresentation {
     constructor() {
@@ -43,7 +44,8 @@ class WebGLPresentation {
             new SlideProblemWebGL(this.presentationManager),
             new Slide2(this.presentationManager),
             new Slide3(this.presentationManager),
-            new Slide4(this.presentationManager)
+            new Slide4(this.presentationManager),
+            new Slide5(this.presentationManager)
         ];
 
         // Set up event listeners
@@ -126,7 +128,6 @@ class WebGLPresentation {
         document.getElementById('slide-title').textContent = slide.title;
         document.getElementById('slide-description').innerHTML = slide.description;
         document.getElementById('slide-number').textContent = `${this.currentSlide + 1} / ${this.slides.length}`;
-        document.getElementById('interactive-hint').textContent = slide.interactiveHint;
         
         // Update indicators
         const dots = document.querySelectorAll('.indicator-dot');

@@ -4,7 +4,17 @@ export class Slide4 {
     constructor(presentationManager) {
         this.presentationManager = presentationManager;
         this.title = "Advantages and Limitations";
-        this.description = "✅ Performance: Hardware acceleration • Accessibility: Works in any browser • ⚠️ Learning curve: Requires shader knowledge • Resource consumption: Battery/processing intensive";
+        this.description = `
+            <div>
+                <br/>
+                <ul>
+                    <li>Performance: Hardware acceleration/li>
+                    <li>Accessibility: Works in any browser</li>
+                    <li>Learning curve: Requires shader knowledge</li>
+                    <li>Resource consumption: Battery/processing intensive</li>
+                </ul>
+            </div>
+        `;
         
         this.optimizedScene = null;
         this.complexScene = null;
