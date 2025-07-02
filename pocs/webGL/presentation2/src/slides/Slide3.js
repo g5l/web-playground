@@ -5,7 +5,6 @@ export class Slide3 {
         this.presentationManager = presentationManager;
         this.title = "Practical Use Cases";
         this.description = "WebGL powers web games, data visualization, education, e-commerce, and digital art. Examples: Google Earth, Figma, interactive 3D maps.";
-        this.interactiveHint = "Drag to rotate carousel • Hover over platforms • Watch different use cases";
         
         this.carousel = null;
         this.platforms = [];

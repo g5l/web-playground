@@ -5,7 +5,6 @@ export class Slide4 {
         this.presentationManager = presentationManager;
         this.title = "Advantages and Limitations";
         this.description = "✅ Performance: Hardware acceleration • Accessibility: Works in any browser • ⚠️ Learning curve: Requires shader knowledge • Resource consumption: Battery/processing intensive";
-        this.interactiveHint = "Drag to rotate • Scroll to zoom • Watch performance comparison";
         
         this.optimizedScene = null;
         this.complexScene = null;

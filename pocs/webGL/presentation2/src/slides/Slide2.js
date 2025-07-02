@@ -4,8 +4,19 @@ export class Slide2 {
     constructor(presentationManager) {
         this.presentationManager = presentationManager;
         this.title = "How Does It Work?";
-        this.description = "Rendering Pipeline: Vertex Shader → Fragment Shader → GPU → Pixels. GLSL for shaders, JavaScript for logic, Buffers for data.";
-        this.interactiveHint = "Drag to rotate • Scroll to zoom • Watch the shader pipeline in action";
+        this.description = `
+            <div>
+                <div>Starts with you, the developer. You write JavaScript to define geometry, load buffers, and connect them to GLSL shaders—small programs that run on the GPU.</div>
+                <br/><br/>
+                <ul>
+                    <li>WebGL API Layer</li>
+                    <li>Native Graphics API</li>
+                    <li>GPU Driver</li>
+                    <li>GPU Hardware</li>
+                    <li>Display Layer</li>
+                </ul>
+            </div>
+        `;
         
         this.mesh = null;
         this.shaderMaterial = null;
