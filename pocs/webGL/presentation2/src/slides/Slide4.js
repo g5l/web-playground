@@ -8,10 +8,11 @@ export class Slide4 {
             <div>
                 <br/>
                 <ul>
-                    <li>Performance: Hardware acceleration/li>
-                    <li>Accessibility: Works in any browser</li>
-                    <li>Learning curve: Requires shader knowledge</li>
-                    <li>Resource consumption: Battery/processing intensive</li>
+                    <li>Hardware acceleration(Performance)</li>
+                    <li>Works in any browser</li>
+                    <br/>
+                    <li>Learning curve</li>
+                    <li>Resource consumption</li>
                 </ul>
             </div>
         `;
