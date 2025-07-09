@@ -9,12 +9,10 @@ export function createElement(
   props: Record<string, any> | null,
   ...children: any[]
 ): ReactElement {
-  // Process children to handle different types
   const processedChildren = children
-    .flat() // Flatten nested arrays
-    .filter(child => child !== null && child !== undefined) // Remove null/undefined
+    .flat()
+    .filter(child => child !== null && child !== undefined)
     .map(child => {
-      // Convert primitive values to text elements
       if (typeof child === 'string' || typeof child === 'number') {
         return createTextElement(child);
       }
@@ -24,7 +22,7 @@ export function createElement(
   return {
     type,
     props: {
-      ...(props || {}), // Spread existing props
+      ...(props || {}),
       children: processedChildren
     }
   };
