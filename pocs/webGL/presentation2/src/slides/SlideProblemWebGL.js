@@ -10,7 +10,7 @@ export class SlideProblemWebGL {
                 <br/>
                 <ul>
                     <li>Need to use <b>plugins</b> like <b>Flash</b> or <b>Java Applets</b>, which:
-                        <ul>
+                        <ul class="sublist">
                             <li>Were insecure and platform-dependent</li>
                             <li>Didn't run well on mobile</li>
                             <li>Were not supported natively by browsers</li>

@@ -12,7 +12,7 @@ export class Slide3 {
                     <li>GPU-Accelerated</li>
                     <li>Programmable Pipeline</li>
                     <li>Two Main Types:
-                        <ul>
+                        <ul class="sublist">
                             <li>Vertex Shaders</li>
                             <li>Fragment Shaders</li>
                         </ul>

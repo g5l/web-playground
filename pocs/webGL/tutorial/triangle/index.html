@@ -1,9 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebGL Triangle</title>
+    <link rel="stylesheet" href="style.css">
+</head>
 <body>
+<div class="info">
+    <h1>WebGL Triangle Example</h1>
+    <p>This demonstrates the basics of WebGL rendering with a simple triangle. The triangle uses vertex and fragment shaders to create a colorful gradient effect.</p>
+</div>
 
-<canvas id="glCanvas" width="800" height="600"></canvas>
-<script src="main.js"></script>
+<canvas id="webgl-canvas" width="600" height="400"></canvas>
 
+<div class="controls">
+    <button onclick="changeColors()">Change Colors</button>
+    <button onclick="rotateTriangle()">Rotate</button>
+    <button onclick="resetTriangle()">Reset</button>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>

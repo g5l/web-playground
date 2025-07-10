@@ -6,9 +6,8 @@ export class Slide2 {
         this.title = "How Does It Work?";
         this.description = `
             <div>
-                <div>Starts with you, the developer. You write JavaScript to define geometry, load buffers, and connect them to GLSL shaders—small programs that run on the GPU.</div>
-                <br/><br/>
                 <ul>
+                    <li>Application Layer</li>
                     <li>WebGL API Layer</li>
                     <li>Native Graphics API</li>
                     <li>GPU Driver</li>
