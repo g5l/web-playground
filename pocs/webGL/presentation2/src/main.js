@@ -6,6 +6,7 @@ import { Slide3 } from './slides/Slide3.js';
 import { Slide4 } from './slides/Slide4.js';
 import { SlideProblemWebGL } from './slides/SlideProblemWebGL.js';
 import { Slide5 } from './slides/Slide5.js';
+import { SlideCodeDemo } from './slides/SlideCodeDemo.js';
 
 class WebGLPresentation {
     constructor() {
@@ -44,6 +45,7 @@ class WebGLPresentation {
             new SlideProblemWebGL(this.presentationManager),
             new Slide2(this.presentationManager),
             new Slide3(this.presentationManager),
+            new SlideCodeDemo(this.presentationManager),
             new Slide4(this.presentationManager),
             new Slide5(this.presentationManager)
         ];
