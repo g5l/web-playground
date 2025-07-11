@@ -9,8 +9,6 @@ export class Slide3 {
                 <div>Shaders are small programs that run on the (GPU), allowing developers to control how graphics are rendered. They are fundamental to modern 3D graphics, enabling complex visual effects and realistic rendering.</div>
                 <br/>
                 <ul>
-                    <li>GPU-Accelerated</li>
-                    <li>Programmable Pipeline</li>
                     <li>Two Main Types:
                         <ul class="sublist">
                             <li>Vertex Shaders</li>

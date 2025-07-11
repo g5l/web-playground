@@ -22,7 +22,7 @@ out vec4 fragColor; // Variável de saída que define a cor final do pixel
 
 void main()
 {
-    fragColor = vec4(1.0, 0.0, 0.0, 1.0); // Define a cor como vermelho sólido (R=1.0, G=0.0, B=0.0, A=1.0)
+    fragColor = vec4(1.0, 0.0, 0.0, .5); // Define a cor como vermelho sólido (R=1.0, G=0.0, B=0.0, A=1.0)
 }`;
 
 const canvas = document.querySelector('canvas'); // pega o evemento do dom
@@ -30,9 +30,9 @@ const gl = canvas.getContext('webgl2'); // cria um context webgl2
 const program = gl.createProgram(); // cria um programa
 
 const vertexShader = gl.createShader(gl.VERTEX_SHADER); // cria um objeto vertex shader
-gl.shaderSource(vertexShader, vertexShaderSource); // atribui o codigo fonte ao shader
-gl.compileShader(vertexShader); // combila o shader na GPU
-gl.attachShader(program, vertexShader); // Anexa o shader ao programa
+gl.shaderSource(vertexShader, vertexShaderSource); // atribui o codigo fonte do shader ao objeto
+gl.compileShader(vertexShader); // combila o shader using the CPU
+gl.attachShader(program, vertexShader); // Anexa o shader compilado ao programa
 
 const fragmentShader = gl.createShader(gl.FRAGMENT_SHADER); 
 gl.shaderSource(fragmentShader, fragmentShaderSource);
@@ -42,10 +42,11 @@ gl.attachShader(program, fragmentShader);
 gl.linkProgram(program);
 gl.useProgram(program);
 
+// get the variables from the memory
 const uPositionLoc = gl.getUniformLocation(program, 'uPosition');
 const uPointSizeLoc = gl.getUniformLocation(program, 'uPointSize');
 
-gl.uniform1f(uPointSizeLoc, 100);
-gl.uniform2f(uPositionLoc, 0, -0.2);
+gl.uniform1f(uPointSizeLoc, 100); // Define tamanho do ponto: 100 pixels
+gl.uniform2f(uPositionLoc, 0, 0); // centro horizontal, centro vertical
 
-gl.drawArrays(gl.POINTS, 0, 1);
+gl.drawArrays(gl.POINTS, 0, 1); // Here use the GPU

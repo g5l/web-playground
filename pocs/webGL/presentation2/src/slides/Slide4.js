@@ -9,7 +9,7 @@ export class Slide4 {
                 <br/>
                 <ul>
                     <li>Hardware acceleration(Performance)</li>
-                    <li>Works in any browser</li>
+                    <li>Cross-browser compatibility</li>
                     <br/>
                     <li>Learning curve</li>
                     <li>Resource consumption</li>

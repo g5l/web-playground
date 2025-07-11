@@ -19,7 +19,7 @@ export class SlideProblemWebGL {
                 </ul>
                 <br/><br/>
                 <ul>
-                    <li>Real-time <b>3D graphics</b> and <b>games</b></li>
+                    <li>Real-time <b>3D graphics</b>, <b>games</b></li>
                     <li>Interactive <b>data visualizations</b></li>
                     <li>Cross-platform (desktop & mobile)</li>
                     <li>Pixel-level control</li>

@@ -11,8 +11,6 @@ export class Slide1 {
                 <ul>
                     <li>Runs on the GPU through the canvas element</li>
                     <li>Use GLSL as a shader programming language</li>
-                    <li>Based on OpenGL ES 3.0</li>
-                    <li>Supported in all modern browsers</li>
                     <li>No plugins required</li>
                     <li>Enables real-time interactive visualizations</li>
                 </ul>
