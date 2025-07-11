@@ -37,3 +37,13 @@ function createTextElement(text: string | number): ReactElement {
     }
   };
 }
+
+// Example: create a VNode for <div>Hello World</div>
+import { VNodeImpl } from './vdom';
+import { Props } from './types';
+
+export function createHelloWorldVNode(): VNodeImpl {
+  return new VNodeImpl('div', { children: [] } as Props, undefined, [
+    new VNodeImpl('TEXT_ELEMENT', { nodeValue: 'Hello World', children: [] } as Props)
+  ]);
+}

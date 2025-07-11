@@ -25,20 +25,21 @@ export interface ComponentType<P = {}> {
 export interface VNode {
   type: string | ComponentType<any>;
   props: Props;
-  key?: ReactKey;
-  children: VNode[];
-  dom?: HTMLElement | Text;
+  key?: ReactKey | undefined;
+  children?: VNode[];
+  dom?: HTMLElement | Text | undefined;
+  parent?: VNode | undefined;
 }
 
 export interface Fiber {
   type: string | ComponentType<any>;
   props: Props;
-  key?: ReactKey;
-  dom?: HTMLElement | Text;
-  parent?: Fiber;
-  child?: Fiber;
-  sibling?: Fiber;
-  alternate?: Fiber;
+  key?: ReactKey | undefined;
+  dom?: HTMLElement | Text | undefined;
+  parent?: Fiber | undefined;
+  child?: Fiber | undefined;
+  sibling?: Fiber | undefined;
+  alternate?: Fiber | undefined;
   effectTag?: 'PLACEMENT' | 'UPDATE' | 'DELETION';
   hooks?: Hook[];
   hookIndex?: number;
@@ -55,5 +56,5 @@ export interface UpdateQueue {
 
 export interface Update {
   action: any;
-  next: Update | null;
+  next?: Update | null | undefined;
 }

@@ -13,21 +13,21 @@ export type VNodeType = typeof VNODE_TYPES[keyof typeof VNODE_TYPES];
 export class VNodeImpl implements VNode {
   type: string | ComponentType<any>;
   props: Props;
-  key?: ReactKey;
+  key?: ReactKey | undefined;
   children: VNode[];
-  dom?: HTMLElement | Text;
-  parent?: VNode;
+  dom?: HTMLElement | Text | undefined;
+  parent?: VNode | undefined;
 
   constructor(
     type: string | ComponentType<any>,
     props: Props = {},
-    key?: ReactKey,
-    children: VNode[] = []
+    key?: ReactKey | undefined,
+    children?: VNode[]
   ) {
     this.type = type;
     this.props = props;
     this.key = key;
-    this.children = children;
+    this.children = children ?? [];
     this.dom = undefined;
     this.parent = undefined;
   }
@@ -47,6 +47,8 @@ export class VNodeImpl implements VNode {
     return typeof this.type === 'function';
   }
 }
+
+export type { VNode };
 
 // Factory function to create VNode from ReactElement
 export function createVNode(
@@ -128,7 +130,7 @@ export function getAllChildren(vnode: VNode): VNode[] {
   if (!vnode || !vnode.children) return [];
 
   const result: VNode[] = [];
-  for (const child of vnode.children) {
+  for (const child of vnode.children ?? []) {
     result.push(child);
     result.push(...getAllChildren(child));
   }
@@ -181,11 +183,11 @@ export function cloneVNode(
     vnode.type,
     mergedProps,
     vnode.key,
-    vnode.children // Shallow copy of children
+    vnode.children ?? []
   );
 
-  cloned.parent = vnode.parent;
-  cloned.dom = vnode.dom;
+  if (vnode.parent) cloned.parent = vnode.parent;
+  if (vnode.dom) cloned.dom = vnode.dom;
 
   return cloned;
 }
@@ -196,7 +198,7 @@ export function cloneVNode(
 export function deepCloneVNode(vnode: VNode): VNode | null {
   if (!vnode) return null;
 
-  const clonedChildren = vnode.children.map(child => deepCloneVNode(child)).filter(Boolean) as VNode[];
+  const clonedChildren = (vnode.children ?? []).map(child => deepCloneVNode(child)).filter(Boolean) as VNode[];
 
   const cloned = new VNodeImpl(
     vnode.type,
@@ -204,14 +206,8 @@ export function deepCloneVNode(vnode: VNode): VNode | null {
     vnode.key,
     clonedChildren
   );
-
-  // Update parent references in cloned children
-  clonedChildren.forEach(child => {
-    if (child) {
-      child.parent = cloned;
-    }
-  });
-
+  if (vnode.parent) cloned.parent = vnode.parent;
+  if (vnode.dom) cloned.dom = vnode.dom;
   return cloned;
 }
 
@@ -220,37 +216,27 @@ export function deepCloneVNode(vnode: VNode): VNode | null {
  */
 export function vnodeToString(vnode: VNode, indent: number = 0): string {
   if (!vnode) return '';
-
+  const impl = vnode as VNodeImpl;
   const spaces = ' '.repeat(indent);
-
-  if (vnode.isTextElement()) {
-    return `${spaces}"${vnode.props.nodeValue}"`;
+  if (impl.isTextElement()) {
+    return `${spaces}"${impl.props.nodeValue}"`;
   }
-
-  if (vnode.isComponent()) {
-    const componentName = typeof vnode.type === 'function' ? vnode.type.name || 'Component' : 'Component';
-    return `${spaces}<${componentName} {...props} />`;
+  if (impl.isComponent()) {
+    const componentName = typeof impl.type === 'function' ? impl.type.name || 'Component' : 'Component';
+    return `${spaces}<${componentName} />`;
   }
-
-  if (vnode.isElement()) {
-    const propsEntries = Object.entries(vnode.props)
+  if (impl.isElement()) {
+    const propsEntries = Object.entries(impl.props)
       .filter(([key]) => key !== 'children')
-      .map(([key, value]) => `${key}="${value}"`);
-
-    const propsStr = propsEntries.length > 0 ? ' ' + propsEntries.join(' ') : '';
-
-    if (!vnode.children || vnode.children.length === 0) {
-      return `${spaces}<${vnode.type}${propsStr} />`;
+      .map(([key, value]) => `${key}="${value}"`)
+      .join(' ');
+    if (!impl.children || impl.children.length === 0) {
+      return `${spaces}<${impl.type}${propsEntries ? ' ' + propsEntries : ''} />`;
     }
-
-    const childrenStr = vnode.children
-      .map(child => vnodeToString(child, indent + 2))
-      .join('\n');
-
-    return `${spaces}<${vnode.type}${propsStr}>\n${childrenStr}\n${spaces}</${vnode.type}>`;
+    const childrenStr = impl.children.map(child => vnodeToString(child, indent + 2)).join('\n');
+    return `${spaces}<${impl.type}${propsEntries ? ' ' + propsEntries : ''}>\n${childrenStr}\n${spaces}</${impl.type}>`;
   }
-
-  return `${spaces}[Unknown VNode Type]`;
+  return '';
 }
 
 /**
@@ -327,7 +313,7 @@ export function createElementVNode(
  * Check if a VNode has children
  */
 export function hasChildren(vnode: VNode): boolean {
-  return vnode.children && vnode.children.length > 0;
+  return Boolean(vnode.children && vnode.children.length > 0);
 }
 
 /**
@@ -350,31 +336,24 @@ export function getLastChild(vnode: VNode): VNode | null {
  * Get siblings of a VNode
  */
 export function getSiblings(vnode: VNode): VNode[] {
-  if (!vnode.parent) return [];
-
-  return vnode.parent.children.filter(child => child !== vnode);
+  if (!vnode.parent || !vnode.parent.children) return [];
+  return (vnode.parent.children ?? []).filter(child => child !== vnode);
 }
 
 /**
  * Get the next sibling of a VNode
  */
 export function getNextSibling(vnode: VNode): VNode | null {
-  if (!vnode.parent) return null;
-
-  const siblings = vnode.parent.children;
+  const siblings = getSiblings(vnode) ?? [];
   const index = siblings.indexOf(vnode);
-
-  return index !== -1 && index < siblings.length - 1 ? siblings[index + 1] : null;
+  return index >= 0 && index < siblings.length - 1 ? siblings[index + 1] : null;
 }
 
 /**
  * Get the previous sibling of a VNode
  */
 export function getPreviousSibling(vnode: VNode): VNode | null {
-  if (!vnode.parent) return null;
-
-  const siblings = vnode.parent.children;
+  const siblings = getSiblings(vnode) ?? [];
   const index = siblings.indexOf(vnode);
-
   return index > 0 ? siblings[index - 1] : null;
 }
