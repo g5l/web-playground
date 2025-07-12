@@ -43,7 +43,7 @@ class WebGLPresentation {
         this.slides = [
             new Slide1(this.presentationManager),
             new SlideProblemWebGL(this.presentationManager),
-            new Slide2(this.presentationManager),
+            // new Slide2(this.presentationManager),
             new Slide3(this.presentationManager),
             new SlideCodeDemo(this.presentationManager),
             new Slide4(this.presentationManager),

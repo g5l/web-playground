@@ -3,14 +3,19 @@ import * as THREE from 'three';
 export class Slide4 {
     constructor(presentationManager) {
         this.presentationManager = presentationManager;
-        this.title = "Advantages and Limitations";
+        this.title = "";
         this.description = `
             <div>
-                <br/>
+                <h1>Advantages</h1>
                 <ul>
                     <li>Hardware acceleration(Performance)</li>
                     <li>Cross-browser compatibility</li>
                     <br/>
+                    
+                </ul>
+                <br/>
+                <h1>Limitations</h1>
+                <ul>
                     <li>Learning curve</li>
                     <li>Resource consumption</li>
                 </ul>
