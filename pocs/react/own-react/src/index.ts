@@ -1,9 +1,11 @@
-import { render } from './render';
-import { createHelloWorldVNode } from './createElement';
+import ReactDOM from 'react-dom';
+import Didact from './vibe';
 
-const root = document.getElementById('root');
-if (root) {
-  render(createHelloWorldVNode(), root);
-} else {
-  throw new Error('Root container not found');
-} 
+const element = Didact.createElement(
+  "div",
+  { id: "foo" },
+  Didact.createElement("a", null, "bar"),
+  Didact.createElement("b")
+)
+const container = document.getElementById("root")
+ReactDOM.render(element, container)
