@@ -1,11 +1,6 @@
 import ReactDOM from 'react-dom';
-import Didact from './vibe';
+import Vibe from './vibe';
 
-const element = Didact.createElement(
-  "div",
-  { id: "foo" },
-  Didact.createElement("a", null, "bar"),
-  Didact.createElement("b")
-)
+const element = Vibe.createElement('div', { id: 'root' }, 'Hello World');
 const container = document.getElementById("root")
 ReactDOM.render(element, container)
