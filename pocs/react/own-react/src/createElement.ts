@@ -9,31 +9,11 @@ export function createElement(
   props: Record<string, any> | null,
   ...children: any[]
 ): ReactElement {
-  const processedChildren = children
-    .flat()
-    .filter(child => child !== null && child !== undefined)
-    .map(child => {
-      if (typeof child === 'string' || typeof child === 'number') {
-        return createTextElement(child);
-      }
-      return child;
-    });
-
   return {
     type,
     props: {
       ...(props || {}),
-      children: processedChildren
-    }
-  };
-}
-
-function createTextElement(text: string | number): ReactElement {
-  return {
-    type: 'TEXT_ELEMENT',
-    props: {
-      nodeValue: text.toString(),
-      children: []
+      children: children.flat()
     }
   };
 }
