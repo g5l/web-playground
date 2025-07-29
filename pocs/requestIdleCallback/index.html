@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>requestIdleCallback POC</title>
+    <style>
+      body { font-family: sans-serif; padding: 20px; }
+      #log { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Hello</h1>
+    <p>
+        This page uses <code>requestIdleCallback</code> to do background work.
+    </p>
+    <div id="log"></div>
+
+    <script>
+      const logEl = document.getElementById('log');
+
+      function log(message) {
+        const p = document.createElement('p');
+        p.textContent = message;
+        logEl.appendChild(p);
+      }
+
+      // Fallback for browsers that don't support requestIdleCallback
+      window.requestIdleCallback = window.requestIdleCallback || function (cb) {
+        return setTimeout(() => cb({ timeRemaining: () => 0, didTimeout: true }), 1);
+      };
+
+      // Simulate a background task
+      function doHeavyWork(deadline) {
+        console.log({
+          deadline
+        })
+        log('Started background task...');
+        let count = 0;
+        while ((deadline.timeRemaining() > 0 || deadline.didTimeout) && count < 1_000_000) {
+          count++;
+        }
+        log(`Background task done! Counted to ${count}`);
+      }
+
+      requestIdleCallback(doHeavyWork);
+    </script>
+</body>
+</html>
