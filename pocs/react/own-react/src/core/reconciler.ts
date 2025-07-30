@@ -1,3 +1,9 @@
+if (typeof globalThis.requestIdleCallback === 'undefined') {
+  globalThis.requestIdleCallback = function (cb: (deadline: { timeRemaining: () => number; didTimeout: boolean }) => void): number {
+    return setTimeout(() => cb({ timeRemaining: () => 50, didTimeout: false }), 1) as unknown as number;
+  };
+}
+
 import { createDom, updateDom, commitDeletion } from './dom';
 import { setWipFiber } from './hooks';
 import { Fiber } from '../types/index';
@@ -94,7 +100,12 @@ function updateHostComponent(fiber: Fiber): void {
   if (!fiber.dom) {
     fiber.dom = createDom(fiber);
   }
-  reconcileChildren(fiber, fiber.props.children);
+  const children = Array.isArray(fiber.props.children)
+    ? fiber.props.children
+    : fiber.props.children != null
+      ? [fiber.props.children]
+      : [];
+  reconcileChildren(fiber, children);
 }
 
 function reconcileChildren(wipFiber: Fiber, elements: any[]): void {
@@ -126,9 +137,9 @@ function reconcileChildren(wipFiber: Fiber, elements: any[]): void {
       newFiber = {
         type: element.type,
         props: element.props,
-        dom: null,
+        dom: undefined,
         parent: wipFiber,
-        alternate: null,
+        alternate: undefined,
         effectTag: "PLACEMENT",
       } as Fiber;
     }

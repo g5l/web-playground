@@ -21,7 +21,7 @@ export function updateDom(
   const isEvent = (key: string) => key.startsWith("on")
   const isProperty = (key: string) => key !== "children" && !isEvent(key)
   const isNew = (prev: Record<string, any>, next: Record<string, any>) => (key: string) => prev[key] !== next[key]
-  const isGone = (prev: Record<string, any>, next: Record<string, any>) => (key: string) => !(key in next)
+  const isGone = (next: Record<string, any>) => (key: string) => !(key in next)
 
   Object.keys(prevProps)
     .filter(isEvent)
@@ -33,7 +33,7 @@ export function updateDom(
 
   Object.keys(prevProps)
     .filter(isProperty)
-    .filter(isGone(prevProps, nextProps))
+    .filter(isGone(nextProps))
     .forEach(name => {
       (dom as any)[name] = ""
     })
