@@ -21,7 +21,6 @@ export function useState<T = any>(initial: T): [T, (action: (prev: T) => T) => v
 
   const setState = (action: (prev: T) => T) => {
     hook.queue.push(action);
-    // wipRoot, currentRoot, nextUnitOfWork, deletions must be handled in reconciler
   };
 
   (wipFiber as Fiber).hooks.push(hook);
