@@ -1,70 +1,68 @@
 # Own React
 
-A React clone built with TypeScript for learning purposes.
+A React-like library built with TypeScript for learning and experimentation.
+
+## Features
+- JSX element creation
+- Fiber-based reconciliation
+- Custom hooks (useState)
+- Modular, senior-level architecture
 
 ## Getting Started
 
 ### Prerequisites
-
 - Node.js (v14 or higher)
 - npm
 
 ### Installation
-
 ```bash
-# Install dependencies
 npm install
 ```
 
 ### Development
-
 ```bash
-# Build the project and start development server
 npm run dev
 ```
 
-This will:
-1. Build the TypeScript files with esbuild in watch mode
-2. Start a development server at http://localhost:3000
-
-### Other Commands
-
+### Build
 ```bash
-# Build the project once
 npm run build
+```
 
-# Build for production (minified)
-npm run build:prod
-
-# Run tests
+### Run Tests
+```bash
 npm test
+```
 
-# Run TypeScript type checking
-npm run type-check
+## Usage Example
+See `src/demo/index.js` for a usage example:
+
+```jsx
+import Vibe from '../vibe';
+
+/** @jsx Vibe.createElement */
+function Counter() {
+  const [state, setState] = Vibe.useState(1);
+  return (
+    <h1 onClick={() => setState(c => c + 1)}>
+      Count: {state}
+    </h1>
+  );
+}
+const element = <Counter />;
+const container = document.getElementById('root');
+Vibe.render(element, container);
 ```
 
 ## Project Structure
-
-- `src/` - Source files
-  - `index.ts` - Entry point
-  - `vibe.ts` - Main React-like implementation
-  - `createElement.ts` - JSX element creation
-  - `vdom.ts` - Virtual DOM implementation
-  - `render.ts` - Rendering logic
-  - `types.ts` - TypeScript type definitions
-- `dist/` - Compiled output
+- `src/`
+  - `api/` - Public API (render, useState, createElement)
+  - `core/` - Fiber reconciler, DOM operations, hooks
+  - `jsx/` - JSX element creation
+  - `types/` - TypeScript type definitions
+  - `demo/` - Example/demo entry point
+  - `vibe.ts` - Main export, aggregates public API
 - `tests/` - Test files
 
-## Troubleshooting
-
-If you encounter issues running the project:
-
-1. Make sure all dependencies are installed: `npm install`
-2. Check if the build was successful: `npm run build`
-3. Verify that the `dist/index.js` file exists
-4. Open browser console for any JavaScript errors
-5. Try clearing browser cache or using incognito mode
-
 ## License
-
 MIT
