@@ -57,4 +57,4 @@ export interface UpdateQueue {
 export interface Update {
   action: any;
   next?: Update | null | undefined;
-}
+} 

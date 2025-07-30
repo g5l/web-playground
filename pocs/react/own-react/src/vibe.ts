@@ -1,9 +1,9 @@
-import {createElement} from './createElement';
-import {render} from './render';
+import { createElement, render, useState } from './api';
 
 const Vibe = {
   createElement,
-  render
+  render,
+  useState,
 };
 
 export default Vibe;

@@ -29,7 +29,6 @@
         return setTimeout(() => cb({ timeRemaining: () => 0, didTimeout: true }), 1);
       };
 
-      // Simulate a background task
       function doHeavyWork(deadline) {
         console.log({
           deadline
