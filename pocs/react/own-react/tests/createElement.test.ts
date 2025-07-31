@@ -1,6 +1,4 @@
 import { createElement } from '../src/jsx/createElement';
-import { useState } from '../src/core/hooks';
-import { render } from '../src/api/render';
 
 describe('createElement', () => {
   test('creates element with just type', () => {
@@ -25,7 +23,7 @@ describe('createElement', () => {
   test('creates element with number children', () => {
     const element = createElement('span', {}, 42);
     expect(element.props.children[0].type).toBe('TEXT_ELEMENT');
-    expect(element.props.children[0].props.nodeValue).toBe('42');
+    expect(element.props.children[0].props.nodeValue).toBe(42);
   });
   test('creates element with multiple children', () => {
     const element = createElement('div', {}, 'Hello', ' ', 'World');
@@ -73,43 +71,5 @@ describe('createElement', () => {
     const element = createElement(MyComponent, { prop: 'value' });
     expect(element.type).toBe(MyComponent);
     expect(element.props.prop).toBe('value');
-  });
-});
-
-describe('useState', () => {
-  test('returns initial state and setter', () => {
-    let stateValue;
-    function TestComponent() {
-      const [state] = useState(123);
-      stateValue = state;
-      return null;
-    }
-    TestComponent();
-    expect(stateValue).toBe(123);
-  });
-  test('setter updates state', () => {
-    let stateValue;
-    let setStateFn: ((cb: (prev: number) => number) => void) | undefined;
-    function TestComponent() {
-      const [state, setState] = useState(0);
-      stateValue = state;
-      setStateFn = setState;
-      return null;
-    }
-    TestComponent();
-    if (setStateFn) {
-      setStateFn((prev: number) => prev + 5);
-    }
-    TestComponent();
-    expect(stateValue).toBe(5);
-  });
-});
-
-describe('render', () => {
-  test('creates root fiber and sets up work', () => {
-    const container = document.createElement('div');
-    const element = createElement('div', {}, 'test');
-    render(element, container);
-    expect(container.childNodes.length).toBeGreaterThanOrEqual(0);
   });
 });

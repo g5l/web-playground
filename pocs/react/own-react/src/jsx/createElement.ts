@@ -5,11 +5,13 @@ export function createElement(type: string | ComponentType<any>, props: Record<s
     type,
     props: {
       ...props,
-      children: children.map(child =>
-        typeof child === "object"
-          ? child
-          : createTextElement(child)
-      ),
+      children: children
+        .filter(child => child !== null && child !== undefined)
+        .map(child =>
+          typeof child === "object"
+            ? child
+            : createTextElement(child)
+        ),
     },
   }
 }
