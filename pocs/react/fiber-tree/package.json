@@ -1,0 +1,20 @@
+{
+  "name": "fiber-tree-demo",
+  "version": "1.0.0",
+  "description": "A simple demonstration of React's Fiber tree structure",
+  "scripts": {
+    "start": "parcel index.html --open",
+    "build": "parcel build index.html"
+  },
+  "keywords": [
+    "react",
+    "fiber",
+    "demo"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.5",
+    "typescript": "^4.9.5"
+  }
+}
