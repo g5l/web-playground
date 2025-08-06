@@ -4,15 +4,14 @@ function createFiberNode(type, key = null, props = {}) {
     key,
     props,
     stateNode: null,
-    child: null,
-    sibling: null,
-    return: null,
+    child: null, // First child
+    sibling: null, // Next sibling
+    return: null, // Parent node
     alternate: null,
     effectTag: null,
   };
 }
 
-// Create nodes
 const app = createFiberNode('App');
 const header = createFiberNode('Header');
 const main = createFiberNode('Main');
@@ -28,7 +27,6 @@ main.sibling = footer;
 
 footer.return = app;
 
-// Simple traversal
 function printFiberTree(fiber, indent = 0) {
   while (fiber) {
     console.log(' '.repeat(indent) + fiber.type);
