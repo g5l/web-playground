@@ -131,13 +131,19 @@ export default function WatchDemo() {
           <div className="state-card">
             <h4>Form Status</h4>
             <p>Dirty: <span className={isDirty ? 'status-true' : 'status-false'}>{isDirty ? 'Yes' : 'No'}</span></p>
-            <p>Dirty Fields: <pre>{JSON.stringify(dirtyFields, null, 2)}</pre></p>
-            <p>Touched Fields: <pre>{JSON.stringify(touchedFields, null, 2)}</pre></p>
+            <p>Dirty Fields: {JSON.stringify(dirtyFields, null, 2)}</p>
+            <p>Touched Fields: {JSON.stringify(touchedFields, null, 2)}</p>
           </div>
           
           <div className="state-card">
             <h4>Errors</h4>
-            <pre>{Object.keys(errors).length ? JSON.stringify(errors, null, 2) : '(no errors)'}</pre>
+            <pre>
+              {Object.keys(errors).length ? 
+                Object.entries(errors).map(([key, error]) => (
+                  `${key}: ${error.message ? `"${error.message}"` : JSON.stringify(error.type)}`
+                )).join('\n') 
+                : '(no errors)'}
+            </pre>
           </div>
         </div>
       </div>

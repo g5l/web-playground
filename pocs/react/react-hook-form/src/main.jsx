@@ -5,9 +5,6 @@ import App from './App'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <div>
-      asdasdasdas
-      <App />
-    </div>
+    <App />
   </StrictMode>,
 )
