@@ -68,16 +68,6 @@ export default function UseFormDemo() {
           {errors.email && <p className="error">{errors.email.message}</p>}
         </div>
 
-        <div className="form-info">
-          <h3>Learning Points:</h3>
-          <ul>
-            <li><code>useForm()</code> - Initialize the form</li>
-            <li><code>register()</code> - Register inputs with validation</li>
-            <li><code>handleSubmit()</code> - Handle form submission</li>
-            <li><code>formState</code> - Access form state information</li>
-          </ul>
-        </div>
-
         {isSubmitSuccessful && (
           <div className="success-message">
             Form submitted successfully!
