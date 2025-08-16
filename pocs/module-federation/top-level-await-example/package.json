@@ -1,0 +1,18 @@
+{
+  "name": "top-level-await-example",
+  "version": "1.0.0",
+  "description": "A POC demonstrating webpack's topLevelAwait feature",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "webpack --mode=production",
+    "dev": "webpack --mode=development",
+    "start": "webpack serve --mode=development"
+  },
+  "keywords": [
+    "webpack",
+    "topLevelAwait",
+    "POC"
+  ],
+  "author": "",
+  "license": "ISC"
+}

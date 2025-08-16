@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remote App - Top-Level Await with Module Federation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        pre {
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9f7ef;
+            border-radius: 5px;
+        }
+        .remote-app {
+            border: 2px solid #4CAF50;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="remote-app">
+        <h1>Remote App - Top-Level Await Example</h1>
+        
+        <p>This is the remote application that exposes a module using top-level await. The data is pre-loaded before the module is exported.</p>
+        
+        <h2>Data in Remote App:</h2>
+        <div class="result" id="result">Loading data...</div>
+        
+        <p>This data is exposed via Module Federation and can be consumed by the host application.</p>
+    </div>
+</body>
+</html>
