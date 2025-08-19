@@ -36,7 +36,7 @@ export default function Home({ posts, error }: HomeProps) {
 
 export const getServerSideProps: GetServerSideProps<HomeProps> = async () => {
   try {
-    const res = await fetch("https://jsonplaceholder.typicode.com/invalid?_limit=5");
+    const res = await fetch("https://jsonplaceholder.typicode.com/posts?_limit=5");
 
     if (!res.ok) {
       new Error(`Failed to fetch posts. Status: ${res.status}`);
