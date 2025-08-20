@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS if() Function - Simple POC</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <h1>CSS if() Function - Simple POC</h1>
+
+    <div class="warning">
+        <strong>⚠️ Note:</strong> CSS if() function requires Chrome 137+ with "Experimental Web Platform features" enabled in chrome://flags
+    </div>
+
+    <div class="controls">
+        <button onclick="setTheme('dark')">Dark Theme</button>
+        <button onclick="setTheme('light')">Light Theme</button>
+        <button onclick="setTheme('auto')">Auto Theme</button>
+    </div>
+
+    <!-- Example 1: if() with style() -->
+    <h2>1. if() with style() - Theme Detection</h2>
+    <div class="demo-box style-example">
+        <h3>Style Condition Example</h3>
+        <p>This box changes color based on the --theme CSS variable.</p>
+        <p>Current theme: <span id="current-theme">dark</span></p>
+    </div>
+    <div class="code">/* if() with style() condition */
+        .style-example {
+        background: if(
+        style(--theme: dark): #2c3e50;
+        style(--theme: light): #ecf0f1;
+        else: #95a5a6
+        );
+
+        color: if(
+        style(--theme: dark): white;
+        else: black
+        );
+        }</div>
+
+    <!-- Example 2: if() with media() -->
+    <h2>2. if() with media() - Responsive Design</h2>
+    <div class="demo-box media-example">
+        <h3>Media Condition Example</h3>
+        <p>This box is RED on small screens (≤600px) and BLUE on larger screens (>600px).</p>
+        <p>Resize your browser window to see the change!</p>
+    </div>
+    <div class="code">/* if() with media() condition */
+        .media-example {
+        background: if(
+        media(max-width: 600px): #e74c3c;
+        media(min-width: 601px): #3498db;
+        else: #95a5a6
+        );
+
+        padding: if(
+        media(max-width: 600px): 15px;
+        else: 30px
+        );
+        }</div>
+
+    <!-- Example 3: if() with supports() -->
+    <h2>3. if() with supports() - Feature Detection</h2>
+    <div class="demo-box supports-example">
+        <h3>Supports Condition Example</h3>
+        <p>This box shows:</p>
+        <ul>
+            <li>GREEN if CSS Grid is supported</li>
+            <li>ORANGE if only Flexbox is supported</li>
+            <li>RED if neither is supported</li>
+        </ul>
+    </div>
+    <div class="code">/* if() with supports() condition */
+        .supports-example {
+        background: if(
+        supports(display: grid): #2ecc71;
+        supports(display: flex): #f39c12;
+        else: #e74c3c
+        );
+
+        display: if(
+        supports(display: grid): grid;
+        supports(display: flex): flex;
+        else: block
+        );
+        }</div>
+
+</div>
+
+<script>
+  function setTheme(theme) {
+    document.documentElement.style.setProperty('--theme', theme);
+    document.getElementById('current-theme').textContent = theme;
+    console.log('Theme set to:', theme);
+  }
+
+  // Log browser support
+  console.log('CSS if() supported:', CSS.supports('width', 'if(style(--test: true): 100px; else: 50px)'));
+  console.log('CSS Grid supported:', CSS.supports('display', 'grid'));
+  console.log('Flexbox supported:', CSS.supports('display', 'flex'));
+</script>
+</body>
+</html>
