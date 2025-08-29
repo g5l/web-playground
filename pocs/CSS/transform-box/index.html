@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS transform-box POC</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <h1>CSS transform-box POC</h1>
+    
+    <div class="demo">
+        <div class="box border-box">border-box</div>
+        <div class="box content-box">content-box</div>
+        <div class="box fill-box">fill-box (SVG)</div>
+    </div>  
+    
+    <svg class="svg-demo" width="200" height="200" viewBox="0 0 100 100">
+        <rect class="rect view-box" x="10" y="10" width="80" height="80" fill="tomato"/>
+        <text x="50" y="55" text-anchor="middle" fill="white">view-box</text>
+    </svg>
+</body>
+</html>
