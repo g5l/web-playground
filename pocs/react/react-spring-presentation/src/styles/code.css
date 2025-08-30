@@ -1,0 +1,15 @@
+pre {
+  background: #f4f6f8;
+  color: #2a2a2a;
+  padding: 16px;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-size: 15px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+code {
+  font-family: "Fira Code", monospace;
+  color: #c7254e;
+}
