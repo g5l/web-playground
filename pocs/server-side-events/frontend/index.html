@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SSE Demo</title>
+</head>
+<body>
+<h1>Server-Sent Events Demo</h1>
+<ul id="messages"></ul>
+
+<script>
+  const eventSource = new EventSource("/events");
+  const list = document.getElementById("messages");
+
+  eventSource.onmessage = (event) => {
+    const data = JSON.parse(event.data);
+    const li = document.createElement("li");
+    li.textContent = data.message;
+    list.appendChild(li);
+  };
+
+  eventSource.onerror = (err) => {
+    console.error("SSE error:", err);
+  };
+</script>
+</body>
+</html>
