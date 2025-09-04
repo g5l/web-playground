@@ -1,0 +1,41 @@
+.example {
+  display: grid;
+  place-items: center;
+  gap: 16px;
+  padding: 24px;
+}
+
+.box {
+  width: 220px;
+  height: 120px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  color: white;
+  font-weight: 600;
+  background: var(--box);
+  user-select: none;
+}
+
+.row { display: flex; gap: 10px; }
+
+.panel {
+  width: 500px;
+  max-width: 90vw;
+  border: 1px solid #1f2937;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #0b1220;
+  padding: 12px 16px;
+  color: var(--text);
+}
+
+.btn {
+  border: 1px solid #1f2937;
+  background: #0b1220;
+  color: var(--text);
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.btn:hover { background: #121a2b; }

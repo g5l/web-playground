@@ -1,0 +1,23 @@
+.cards-stage {
+  position: relative;
+  width: 360px;
+  height: 260px;
+  border: 1px dashed #334155;
+  border-radius: 12px;
+  margin: 12px auto;
+}
+
+.card {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  color: white;
+  font-weight: 700;
+  will-change: transform, opacity;
+}
+.card.c1 { background: var(--box); }
+.card.c2 { background: var(--box-2); }
+.card.c3 { background: var(--box-3); }
