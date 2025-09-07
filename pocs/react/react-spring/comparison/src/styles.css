@@ -1,0 +1,62 @@
+body {
+  font-family: sans-serif;
+  background: #0f172a;
+  color: #f1f5f9;
+  text-align: center;
+  padding: 20px;
+}
+
+button {
+  background: #3b82f6;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+button:hover {
+  background: #2563eb;
+}
+
+.container h1 {
+  margin: 0 0 8px;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 20px;
+}
+
+.stage {
+  position: relative;
+  width: 260px;
+  height: 120px;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  background: #1e293b;
+  overflow: hidden;
+}
+
+.ball {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #f59e0b;
+  margin: 40px 0 0 10px;
+}
+
+/* animation */
+.ball.css {
+  transition: transform 0.5s ease-out;
+}
+.ball.css.move {
+  transform: translateX(200px);
+}
+
+
+.ball.spring {
+  background: #22c55e;
+}
