@@ -3,6 +3,12 @@ import { Globals } from '@react-spring/web'
 
 import FadeIn from "../src/FadeIn";
 
+beforeAll(() => {
+  Globals.assign({
+    skipAnimation: true,
+  })
+})
+
 describe("FadeIn component", () => {
   it("should have opacity style applied (spring animation)", async () => {
     const { rerender }  = render(<FadeIn>Check opacity</FadeIn>);
@@ -11,7 +17,9 @@ describe("FadeIn component", () => {
     expect(element).toHaveStyle('opacity: 0')
 
     rerender(<FadeIn isVisible>Hello!</FadeIn>)
-    expect(element).toHaveStyle('opacity: 1')
+    await waitFor(() => {
+      expect(element).toHaveStyle('opacity: 1')
+    })
   });
 });
 
@@ -34,13 +42,7 @@ describe("FadeIn component", () => {
 
 
 
-// await waitFor(() => {
-//   expect(element).toHaveStyle('opacity: 1')
-// })
 
 
-// beforeAll(() => {
-//   Globals.assign({
-//     skipAnimation: true,
-//   })
-// })
+
+
