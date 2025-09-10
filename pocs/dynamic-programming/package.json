@@ -1,0 +1,12 @@
+{
+  "name": "dp-poc",
+  "version": "1.0.0",
+  "description": "Dynamic Programming POC with Fibonacci and Coin Change examples",
+  "main": "index.js",
+  "scripts": {
+    "start": "node test.js",
+    "test": "node test.js"
+  },
+  "author": "Gabriel",
+  "license": "MIT"
+}
