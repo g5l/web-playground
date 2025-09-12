@@ -1,28 +1,15 @@
-import React, { useState } from "react";
-import CssBall from "./CssBall";
-import SpringBall from "./SpringBall";
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import MainPage from "./MainPage";
+import CssPerformancePage from "./CssPerformancePage";
+import SpringPerformancePage from "./SpringPerformancePage";
 
 export default function App() {
-  const [move, setMove] = useState(false);
-
   return (
-    <div className="container">
-      <h1>CSS vs React Spring</h1>
-      <p>Click the button to see the difference:</p>
-      <button onClick={() => setMove((m) => !m)}>
-        {move ? "Reset" : "Animate"}
-      </button>
-
-      <div className="row">
-        <div>
-          <h2>CSS Transition</h2>
-          <CssBall move={move} />
-        </div>
-        <div>
-          <h2>React Spring</h2>
-          <SpringBall move={move} />
-        </div>
-      </div>
-    </div>
+    <Routes>
+      <Route path="/" element={<MainPage />} />
+      <Route path="/css-performance" element={<CssPerformancePage />} />
+      <Route path="/spring-performance" element={<SpringPerformancePage />} />
+    </Routes>
   );
 }
