@@ -2,7 +2,7 @@
 
 This project compares the performance of browser-based animations using pure CSS and [react-spring](https://react-spring.dev/).
 
-## 🚀 Getting Started
+## Getting Started
 
 1. Install dependencies:
    ```bash
@@ -14,9 +14,9 @@ This project compares the performance of browser-based animations using pure CSS
    ```
 3. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## 🧪 Performance Test
+## Performance Test
 
-## 📋 How it Works
+## How it Works
 
 - **CSS Animation:** Uses a simple `transform: translateX` with a CSS transition.
 - **react-spring:** Uses the `useSpring` hook to animate the same movement.
@@ -36,9 +36,9 @@ This project compares the performance of browser-based animations using pure CSS
 ## Performance Reports
 
 #### CSS Animation
-- [CSS Performance Report (JSON)](perf-reports/css-performance-report.json)
-- ![CSS Performance Screenshot](perf-screenshots/css-performance.png)
+<img width="1507" height="940" alt="Screenshot 2025-09-11 at 20 55 32" src="https://github.com/user-attachments/assets/dc03d160-9df4-4250-b5d9-8625e66bed4f" />
+
 
 #### React Spring
-- [React Spring Performance Report (JSON)](perf-reports/react-spring-performance-report.json)
-- ![React Spring Performance Screenshot](perf-screenshots/react-spring-performance.png)
+<img width="1509" height="938" alt="Screenshot 2025-09-11 at 20 54 25" src="https://github.com/user-attachments/assets/2901653c-c43d-4989-a736-33bc6dc8eb7c" />
+
