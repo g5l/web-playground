@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>CSS field-sizing POC</title>
+    <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+<header class="site-header">
+    <h1>CSS <code>field-sizing</code> POC</h1>
+    <p id="support-note" class="note"></p>
+    <div class="controls">
+        <label><input type="radio" name="mode" value="content" checked> <code>field-sizing: content</code></label>
+        <label><input type="radio" name="mode" value="fixed"> <code>field-sizing: fixed</code></label>
+    </div>
+</header>
+
+<main class="grid">
+    <section class="card">
+        <h2>Text input</h2>
+        <p class="hint">Type to see width change in <code>content</code> mode.</p>
+        <div class="row">
+            <label>Job title</label>
+            <input class="demo fs-content" type="text" value="Senior Product Engineer" placeholder="Type here..." />
+        </div>
+        <div class="row">
+            <label>Company</label>
+            <input class="demo fs-content" type="text" value="Vanderlay Industries" />
+        </div>
+        <div class="row">
+            <label>Username</label>
+            <input class="demo fs-content" type="text" placeholder="short" />
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>Number input</h2>
+        <p class="hint">Grows with digits in <code>content</code> mode.</p>
+        <div class="row">
+            <label>Account #</label>
+            <input class="demo fs-content" type="number" value="42" />
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>Select</h2>
+        <p class="hint">Width follows selected option in <code>content</code> mode.</p>
+        <div class="row">
+            <label>Department</label>
+            <select class="demo fs-content">
+                <option>Sales</option>
+                <option>Engineering</option>
+                <option selected>International Sales & Enterprise Partnerships</option>
+                <option>Support</option>
+            </select>
+        </div>
+    </section>
+
+    <section class="card">
+        <h2>Textarea</h2>
+        <p class="hint">Height auto-expands with lines in <code>content</code> mode.</p>
+        <textarea class="demo fs-content" rows="1">This textarea grows taller as you add more lines.
+Try pressing Enter a few times and typing more text.
+      </textarea>
+    </section>
+
+    <section class="card">
+        <h2>With constraints</h2>
+        <p class="hint">Use <code>min/max-width</code> & <code>min/max-height</code> to set bounds.</p>
+        <div class="row">
+            <label>Bounded Input</label>
+            <input class="demo fs-content bounded" type="text" value="Start small, but don't exceed 32ch" />
+        </div>
+        <textarea class="demo fs-content bounded-area" rows="1">Grows until 12 lines max.</textarea>
+    </section>
+</main>
+
+<footer class="site-footer">
+    <p>Tip: Toggle modes above. Resize your window and switch options to compare behavior.</p>
+</footer>
+
+<!--<script src="./app.js" type="module"></script>-->
+</body>
+</html>

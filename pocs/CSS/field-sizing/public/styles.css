@@ -1,0 +1,133 @@
+:root {
+  --bg: #0f172a;
+  --card: #111827;
+  --text: #e5e7eb;
+  --muted: #94a3b8;
+  --accent: #22d3ee;
+  --border: #1f2937;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: radial-gradient(1200px 800px at 10% -10%, #0b1223, var(--bg));
+  color: var(--text);
+  font: 16px/1.5 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+}
+
+.site-header, .site-footer {
+  max-width: 1100px;
+  margin: 24px auto;
+  padding: 0 16px;
+}
+.site-header h1 {
+  margin: 0 0 8px;
+}
+.note {
+  color: var(--muted);
+  margin: 4px 0 16px;
+}
+
+.controls {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: rgba(255,255,255,0.03);
+  width: fit-content;
+}
+
+.grid {
+  max-width: 1100px;
+  margin: 0 auto 40px;
+  padding: 0 16px;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 16px;
+}
+
+.card {
+  grid-column: span 6;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+@media (max-width: 900px) {
+  .card {
+    grid-column: 1 / -1;
+  }
+}
+
+.card h2 {
+  margin: 0 0 6px;
+  font-size: 18px;
+}
+
+.hint {
+  color: var(--muted);
+  margin: 0 0 12px;
+  font-size: 14px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 140px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+label {
+  color: var(--muted);
+}
+
+.demo {
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: #0b1020;
+  color: var(--text);
+  outline: none;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.05) inset;
+  font: 500 14px/1.2 ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  
+  field-sizing: content;
+
+  transition: width 120ms ease, height 120ms ease;
+}
+
+.fs-content {
+  field-sizing: content;
+}
+.fs-fixed   {
+  field-sizing: fixed;
+}
+
+.demo::selection {
+  background: rgba(34, 211, 238, 0.3);
+  color: white;
+}
+.demo:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.25);
+}
+
+.bounded {
+  min-width: 16ch;
+  max-width: 32ch;
+}
+.bounded-area {
+  min-height: 2.2em;
+  max-height: calc(1.2em * 12);
+  resize: none;
+}
+
+select.demo { appearance: auto; }
