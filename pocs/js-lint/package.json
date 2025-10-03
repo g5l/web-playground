@@ -1,0 +1,23 @@
+{
+  "name": "js-lint",
+  "version": "0.1.0",
+  "description": "avaScript linter with custom rules.",
+  "private": true,
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "lint": "node index.js",
+    "test": "node -e \"console.log('No tests defined')\""
+  },
+  "keywords": [
+    "linter",
+    "javascript",
+    "poc"
+  ],
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=18"
+  }
+}
+
