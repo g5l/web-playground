@@ -3,11 +3,13 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { noConsole } from './rules/noConsole.js';
 import { noDebugger } from './rules/noDebugger.js';
+import { indent } from './rules/indent.js';
+import { maxLineLength } from './rules/maxLineLength.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const RULES = [noConsole, noDebugger];
+const RULES = [noConsole, noDebugger, indent, maxLineLength];
 
 function lintFile(filePath) {
   const code = fs.readFileSync(filePath, 'utf8');
