@@ -14,6 +14,15 @@ Simple proof-of-concept JavaScript linter that runs a few custom rules against a
 
 Rules live under `rules/` and export an object with a `name` and a `run(code, filePath)` function that returns an array of findings.
 
+## Example
+### Bad
+
+<img width="746" height="163" alt="image" src="https://github.com/user-attachments/assets/29460376-be85-43cc-9238-6b07fea701ae" />
+
+### Good
+<img width="742" height="104" alt="image" src="https://github.com/user-attachments/assets/fc6d5759-9e3f-4245-a081-b35cc73f76e8" />
+
+
 ## Project Structure
 - `index.js` — CLI entry that loads and runs rules.
 - `rules/` — custom lint rules.
