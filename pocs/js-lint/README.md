@@ -1,4 +1,4 @@
-# js-lint (POC)
+# js-lint
 
 Simple proof-of-concept JavaScript linter that runs a few custom rules against a target file.
 
@@ -11,6 +11,8 @@ Simple proof-of-concept JavaScript linter that runs a few custom rules against a
 ## Available Rules
 - `noConsole` — flags any usage of `console.*`.
 - `noDebugger` — flags any `debugger` statements.
+- `indent` — flags lines whose leading spaces are not a multiple of 2 (enforces 2‑space indentation).
+- `maxLineLength` — flags lines longer than 120 characters.
 
 Rules live under `rules/` and export an object with a `name` and a `run(code, filePath)` function that returns an array of findings.
 
