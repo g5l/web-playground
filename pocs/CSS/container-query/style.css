@@ -1,0 +1,91 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  background: #f9fafb;
+}
+
+.card-container {
+  container-type: inline-size;
+  width: 600px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  padding: 1rem;
+  resize: horizontal;
+  overflow: auto;
+  transition: width 0.3s ease;
+  background: #fff;
+}
+
+.card {
+  text-align: center;
+}
+
+.card h2 {
+  font-size: 1em;
+  color: #222;
+  margin-bottom: 0.5rem;
+  transition: font-size 0.2s ease;
+}
+
+.card p {
+  color: #555;
+  font-size: 0.9em;
+}
+
+@container (width > 500px) {
+  .card {
+    background: #e0f2fe;
+  }
+  .card h2 {
+    font-size: 1.5em;
+  }
+}
+
+@container (width > 700px) {
+  .card {
+    background: #d9f99d;
+  }
+  .card h2 {
+    font-size: 2em;
+  }
+}
+
+@container (width < 400px) {
+  .card {
+    background: #fecaca;
+  }
+  .card h2 {
+    font-size: 0.9em;
+  }
+}
+
+.controls {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 1rem;
+}
+
+button {
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 6px;
+  background: #2563eb;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+button:hover {
+  background: #1d4ed8;
+}

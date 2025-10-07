@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Container Query Range POC</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<main class="layout">
+    <section class="card-container">
+        <article class="card">
+            <h2>Responsive Card Title</h2>
+            <p>
+                This card’s title and layout change based on the container’s width —
+                not the viewport size.
+            </p>
+        </article>
+    </section>
+
+    <div class="controls">
+        <button id="shrink">Shrink</button>
+        <button id="expand">Expand</button>
+    </div>
+</main>
+
+<script>
+  const container = document.querySelector(".card-container");
+  const shrinkBtn = document.getElementById("shrink");
+  const expandBtn = document.getElementById("expand");
+
+  shrinkBtn.addEventListener("click", () => {
+    container.style.width = "400px";
+  });
+
+  expandBtn.addEventListener("click", () => {
+    container.style.width = "800px";
+  });
+</script>
+</body>
+</html>
