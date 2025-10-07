@@ -1,6 +1,6 @@
 # js-lint
 
-Simple proof-of-concept JavaScript linter that runs a few custom rules against a target file.
+Simple JavaScript linter that runs a few custom rules against a target file.
 
 ## Requirements
 - Node.js >= 18
@@ -32,5 +32,3 @@ Rules live under `rules/` and export an object with a `name` and a `run(code, fi
 ## Scripts
 - `npm start` — alias for running the linter.
 - `npm run lint -- <file>` — lints the specified file.
-
-This is a minimal POC and does not implement autofix.
