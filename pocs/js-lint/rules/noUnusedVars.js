@@ -3,34 +3,93 @@ import * as walk from 'acorn-walk';
 
 export const noUnusedVars = {
   name: 'noUnusedVars',
+
   run(code) {
-    const ast = parse(code, { ecmaVersion: 'latest', sourceType: 'module' });
+    const ast = parse(code, {
+      ecmaVersion: 'latest',
+      sourceType: 'module',
+      locations: true,
+    });
 
-    const declared = new Map();
-    const used = new Set();
-    const results = [];
+    const declaredVars = new Map();
+    const usedNames = new Set();
 
+    // Step 1: Collect declarations and parameters
     walk.simple(ast, {
       VariableDeclarator(node) {
-        declared.set(node.id.name, node.loc.start.line);
+        if (node.id?.name) {
+          declaredVars.set(node.id.name, {
+            line: node.loc.start.line,
+            isParam: false,
+          });
+        }
       },
       FunctionDeclaration(node) {
-        declared.set(node.id.name, node.loc.start.line);
+        if (node.id?.name) {
+          declaredVars.set(node.id.name, {
+            line: node.loc.start.line,
+            isParam: false,
+          });
+        }
+        for (const param of node.params) {
+          if (param.type === 'Identifier') {
+            declaredVars.set(param.name, {
+              line: param.loc.start.line,
+              isParam: true,
+            });
+          }
+        }
+      },
+      FunctionExpression(node) {
+        for (const param of node.params) {
+          if (param.type === 'Identifier') {
+            declaredVars.set(param.name, {
+              line: param.loc.start.line,
+              isParam: true,
+            });
+          }
+        }
+      },
+      ArrowFunctionExpression(node) {
+        for (const param of node.params) {
+          if (param.type === 'Identifier') {
+            declaredVars.set(param.name, {
+              line: param.loc.start.line,
+              isParam: true,
+            });
+          }
+        }
       },
     });
 
-    walk.simple(ast, {
-      Identifier(node) {
-        used.add(node.name);
+    // Step 2: Collect identifier usage with ancestor tracking
+    walk.ancestor(ast, {
+      Identifier(node, ancestors) {
+        const parent = ancestors[ancestors.length - 2];
+
+        // Skip declaration identifiers
+        if (
+          (parent.type === 'VariableDeclarator' && parent.id === node) ||
+          (parent.type === 'FunctionDeclaration' && parent.params.includes(node)) ||
+          (parent.type === 'FunctionExpression' && parent.params.includes(node)) ||
+          (parent.type === 'ArrowFunctionExpression' && parent.params.includes(node))
+        ) {
+          return;
+        }
+
+        usedNames.add(node.name);
       },
     });
 
-    for (const [name, line] of declared.entries()) {
-      if (!used.has(name)) {
+    // Step 3: Compare declared vs used
+    const results = [];
+
+    for (const [name, info] of declaredVars.entries()) {
+      if (!usedNames.has(name)) {
         results.push({
           rule: this.name,
-          line,
-          message: `Variable "${name}" is declared but never used.`,
+          line: info.line,
+          message: `Identifier "${name}" is declared but never used.`,
         });
       }
     }
