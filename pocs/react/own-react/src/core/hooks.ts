@@ -1,4 +1,11 @@
 import { Fiber, Hook } from '../types/index';
+import {
+  getCurrentRoot,
+  getWipRoot,
+  setWipRoot,
+  setNextUnitOfWork,
+  clearDeletions,
+} from './reconciler';
 
 let wipFiber: Fiber | null = null;
 let hookIndex: number | null = null;
@@ -20,6 +27,18 @@ export function useState<T = any>(initial: T): [T, (action: (prev: T) => T) => v
   });
   const setState = (action: (prev: T) => T) => {
     hook.queue.push(action);
+    const current = getCurrentRoot();
+    if (current) {
+      const newRoot: Fiber = {
+        type: current.type,
+        dom: current.dom,
+        props: current.props,
+        alternate: current,
+      } as Fiber;
+      setWipRoot(newRoot);
+      clearDeletions();
+      setNextUnitOfWork(getWipRoot());
+    }
   };
   if (wipFiber) {
     if (!wipFiber.hooks) {

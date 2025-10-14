@@ -160,6 +160,26 @@ function reconcileChildren(wipFiber: Fiber, elements: any[]): void {
   }
 }
 
+function setNextUnitOfWork(fiber: Fiber | null): void {
+  nextUnitOfWork = fiber;
+}
+
+function setWipRoot(fiber: Fiber | null): void {
+  wipRoot = fiber;
+}
+
+function getWipRoot(): Fiber | null {
+  return wipRoot;
+}
+
+function clearDeletions(): void {
+  deletions = [];
+}
+
+function getCurrentRoot(): Fiber | null {
+  return currentRoot;
+}
+
 export {
   nextUnitOfWork,
   currentRoot,
@@ -171,4 +191,9 @@ export {
   updateFunctionComponent,
   updateHostComponent,
   reconcileChildren,
-}; 
+  setNextUnitOfWork,
+  setWipRoot,
+  getWipRoot,
+  clearDeletions,
+  getCurrentRoot
+};

@@ -1,15 +1,23 @@
 import { Fiber } from '../types/index';
-import { nextUnitOfWork, wipRoot, deletions } from '../core/reconciler';
+import {
+  getWipRoot,
+  setWipRoot,
+  setNextUnitOfWork,
+  clearDeletions,
+} from '../core/reconciler';
 
 export function render(element: any, container: HTMLElement) {
-  (wipRoot as Fiber) = {
+  const previous = getWipRoot();
+  const root: Fiber = {
     type: 'ROOT',
     dom: container,
     props: {
       children: [element],
     },
-    alternate: (wipRoot as Fiber)?.alternate ?? undefined,
-  };
-  (deletions as Fiber[]) = [];
-  (nextUnitOfWork as Fiber | null) = wipRoot;
-} 
+    alternate: previous?.alternate ?? undefined,
+  } as Fiber;
+
+  setWipRoot(root);
+  clearDeletions();
+  setNextUnitOfWork(root);
+}
