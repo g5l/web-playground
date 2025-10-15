@@ -1,18 +1,8 @@
 import Vibe from './vibe';
 
-function Counter() {
-  const [state, setState] = Vibe.useState(1);
-  return Vibe.createElement(
-    'h1',
-    { onClick: () => setState((c: number) => c + 1) },
-    'Count: ',
-    state
-  );
-}
+import './demo/index.js';
+import './demo/createElement.js';
 
-const element = Vibe.createElement(Counter, {});
-const container = document.getElementById('root');
-if (container) {
-  Vibe.render(element, container);
-}
-
+// Re-export library in case it’s imported from the bundle
+export default Vibe;
+export { default as Vibe } from './vibe';

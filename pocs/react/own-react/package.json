@@ -5,9 +5,9 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "esbuild src/index.ts --bundle --outfile=dist/index.js --format=esm --sourcemap",
-    "build:watch": "esbuild src/index.ts --bundle --outfile=dist/index.js --format=esm --sourcemap --watch",
-    "build:prod": "esbuild src/index.ts --bundle --outfile=dist/index.js --format=esm --minify",
+    "build": "esbuild src/index.ts --bundle --outfile=dist/index.js --format=esm --sourcemap --loader:.js=jsx --jsx=transform --jsx-factory=Vibe.createElement",
+    "build:watch": "esbuild src/index.ts --bundle --outfile=dist/index.js --format=esm --sourcemap --watch --loader:.js=jsx --jsx=transform --jsx-factory=Vibe.createElement",
+    "build:prod": "esbuild src/index.ts --bundle --outfile=dist/index.js --format=esm --minify --loader:.js=jsx --jsx=transform --jsx-factory=Vibe.createElement",
     "dev": "concurrently \"npm run build:watch\" \"npm run serve\"",
     "serve": "serve -s . -p 3000",
     "test": "jest",
