@@ -1,3 +1,3 @@
 export { render } from './render';
-export { useState } from '../core/hooks';
+export { useState, useReducer } from '../core/hooks';
 export { createElement } from '../jsx/createElement'; 

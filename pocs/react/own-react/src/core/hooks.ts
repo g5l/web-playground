@@ -55,4 +55,15 @@ export function useState<T = any>(initial: T): [T, (action: (prev: T) => T) => v
 export function setWipFiber(fiber: Fiber): void {
   wipFiber = fiber;
   hookIndex = 0;
-} 
+}
+
+export function useReducer<S, A>(
+  reducer: (state: S, action: A) => S,
+  initialArg: S,
+  init?: (arg: S) => S
+): [S, (action: A) => void] {
+  const initialState = init ? init(initialArg) : initialArg;
+  const [state, setState] = useState<S>(initialState);
+  const dispatch = (action: A) => setState(prev => reducer(prev, action));
+  return [state, dispatch];
+}
