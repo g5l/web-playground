@@ -19,7 +19,7 @@ Rules live under `rules/` and export an object with a `name` and a `run(code, fi
 ## Example
 ### Bad
 
-<img width="746" height="163" alt="image" src="https://github.com/user-attachments/assets/29460376-be85-43cc-9238-6b07fea701ae" />
+<img width="746" height="163" alt="image" src="https://github.com/user-attachments/assets/ca99f4fc-08bf-4878-9f11-9315a4e5cffd" />
 
 ### Good
 <img width="742" height="104" alt="image" src="https://github.com/user-attachments/assets/fc6d5759-9e3f-4245-a081-b35cc73f76e8" />
