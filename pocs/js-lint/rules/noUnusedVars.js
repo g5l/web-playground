@@ -14,7 +14,6 @@ export const noUnusedVars = {
     const declaredVars = new Map();
     const usedNames = new Set();
 
-    // Step 1: Collect declarations and parameters
     walk.simple(ast, {
       VariableDeclarator(node) {
         if (node.id?.name) {
@@ -62,12 +61,10 @@ export const noUnusedVars = {
       },
     });
 
-    // Step 2: Collect identifier usage with ancestor tracking
     walk.ancestor(ast, {
       Identifier(node, ancestors) {
         const parent = ancestors[ancestors.length - 2];
 
-        // Skip declaration identifiers
         if (
           (parent.type === 'VariableDeclarator' && parent.id === node) ||
           (parent.type === 'FunctionDeclaration' && parent.params.includes(node)) ||
@@ -81,7 +78,6 @@ export const noUnusedVars = {
       },
     });
 
-    // Step 3: Compare declared vs used
     const results = [];
 
     for (const [name, info] of declaredVars.entries()) {
