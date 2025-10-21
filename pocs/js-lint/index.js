@@ -6,11 +6,12 @@ import { noDebugger } from './rules/noDebugger.js';
 import { indent } from './rules/indent.js';
 import { maxLineLength } from './rules/maxLineLength.js';
 import { noUnusedVars } from './rules/noUnusedVars.js';
+import { noUndefined } from './rules/noUndefined.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const RULES = [noConsole, noDebugger, indent, maxLineLength, noUnusedVars];
+const RULES = [noConsole, noDebugger, indent, maxLineLength, noUnusedVars, noUndefined];
 
 function lintFile(filePath) {
   const code = fs.readFileSync(filePath, 'utf8');
