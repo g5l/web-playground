@@ -1,6 +1,14 @@
 import { parse } from 'acorn';
 import * as walk from 'acorn-walk';
 
+const GLOBALS = new Set([
+  'console', 'window', 'document', 'globalThis',
+  'Math', 'Number', 'String', 'Boolean', 'Array', 'Object', 'JSON',
+  'Promise', 'RegExp', 'Date', 'Error', 'Map', 'Set', 'WeakMap', 'WeakSet',
+  'Symbol', 'BigInt', 'Intl', 'Reflect', 'Proxy',
+  'parseInt', 'parseFloat', 'isNaN', 'isFinite',
+]);
+
 function isFunction(node) {
   return (
     node?.type === 'FunctionDeclaration' ||
@@ -79,6 +87,7 @@ export const noUndefined = {
     });
     
     function isDeclared(name, ancestors) {
+      if (GLOBALS.has(name)) return true;
       for (let i = ancestors.length - 1; i >= 0; i--) {
         const s = scopes.get(ancestors[i]);
         if (s && s.has(name)) return true;
