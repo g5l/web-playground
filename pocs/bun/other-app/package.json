@@ -1,0 +1,12 @@
+{
+  "name": "bun-other-app-poc",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun run --hot src/server.js",
+    "start": "bun run src/server.js",
+    "test": "bun test",
+    "seed": "bun run scripts/seed.js"
+  }
+}
+

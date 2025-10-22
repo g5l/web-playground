@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bun Notes POC</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>🧁 Bun Notes POC</h1>
+      <nav>
+        <button id="refresh">Refresh</button>
+        <span id="status">Connecting…</span>
+      </nav>
+    </header>
+
+    <main>
+      <section class="composer">
+        <input id="noteText" placeholder="Write a note…" />
+        <button id="addBtn">Add</button>
+      </section>
+      <section>
+        <ul id="list"></ul>
+      </section>
+    </main>
+
+    <footer>
+      <small>
+        API: <code>/api/notes</code> • WS: <code>/ws</code> • Time: <code>/api/time</code>
+      </small>
+    </footer>
+
+    <script type="module" src="/main.js"></script>
+  </body>
+  </html>
+
