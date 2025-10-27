@@ -1,0 +1,22 @@
+.list-page h2 {
+  margin: 0 0 12px 0;
+}
+
+.list-grid {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.list-item a {
+  text-decoration: none;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: block;
+}
+
+.list-item a:hover {
+  border-color: var(--accent);
+}

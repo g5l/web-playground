@@ -1,0 +1,23 @@
+.list-page-anti h2 {
+  margin: 0 0 12px 0;
+}
+
+.list-grid-anti {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.list-item-anti a {
+  text-decoration: none;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-anti);
+  display: block;
+  color: var(--text-anti);
+}
+
+.list-item-anti a:hover {
+  border-color: var(--accent-anti);
+}

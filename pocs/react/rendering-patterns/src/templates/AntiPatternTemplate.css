@@ -1,0 +1,43 @@
+:root {
+  --bg-anti: #1a0b0b;
+  --panel-anti: #230e0e;
+  --accent-anti: #f87171; /* red-400 */
+  --accent-2-anti: #fb7185; /* rose-400 */
+  --text-anti: #ffe4e6;   /* rose-100 */
+  --muted-anti: #fca5a5;  /* red-300 */
+  --border-anti: #3f1a1a;
+}
+
+.layout--anti {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
+  background: linear-gradient(180deg, var(--bg-anti), #120606 60%, #160808);
+  color: var(--text-anti);
+}
+
+.content {
+  border-left: 1px solid var(--border-anti);
+  padding: 24px;
+}
+
+.content__header {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px dashed var(--border-anti);
+}
+
+.swap-link {
+  color: var(--accent-anti);
+  text-decoration: none;
+}
+
+.swap-link:hover {
+  text-decoration: underline;
+}
+
+.content__body {
+  padding-top: 20px;
+}
