@@ -3,11 +3,7 @@ import {FlyOutContextType, FlyOutProps} from './types';
 
 export const FlyOutContext = createContext<FlyOutContextType | undefined>(undefined);
 
-export const FlyOut: React.FC<FlyOutProps> & {
-  Toggle: React.FC;
-  List: React.FC;
-  Item: React.FC;
-} = ({children}) => {
+export function FlyOut({ children }: FlyOutProps) {
   const [open, setOpen] = useState(false);
   const toggle = () => setOpen((o) => !o);
 
@@ -16,6 +12,6 @@ export const FlyOut: React.FC<FlyOutProps> & {
       {children}
     </FlyOutContext.Provider>
   );
-};
+}
 
 export default FlyOut;

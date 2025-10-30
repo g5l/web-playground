@@ -1,5 +1,7 @@
 import React from 'react';
 
-export const Item: React.FC<{ children: React.ReactNode }> = ({children}) => {
+type ItemProps = { children: React.ReactNode };
+
+export function Item({ children }: ItemProps) {
   return <li>{children}</li>;
-};
+}

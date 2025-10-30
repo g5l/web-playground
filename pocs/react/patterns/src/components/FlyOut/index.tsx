@@ -1,10 +1,11 @@
-import FlyOut from './FlyOut';
-import { Toggle } from './Toggle';
-import { List } from './List';
-import { Item } from './Item';
+import FlyOutBase from './FlyOut';
+import {Item} from './Item';
+import {List} from './List';
+import {Toggle} from './Toggle';
 
-(FlyOut as any).Toggle = Toggle;
-(FlyOut as any).List = List;
-(FlyOut as any).Item = Item;
+const FlyOut = FlyOutBase;
+FlyOut.Toggle = Toggle;
+FlyOut.List = List;
+FlyOut.Item = Item;
 
-export { FlyOut };
+export {FlyOut};

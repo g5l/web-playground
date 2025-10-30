@@ -1,7 +1,7 @@
 import React from 'react';
 import {FlyOut} from '../components/FlyOut';
 
-const FlyoutExample: React.FC = () => (
+const FlyoutExample = () => (
   <FlyOut>
     <FlyOut.Toggle>Toggle Menu</FlyOut.Toggle>
     <FlyOut.List>
