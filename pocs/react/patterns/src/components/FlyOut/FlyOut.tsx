@@ -9,7 +9,7 @@ export function FlyOut({ children }: FlyOutProps) {
 
   return (
     <FlyOutContext.Provider value={{open, toggle}}>
-      {children}
+      <div className="flyout-root">{children}</div>
     </FlyOutContext.Provider>
   );
 }

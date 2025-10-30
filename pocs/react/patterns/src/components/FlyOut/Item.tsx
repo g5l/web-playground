@@ -1,7 +1,13 @@
 import React from 'react';
 
-type ItemProps = { children: React.ReactNode };
+type ItemProps = React.LiHTMLAttributes<HTMLLIElement> & {
+  children: React.ReactNode;
+};
 
 export function Item({ children }: ItemProps) {
-  return <li>{children}</li>;
+  return (
+    <li role="menuitem" className='flyout-item'>
+      {children}
+    </li>
+  );
 }
