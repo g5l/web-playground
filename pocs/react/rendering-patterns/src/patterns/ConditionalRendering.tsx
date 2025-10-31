@@ -9,7 +9,6 @@ export default function ConditionalRendering() {
 
   useEffect(() => {
     const t = setTimeout(() => {
-      // simulate success
       setItems(['Alpha', 'Beta', 'Gamma']);
       setLoading(false);
     }, 800);
