@@ -1,0 +1,88 @@
+.ph-page {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.ph-header {
+  margin-bottom: 16px;
+}
+
+.ph-header h1 {
+  margin: 0 0 6px;
+  font-size: 28px;
+}
+
+.ph-header p {
+  margin: 0;
+  color: #9ca3af;
+}
+
+.ph-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.ph-footer {
+  margin-top: 20px;
+  color: #9ca3af;
+}
+
+.widget {
+  border: 1px solid #374151;
+  border-radius: 10px;
+  background: #111827;
+  overflow: hidden;
+}
+
+.widget-hdr {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.widget-body {
+  padding: 12px;
+}
+
+.btn {
+  background: #0ea5e9;
+  color: white;
+  border: 0;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn[disabled] {
+  background: #374151;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.badge {
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+}
+
+.badge.server {
+  color: #f59e0b;
+}
+
+.badge.hydrated {
+  color: #10b981;
+}
+
+@media (min-width: 720px) {
+  .ph-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

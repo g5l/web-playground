@@ -9,9 +9,7 @@ import { antiPatterns } from '@data/antiPatterns';
 const lazyMap: Record<string, React.LazyExoticComponent<React.FC>> = {
   ConditionalRendering: React.lazy(() => import('@patterns/ConditionalRendering')),
   ListRendering: React.lazy(() => import('@patterns/ListRendering')),
-  //
-  // IndexAsKey: React.lazy(() => import('@antipatterns/IndexAsKey')),
-  // OverusingContext: React.lazy(() => import('@antipatterns/OverusingContext'))
+  ProgressiveHydration: React.lazy(() => import('@patterns/ProgressiveHydration')),
 };
 
 export const router = createBrowserRouter([
@@ -23,7 +21,6 @@ export const router = createBrowserRouter([
       { path: 'patterns', element: <PatternList /> },
       { path: 'anti-patterns', element: <AntiPatternList /> },
 
-      // pattern detail routes
       ...patterns.map(p => ({
         path: `patterns/${p.slug}`,
         element: (
@@ -33,7 +30,6 @@ export const router = createBrowserRouter([
         )
       })),
 
-      // anti-pattern detail routes
       ...antiPatterns.map(a => ({
         path: `anti-patterns/${a.slug}`,
         element: (
