@@ -5,7 +5,7 @@ if (typeof globalThis.requestIdleCallback === 'undefined') {
 }
 
 import { createDom, updateDom, commitDeletion } from './dom';
-import { setWipFiber } from './hooks';
+import { setWipFiber, flushEffects, cleanupFiber } from './hooks';
 import { Fiber } from '../types/index';
 
 let nextUnitOfWork: Fiber | null = null;
@@ -20,6 +20,8 @@ function commitRoot(): void {
   }
   currentRoot = wipRoot;
   wipRoot = null;
+  // Run passive effects after committing DOM changes
+  flushEffects();
 }
 
 function commitWork(fiber: Fiber | null): void {
@@ -46,6 +48,8 @@ function commitWork(fiber: Fiber | null): void {
       fiber.props
     );
   } else if (fiber.effectTag === "DELETION") {
+    // Run any cleanup effects for this subtree before removing
+    cleanupFiber(fiber);
     commitDeletion(fiber, domParent);
   }
   commitWork(fiber.child!);

@@ -48,6 +48,9 @@ export interface Fiber {
 export interface Hook {
   state: any;
   queue: any[];
+  deps?: any[] | undefined;
+  effect?: (() => void | (() => void)) | undefined;
+  cleanup?: ((() => void) | void) | undefined;
 }
 
 export interface UpdateQueue {

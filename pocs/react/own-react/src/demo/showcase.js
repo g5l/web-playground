@@ -1,6 +1,7 @@
 import Vibe from '../vibe';
 import { Counter } from './CounterComponent';
 import { ReducerCounter } from './ReducerCounter';
+import { EffectDemo } from './EffectDemo';
 
 function Showcase() {
   return (
@@ -15,6 +16,10 @@ function Showcase() {
           <h3>useReducer Counter</h3>
           <ReducerCounter />
         </div>
+        <div>
+          <h3>useEffect</h3>
+          <EffectDemo />
+        </div>
       </div>
     </div>
   );
@@ -24,4 +29,3 @@ const container = document.getElementById('showcase');
 if (container) {
   Vibe.render(<Showcase />, container);
 }
-
