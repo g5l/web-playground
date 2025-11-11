@@ -3,13 +3,16 @@ import type { ReactNode } from "react";
 
 export default function PocsLayout({ children }: { children: ReactNode }) {
   return (
-    <div style={{ padding: 24, maxWidth: 900, margin: "0 auto" }}>
-      <header style={{ display: "flex", gap: 16, marginBottom: 24 }}>
-        <Link href="/">Home</Link>
-        <Link href="/pocs">POCs</Link>
+    <div className="container">
+      <header className="header">
+        <Link className="navlink" href="/">
+          Home
+        </Link>
+        <Link className="navlink" href="/pocs">
+          POCs
+        </Link>
       </header>
-      <main>{children}</main>
+      <main className="grid" style={{ gridTemplateColumns: "1fr" }}>{children}</main>
     </div>
   );
 }
-

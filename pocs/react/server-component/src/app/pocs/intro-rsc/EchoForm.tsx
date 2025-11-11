@@ -9,9 +9,9 @@ export default function EchoForm({ action }: { action: EchoAction }) {
   const [isPending] = useTransition();
 
   return (
-    <section>
+    <section className="card">
       <h3>EchoForm (Client + Server Action)</h3>
-      <form action={formAction} style={{ display: "flex", gap: 8 }}>
+      <form action={formAction}>
         <input
           type="text"
           name="text"
@@ -19,7 +19,7 @@ export default function EchoForm({ action }: { action: EchoAction }) {
           required
           aria-label="text"
         />
-        <button type="submit" disabled={isPending}>
+        <button className="btn" type="submit" disabled={isPending}>
           {isPending ? "Submitting…" : "Submit"}
         </button>
       </form>
@@ -31,4 +31,3 @@ export default function EchoForm({ action }: { action: EchoAction }) {
     </section>
   );
 }
-

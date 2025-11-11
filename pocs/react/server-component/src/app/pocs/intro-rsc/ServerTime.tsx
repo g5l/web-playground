@@ -7,11 +7,10 @@ export default async function ServerTime() {
   const now = new Date().toISOString();
 
   return (
-    <section>
+    <section className="card">
       <h3>ServerTime (Server Component)</h3>
       <p>Rendered on the server at: {now}</p>
       <small>Includes an artificial 300ms delay to simulate I/O.</small>
     </section>
   );
 }
-

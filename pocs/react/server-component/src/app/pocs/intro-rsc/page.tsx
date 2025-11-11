@@ -12,19 +12,19 @@ export default async function IntroRSCPage() {
   }
 
   return (
-    <div style={{ display: "grid", gap: 16 }}>
-      <h1>Intro: React Server Components</h1>
-      <p>
-        This page demonstrates server components, client component islands, and
-        server actions in a minimal setup.
-      </p>
+    <div className="grid" style={{ gridTemplateColumns: "1fr" }}>
+      <div className="card">
+        <h1>Intro: React Server Components</h1>
+        <p>
+          This page demonstrates server components, client component islands, and
+          server actions in a minimal setup.
+        </p>
+      </div>
 
       <ServerTime />
       <ServerEnv />
-
       <ClientCounter />
       <EchoForm action={echoAction} />
     </div>
   );
 }
-
