@@ -1,4 +1,5 @@
-import ClientCounter from "./ClientCounter";
+import ClientCounter from "@/app/pocs/intro-rsc/ClientCounter";
+import ServerCounter from "@/app/pocs/intro-rsc/ServerCounter";
 import ServerEnv from "./ServerEnv";
 import ServerTime from "./ServerTime";
 import EchoForm from "./EchoForm";
@@ -23,7 +24,8 @@ export default async function IntroRSCPage() {
 
       <ServerTime />
       <ServerEnv />
-      <ClientCounter />
+      <ServerCounter />
+      <ClientCounter/>
       <EchoForm action={echoAction} />
     </div>
   );
