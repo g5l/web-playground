@@ -13,6 +13,11 @@ export default function PocsIndex() {
             Intro RSC – server vs client, async, actions
           </Link>
         </li>
+        <li className="card">
+          <Link href="/pocs/data-fetching">
+            Data Fetching – await in server component
+          </Link>
+        </li>
       </ul>
     </div>
   );
