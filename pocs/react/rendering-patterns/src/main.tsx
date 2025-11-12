@@ -1,4 +1,5 @@
 import React from 'react';
+import './reset.css';
 import { createRoot } from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
 import { router } from './router';

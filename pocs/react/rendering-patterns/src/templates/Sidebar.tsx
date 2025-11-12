@@ -37,10 +37,6 @@ export default function Sidebar({ variant }: { variant: 'pattern' | 'anti' }) {
           ))}
         </div>
       </nav>
-
-      <div className="sidebar__footer">
-        <div className="path">{loc.pathname}</div>
-      </div>
     </aside>
   );
 }
