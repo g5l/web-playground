@@ -1,0 +1,54 @@
+.anti-screen .demo-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.panel {
+  border: 1px solid var(--border-anti);
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.panel__title {
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border-anti);
+  background: rgba(255,255,255,0.06);
+  color: inherit;
+  cursor: pointer;
+}
+
+.btn + .btn { margin-left: 8px; }
+
+.btn--wrong { border-color: #7f1d1d; }
+.btn--right { border-color: #065f46; }
+
+.list {
+  margin-top: 8px;
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.list li {
+  padding: 6px 8px;
+  border: 1px dashed var(--border-anti);
+  border-radius: 6px;
+}
+
+.actions { margin-top: 10px; }
+
+.hint {
+  margin-top: 8px;
+  font-size: 12px;
+  opacity: 0.8;
+}
+
