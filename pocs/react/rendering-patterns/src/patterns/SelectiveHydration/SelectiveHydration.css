@@ -1,0 +1,62 @@
+.sh-page {
+  padding: 20px;
+}
+
+.sh-header {
+  margin-bottom: 16px;
+}
+
+.sh-grid {
+  display: grid;
+  gap: 12px;
+}
+
+@media (min-width: 720px) {
+  .sh-grid { grid-template-columns: 1fr 1fr; }
+}
+
+.widget {
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.widget-hdr {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.widget-body { padding: 12px; }
+
+.btn {
+  background: #0ea5e9;
+  color: white;
+  border: 0;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.badge {
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+}
+.badge.server { color: #f59e0b; }
+.badge.hydrated { color: #10b981; }
+
+.fallback {
+  padding: 12px;
+  border: 1px dashed rgba(255,255,255,0.2);
+  border-radius: 6px;
+}
+
+.chart-skel { display: grid; gap: 6px; }
+.chart-skel div { height: 12px; background: rgba(255,255,255,0.08); border-radius: 6px; }
+
+.muted { opacity: 0.8; font-size: 12px; }
+

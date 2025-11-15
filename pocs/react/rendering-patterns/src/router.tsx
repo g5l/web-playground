@@ -11,9 +11,11 @@ const lazyMap: Record<string, React.LazyExoticComponent<React.FC>> = {
   ConditionalRendering: React.lazy(() => import('@patterns/ConditionalRendering')),
   ListRendering: React.lazy(() => import('@patterns/ListRendering')),
   ProgressiveHydration: React.lazy(() => import('@patterns/ProgressiveHydration')),
+  SelectiveHydration: React.lazy(() => import('@patterns/SelectiveHydration')),
   // Anti-Patterns
   IndexAsKey: React.lazy(() => import('@antipatterns/IndexAsKey')),
   OverusingContext: React.lazy(() => import('@antipatterns/OverusingContext')),
+  SideEffectsInRender: React.lazy(() => import('@antipatterns/SideEffectsInRender')),
   MutatingStateDirectly: React.lazy(() => import('@antipatterns/MutatingStateDirectly')),
 };
 
