@@ -1,0 +1,75 @@
+:root {
+  --font-sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+  --font-size-base: 18px;
+  --line-height-base: 1.65;
+  --max-content-width: 120ch;
+
+  --heading-1: clamp(1.8rem, 1.2rem + 2vw, 2.4rem);
+  --heading-2: clamp(1.4rem, 1.0rem + 1.2vw, 1.8rem);
+  --heading-3: clamp(1.2rem, 0.9rem + 0.8vw, 1.4rem);
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.content .content__body {
+  max-width: var(--max-content-width);
+}
+
+h1, h2, h3 {
+  line-height: 1.2;
+  margin: 0 0 0.6rem;
+}
+
+h1 {
+  font-size: var(--heading-1);
+}
+
+h2 {
+  font-size: var(--heading-2);
+}
+
+h3 {
+  font-size: var(--heading-3);
+}
+
+p {
+  margin: 0.75rem 0;
+}
+
+ul, ol {
+  margin: 0.75rem 0 0.75rem 1.25rem;
+}
+
+a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+code, pre {
+  font-family: var(--font-mono);
+  font-size: 0.95em;
+}
+
+pre {
+  line-height: 1.5;
+}
+
+:focus-visible {
+  outline: 2px solid #93c5fd;
+  outline-offset: 2px;
+}
+
