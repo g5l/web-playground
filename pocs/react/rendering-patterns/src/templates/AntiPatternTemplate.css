@@ -23,7 +23,7 @@
 
 .content__header {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 16px;
   padding-bottom: 16px;
   border-bottom: 1px dashed var(--border-anti);
