@@ -27,7 +27,8 @@
 }
 
 .brand-text strong {
-  font-size: 14px;
+  line-height: 1;
+  font-size: 20px;
   display: block;
 }
 
