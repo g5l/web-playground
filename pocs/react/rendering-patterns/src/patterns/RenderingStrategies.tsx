@@ -5,18 +5,6 @@ import './RenderingStrategies.css';
 export default function RenderingStrategies() {
   return (
     <div className="pattern-screen">
-      <CodeCard
-        title="Rendering Strategies"
-        description="What CSR, SSR, SSG, ISG, and RSC are, and when to use them."
-      >
-        <ul className="rs-list">
-          <li><strong>CSR</strong>: render fully on the client after JS loads.</li>
-          <li><strong>SSR</strong>: server renders HTML per request, then hydrates.</li>
-          <li><strong>SSG</strong>: build-time prerender to static HTML.</li>
-          <li><strong>ISG</strong>: like SSG, but pages can revalidate incrementally.</li>
-          <li><strong>RSC</strong>: render components on the server with minimal client JS.</li>
-        </ul>
-      </CodeCard>
 
       <CodeCard title="Client-Side Rendering (CSR)">
         <p><em>What</em>: Server sends a shell; React renders everything in the browser.</p>
