@@ -7,7 +7,7 @@ export default function RenderingStrategies() {
     <div className="pattern-screen">
       <CodeCard
         title="Rendering Strategies"
-        description="What CSR, SSR, SSG, ISG, and RSC are — and when to use them."
+        description="What CSR, SSR, SSG, ISG, and RSC are, and when to use them."
       >
         <ul className="rs-list">
           <li><strong>CSR</strong>: render fully on the client after JS loads.</li>
@@ -32,7 +32,16 @@ export default function RenderingStrategies() {
         <p><em>Use when</em>: Marketing pages, content that depends on per-request data, strong SEO.</p>
         <ul className="rs-bullets">
           <li><strong>Pros</strong>: Fast first content, good SEO, auth-aware HTML.</li>
-          <li><strong>Cons</strong>: Server cost/complexity; sensitive to backend latency (TTFB).</li>
+          <li><strong>Cons</strong>: Server cost/complexity; sensitive to backend latency.</li>
+        </ul>
+      </CodeCard>
+
+      <CodeCard title="React Server Components (RSC)">
+        <p><em>What</em>: Components render on the server and stream to the client; only interactive parts ship JS.</p>
+        <p><em>Use when</em>: Reduce client JS, fetch on the server, stream UI early, compose server/client boundaries.</p>
+        <ul className="rs-bullets">
+          <li><strong>Pros</strong>: Less client JS, better network utilization, simpler data fetching.</li>
+          <li><strong>Cons</strong>: Requires RSC-enabled framework (e.g., Next.js 13+)</li>
         </ul>
       </CodeCard>
 
@@ -45,7 +54,7 @@ export default function RenderingStrategies() {
         </ul>
       </CodeCard>
 
-      <CodeCard title="Incremental Static Generation (ISG)">
+      <CodeCard title="Incremental Static Generation (iSSG)">
         <p><em>What</em>: Static pages can be re-generated on-demand with caching and revalidation.</p>
         <p><em>Use when</em>: Mostly-static content that updates periodically (catalogs, news, docs).</p>
         <ul className="rs-bullets">
@@ -54,21 +63,12 @@ export default function RenderingStrategies() {
         </ul>
       </CodeCard>
 
-      <CodeCard title="React Server Components (RSC)">
-        <p><em>What</em>: Components render on the server and stream to the client; only interactive parts ship JS.</p>
-        <p><em>Use when</em>: Reduce client JS, fetch on the server, stream UI early, compose server/client boundaries.</p>
+      <CodeCard title="Conclusion">
         <ul className="rs-bullets">
-          <li><strong>Pros</strong>: Less client JS, better network utilization, simpler data fetching.</li>
-          <li><strong>Cons</strong>: Requires RSC-enabled framework (e.g., Next.js 13+); new mental model.</li>
-        </ul>
-      </CodeCard>
-
-      <CodeCard title="Choosing Guide">
-        <ul className="rs-bullets">
-          <li><strong>App-like SPA</strong>: CSR + selective/partial SSR where needed.</li>
-          <li><strong>Content/SEO critical</strong>: SSR or SSG; add ISG for freshness.</li>
-          <li><strong>Large surfaces with data fetching</strong>: Consider an RSC-enabled framework.</li>
-          <li><strong>Hybrid</strong>: Mix per-route strategies; modern frameworks support this.</li>
+          <li><strong>Client-Side Rendering (CSR)</strong>: gives you flexibility.</li>
+          <li><strong>Server-Side Rendering (SSR)</strong>: gives you personalization.</li>
+          <li><strong>Static Site Generation (SSG)</strong>: gives you performance.</li>
+          <li><strong>Incremental Static Generation (iSSG) and (RSC)</strong>: bridge those worlds with modern optimizations</li>
         </ul>
       </CodeCard>
     </div>

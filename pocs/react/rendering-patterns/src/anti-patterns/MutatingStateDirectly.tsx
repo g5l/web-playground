@@ -23,7 +23,7 @@ export default function MutatingStateDirectly() {
     <div className="anti-screen">
       <CodeCard
         title="Anti-Pattern: Mutating State Directly"
-        description="Changing state objects or arrays in place prevents React from detecting updates — always return new copies."
+        description="Changing state objects or arrays in place prevents React from detecting updates always return new copies."
       >
         <div className="demo-row">
           <div className="panel">
@@ -32,7 +32,6 @@ export default function MutatingStateDirectly() {
             <ul className="list">
               {wrongItems.map((it, idx) => (<li key={idx}>{it}</li>))}
             </ul>
-            <p className="hint">Clicking may not render a new item — same reference.</p>
           </div>
           <div className="panel">
             <div className="panel__title">Correct</div>
@@ -57,10 +56,10 @@ export default function MutatingStateDirectly() {
       <CodeCard title="Correct Usage">
         <pre>
           {`
-            // Arrays — create a new array
+            // Arrays: create a new array
             setItems(prev => [...prev, newItem]);
             
-            // Objects — create a new object
+            // Objects: create a new object
             setUser(prev => ({ ...prev, name: 'Ada' }));
           `}
         </pre>

@@ -20,7 +20,7 @@ function ChatButton() {
         <HydrationBadge />
       </div>
       <div className="widget-body">
-        <p>Click quickly after load — with selective hydration this is responsive even while the chart hydrates.</p>
+        <p>Click quickly after load, with selective hydration this is responsive even while the chart hydrates.</p>
         <button className="btn" onClick={() => setCount(c => c + 1)}>Send ping ({count})</button>
       </div>
     </div>

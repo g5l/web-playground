@@ -54,7 +54,7 @@ export default function SideEffectsInRender() {
     <div className="anti-screen">
       <CodeCard
         title="Anti-Pattern: Side Effects in Render"
-        description="Triggering effects (API calls, localStorage writes) inside render breaks React's predictable model — use useEffect instead."
+        description="Triggering effects (API calls, localStorage writes) inside render breaks React's predictable model, use useEffect instead."
       >
         <div className="demo-row">
           <div className="panel">
@@ -110,14 +110,14 @@ export default function SideEffectsInRender() {
       <CodeCard title="Correct Usage">
         <pre>
           {`
-            // Wrong — side effect in render
+            // Wrong: side effect in render
             function Profile({ id }) {
-              // DON'T do this — runs every render, may duplicate in Strict Mode
+              // DON'T do this, runs every render, may duplicate in Strict Mode
               localStorage.setItem('lastProfile', id);
               return <div>Profile {id}</div>;
             }
             
-            // Right — move effects to useEffect
+            // Right: move effects to useEffect
             function Profile({ id }) {
               useEffect(() => {
                 localStorage.setItem('lastProfile', id);
@@ -125,7 +125,7 @@ export default function SideEffectsInRender() {
               return <div>Profile {id}</div>;
             }
             
-            // Fetching data — wrap in useEffect or a data layer
+            // Fetching data, wrap in useEffect or a data layer
             function UserList() {
               const [users, setUsers] = useState<User[]>([]);
               useEffect(() => {

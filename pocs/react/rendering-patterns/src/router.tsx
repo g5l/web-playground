@@ -12,6 +12,7 @@ const lazyMap: Record<string, React.LazyExoticComponent<React.FC>> = {
   ListRendering: React.lazy(() => import('@patterns/ListRendering')),
   ProgressiveHydration: React.lazy(() => import('@patterns/ProgressiveHydration')),
   SelectiveHydration: React.lazy(() => import('@patterns/SelectiveHydration')),
+  IncrementalStaticRendering: React.lazy(() => import('@patterns/IncrementalStaticRendering')),
   RenderingStrategies: React.lazy(() => import('@patterns/RenderingStrategies')),
   // Anti-Patterns
   IndexAsKey: React.lazy(() => import('@antipatterns/IndexAsKey')),
