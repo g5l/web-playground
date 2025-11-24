@@ -1,0 +1,50 @@
+.anti-screen .demo-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.panel {
+  border: 1px solid var(--border-anti);
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.panel__title {
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.controls { margin-bottom: 8px; display: flex; gap: 8px; flex-wrap: wrap; }
+
+.btn {
+  display: inline-block;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border-anti);
+  background: rgba(255,255,255,0.06);
+  color: inherit;
+  cursor: pointer;
+}
+
+.btn--wrong { border-color: #7f1d1d; }
+.btn--right { border-color: #065f46; }
+
+.child {
+  border: 1px dashed var(--border-anti);
+  border-radius: 8px;
+  padding: 10px;
+}
+.child__hdr { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+
+.render-badge {
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 999px;
+  border: 1px solid var(--border-anti);
+}
+
+.hint { margin-top: 8px; font-size: 12px; opacity: 0.8; }
+
+.bullets { list-style: disc; padding-left: 1.25rem; display: grid; gap: 6px; }
+

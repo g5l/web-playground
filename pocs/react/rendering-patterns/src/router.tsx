@@ -18,6 +18,7 @@ const lazyMap: Record<string, React.LazyExoticComponent<React.FC>> = {
   IndexAsKey: React.lazy(() => import('@antipatterns/IndexAsKey')),
   OverusingContext: React.lazy(() => import('@antipatterns/OverusingContext')),
   SideEffectsInRender: React.lazy(() => import('@antipatterns/SideEffectsInRender')),
+  UnstableProps: React.lazy(() => import('@antipatterns/UnstableProps')),
   MutatingStateDirectly: React.lazy(() => import('@antipatterns/MutatingStateDirectly')),
 };
 
