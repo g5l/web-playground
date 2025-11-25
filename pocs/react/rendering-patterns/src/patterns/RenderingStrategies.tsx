@@ -29,7 +29,7 @@ export default function RenderingStrategies() {
         <p><em>Use when</em>: Reduce client JS, fetch on the server, stream UI early, compose server/client boundaries.</p>
         <ul className="rs-bullets">
           <li><strong>Pros</strong>: Less client JS, better network utilization, simpler data fetching.</li>
-          <li><strong>Cons</strong>: Requires RSC-enabled framework (e.g., Next.js 13+)</li>
+          <li><strong>Cons</strong>: Limited client-side interactivity</li>
         </ul>
       </CodeCard>
 
