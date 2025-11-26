@@ -27,14 +27,11 @@ export default function SideEffectsInRender() {
   const [rightCount, setRightCount] = useState(0);
   const [rightLog, setRightLog] = useState<string[]>([]);
 
-  // Anti-pattern: side effect inside render path
   appendLog(LS_WRONG, `render: count=${wrongCount} @ ${new Date().toLocaleTimeString()}`);
 
-  // Keep UI in sync with current logs 
   useEffect(() => setWrongLog(readLog(LS_WRONG)), []);
   useEffect(() => setWrongLog(readLog(LS_WRONG)), [wrongCount]);
 
-  // Correct usage
   useEffect(() => {
     appendLog(LS_RIGHT, `effect: count=${rightCount} @ ${new Date().toLocaleTimeString()}`);
     setRightLog(readLog(LS_RIGHT));
