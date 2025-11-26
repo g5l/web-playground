@@ -48,7 +48,6 @@ export default function IndexAsKey() {
     <div className="anti-screen">
       <CodeCard
         title="Anti-Pattern: Using Index as Key"
-        description="Keys must reflect item identity. Using the array index breaks identity when inserting/reordering. React may reuse the wrong component/DOM, causing state and focus glitches."
       >
         <div className="demo-row">
           <div className="panel">
@@ -64,7 +63,6 @@ export default function IndexAsKey() {
                 </li>
               ))}
             </ul>
-            <p className="hint">Type in an input, then insert at top or reverse, text jumps rows because component instances are reused by position.</p>
           </div>
 
           <div className="panel">
@@ -80,7 +78,6 @@ export default function IndexAsKey() {
                 </li>
               ))}
             </ul>
-            <p className="hint">With stable keys, each row keeps its own state and focus correctly across list changes.</p>
           </div>
         </div>
       </CodeCard>
