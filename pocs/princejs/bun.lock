@@ -1,0 +1,19 @@
+{
+  "lockfileVersion": 1,
+  "workspaces": {
+    "": {
+      "name": "princejs",
+      "dependencies": {
+        "princejs": "^1.7.7",
+        "zod": "^4.1.13",
+      },
+    },
+  },
+  "packages": {
+    "jose": ["jose@6.1.2", "", {}, "sha512-MpcPtHLE5EmztuFIqB0vzHAWJPpmN1E6L4oo+kze56LIs3MyXIj9ZHMDxqOvkP38gBR7K1v3jqd4WU2+nrfONQ=="],
+
+    "princejs": ["princejs@1.7.7", "", { "dependencies": { "jose": "^6.1.2" }, "peerDependencies": { "zod": "^4.1.12" }, "optionalPeers": ["zod"], "bin": { "create-princejs": "dist/create.js" } }, "sha512-iYNWXseRWmxv4FIKoMIVIva1md4FJSNLt0WyjSDPXmtbzRH0yefipV/5YWVdupbsMrD2XWjGRn64y00Ul1/WTw=="],
+
+    "zod": ["zod@4.1.13", "", {}, "sha512-AvvthqfqrAhNH9dnfmrfKzX5upOdjUVJYFqNSlkmGf64gRaTzlPwz99IHYnVs28qYAybvAlBV+H7pn0saFY4Ig=="],
+  }
+}
