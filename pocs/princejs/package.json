@@ -10,5 +10,9 @@
   },
   "engines": {
     "bun": ">=1.0.0"
+  },
+  "dependencies": {
+    "princejs": "^1.7.7",
+    "zod": "^4.1.13"
   }
 }
