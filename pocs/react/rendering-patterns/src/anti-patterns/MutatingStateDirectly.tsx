@@ -23,7 +23,6 @@ export default function MutatingStateDirectly() {
     <div className="anti-screen">
       <CodeCard
         title="Anti-Pattern: Mutating State Directly"
-        description="Changing state objects or arrays in place prevents React from detecting updates always return new copies."
       >
         <div className="demo-row">
           <div className="panel">

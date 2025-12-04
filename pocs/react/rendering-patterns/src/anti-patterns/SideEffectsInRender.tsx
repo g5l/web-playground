@@ -51,24 +51,22 @@ export default function SideEffectsInRender() {
     <div className="anti-screen">
       <CodeCard
         title="Anti-Pattern: Side Effects in Render"
-        description="Triggering effects (API calls, localStorage writes) inside render breaks React's predictable model, use useEffect instead."
+        description=""
       >
         <div className="demo-row">
           <div className="panel">
             <div className="panel__title">Wrong (side effects in render)</div>
             <div className="controls">
               <button className="btn btn--wrong" onClick={() => setWrongCount(c => c + 1)}>
-                Re-render (count: {wrongCount})
+                Add (count: {wrongCount})
               </button>
             </div>
             <div className="log">
-              <div className="log__title">localStorage log</div>
               <ul>
                 {wrongLog.slice().reverse().map((l, i) => (
                   <li key={i}>{l}</li>
                 ))}
               </ul>
-              <p className="hint">Note: This logs on every render because the write happens in render.</p>
             </div>
           </div>
 
@@ -76,17 +74,15 @@ export default function SideEffectsInRender() {
             <div className="panel__title">Correct (use useEffect)</div>
             <div className="controls">
               <button className="btn btn--right" onClick={() => setRightCount(c => c + 1)}>
-                Update (count: {rightCount})
+                Add (count: {rightCount})
               </button>
             </div>
             <div className="log">
-              <div className="log__title">localStorage log</div>
               <ul>
                 {rightLog.slice().reverse().map((l, i) => (
                   <li key={i}>{l}</li>
                 ))}
               </ul>
-              <p className="hint">Side effects run in useEffect tied to dependencies, not during render. In development Strict Mode, effects run twice on mount.</p>
             </div>
           </div>
         </div>
@@ -108,18 +104,17 @@ export default function SideEffectsInRender() {
         <pre>
           {`
             // Wrong: side effect in render
-            function Profile({ id }) {
-              // DON'T do this, runs every render, may duplicate in Strict Mode
-              localStorage.setItem('lastProfile', id);
-              return <div>Profile {id}</div>;
+            function Profile({ count }) {
+              localStorage.setItem('count', count);
+              return <div>Count: {count}</div>;
             }
             
             // Right: move effects to useEffect
-            function Profile({ id }) {
+            function Profile({ count }) {
               useEffect(() => {
-                localStorage.setItem('lastProfile', id);
-              }, [id]);
-              return <div>Profile {id}</div>;
+                localStorage.setItem('count', count);
+              }, [count]);
+              return <div>Count: {count}</div>;
             }
             
             // Fetching data, wrap in useEffect or a data layer
