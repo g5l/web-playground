@@ -17,6 +17,8 @@ out/
 .webpack/
 client/bundle.js
 client/bundle.js.map
+server/rsc/App.server.js
+server/rsc/App.server.js.map
 .next/
 .nuxt/
 .svelte-kit/

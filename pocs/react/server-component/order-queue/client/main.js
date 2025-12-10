@@ -1,7 +1,6 @@
-// Minimal client that mounts the RSC stream
 import React, { use } from "react";
 import ReactDOM from "react-dom/client";
-// Webpack consumes the browser client from the package exports
+
 import { createFromFetch } from "react-server-dom-webpack/client";
 
 const container = document.getElementById("root");

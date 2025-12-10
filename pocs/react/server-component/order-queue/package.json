@@ -5,8 +5,11 @@
   "scripts": {
     "start": "NODE_ENV=production npm run build && NODE_ENV=production node --conditions react-server server/index.js",
     "dev": "NODE_ENV=development node --conditions react-server server/index.js",
-    "build": "webpack --config webpack.config.js",
-    "build:watch": "webpack --config webpack.config.js --watch"
+    "build": "npm run build:client && npm run build:server",
+    "build:client": "webpack --config webpack.config.js",
+    "build:client:watch": "webpack --config webpack.config.js --watch",
+    "build:server": "esbuild server/rsc/App.server.jsx --format=esm --jsx=automatic --outfile=server/rsc/App.server.js",
+    "build:server:watch": "esbuild server/rsc/App.server.jsx --format=esm --jsx=automatic --outfile=server/rsc/App.server.js --watch"
   },
   "dependencies": {
     "express": "^4.19.2",
@@ -16,6 +19,7 @@
   },
   "devDependencies": {
     "webpack": "^5.95.0",
-    "webpack-cli": "^5.1.4"
+    "webpack-cli": "^5.1.4",
+    "esbuild": "^0.24.0"
   }
 }
