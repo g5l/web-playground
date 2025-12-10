@@ -25,19 +25,23 @@ app.get("/", (req, res) => {
 });
 
 // Stream the React Server Components payload
-app.get("/rsc", async (req, res, next) => {
+app.get("/rsc", async (_req, res, next) => {
   try {
     res.setHeader("Content-Type", "text/x-component");
+    res.setHeader("Cache-Control", "no-store");
     const onError = (err) => {
       console.error("RSC render error:", err);
     };
-    // For this minimal demo we pass an empty module map because we use no client components.
+    // No client components, so an empty bundler map is fine.
     const moduleMap = {};
-    // In React 19, server.node exports renderToPipeableStream for Node.js
-    const stream = ReactServerDOM.renderToPipeableStream(React.createElement(App, null), moduleMap, {
-      onError,
-    });
-    stream.pipe(res);
+    // Use the ReadableStream API and adapt to Node for robust piping.
+    const rscStream = ReactServerDOM.renderToReadableStream(
+      React.createElement(App, null),
+      moduleMap,
+      { onError }
+    );
+    if (typeof res.flushHeaders === "function") res.flushHeaders();
+    Readable.fromWeb(rscStream).pipe(res);
   } catch (err) {
     next(err);
   }
