@@ -1,0 +1,20 @@
+{
+  "name": "tax-rsc",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:client": "node scripts/build-client.mjs",
+    "dev": "node src/server/index.mjs"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-server-dom-webpack": "^19.0.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.21.5"
+  }
+}
+
