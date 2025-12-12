@@ -35757,6 +35757,129 @@ if (false) // removed by dead control flow
 }
 
 
+/***/ }),
+
+/***/ "./src/components/TaxForm.client.jsx":
+/*!*******************************************!*\
+  !*** ./src/components/TaxForm.client.jsx ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ TaxForm)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+'use client';
+
+
+
+function TaxForm({
+  products,
+  states,
+  years,
+  onCalculate,
+  initialValues
+}) {
+  const [formData, setFormData] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(() => ({
+    productId: initialValues?.productId ?? products[0]?.id ?? '',
+    stateCode: initialValues?.stateCode ?? states[0]?.code ?? '',
+    year: initialValues?.year ?? years[years.length - 1] ?? 2025,
+    quantity: initialValues?.quantity ?? 1
+  }));
+  const handleSubmit = e => {
+    e.preventDefault();
+    onCalculate(formData);
+  };
+  const handleChange = e => {
+    const {
+      name,
+      value
+    } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: name === 'quantity' || name === 'year' ? parseInt(value, 10) : value
+    }));
+  };
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("form", {
+    onSubmit: handleSubmit,
+    className: "tax-form",
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+      className: "tax-form__group",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
+        htmlFor: "productId",
+        className: "tax-form__label",
+        children: "Product:"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("select", {
+        id: "productId",
+        name: "productId",
+        value: formData.productId,
+        onChange: handleChange,
+        className: "tax-form__select",
+        children: products.map(product => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("option", {
+          value: product.id,
+          children: [product.name, " ($", product.basePrice, ")"]
+        }, product.id))
+      })]
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+      className: "tax-form__group",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
+        htmlFor: "stateCode",
+        className: "tax-form__label",
+        children: "State:"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("select", {
+        id: "stateCode",
+        name: "stateCode",
+        value: formData.stateCode,
+        onChange: handleChange,
+        className: "tax-form__select",
+        children: states.map(state => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("option", {
+          value: state.code,
+          children: [state.name, " (", state.code, ")"]
+        }, state.code))
+      })]
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+      className: "tax-form__group",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
+        htmlFor: "year",
+        className: "tax-form__label",
+        children: "Tax Year:"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("select", {
+        id: "year",
+        name: "year",
+        value: formData.year,
+        onChange: handleChange,
+        className: "tax-form__select",
+        children: years.map(year => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("option", {
+          value: year,
+          children: year
+        }, year))
+      })]
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+      className: "tax-form__group",
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
+        htmlFor: "quantity",
+        className: "tax-form__label",
+        children: "Quantity:"
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
+        type: "number",
+        id: "quantity",
+        name: "quantity",
+        min: "1",
+        value: formData.quantity,
+        onChange: handleChange,
+        className: "tax-form__input"
+      })]
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
+      type: "submit",
+      className: "tax-form__button",
+      children: "Calculate Tax"
+    })]
+  });
+}
+
 /***/ })
 
 /******/ 	});
@@ -36045,23 +36168,90 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_server_dom_webpack_client__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-server-dom-webpack/client */ "./node_modules/react-server-dom-webpack/client.browser.js");
 /* harmony import */ var react_dom_client__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-dom/client */ "./node_modules/react-dom/client.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _components_TaxForm_client_jsx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/TaxForm.client.jsx */ "./src/components/TaxForm.client.jsx");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
 
 
 
 
 const root = (0,react_dom_client__WEBPACK_IMPORTED_MODULE_2__.createRoot)(document.getElementById("root"));
-root.render(/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(Root, {}));
-const cache = new Map();
-function Root() {
-  let content = cache.get("home");
+root.render(/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(App, {}));
+const rscCache = new Map();
+function App() {
+  const [version, setVersion] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0);
+
+  // Listen for navigation events triggered by the form
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    const onNavigate = () => setVersion(v => v + 1);
+    window.addEventListener("rsc:navigate", onNavigate);
+    return () => window.removeEventListener("rsc:navigate", onNavigate);
+  }, []);
+
+  // Fetch RSC tree with current query string
+  const search = typeof window !== "undefined" ? window.location.search : "";
+  const cacheKey = `rsc:${search}`;
+  let content = rscCache.get(cacheKey);
   if (!content) {
-    content = (0,react_server_dom_webpack_client__WEBPACK_IMPORTED_MODULE_1__.createFromFetch)(fetch("/react"));
-    cache.set("home", content);
+    content = (0,react_server_dom_webpack_client__WEBPACK_IMPORTED_MODULE_1__.createFromFetch)(fetch(`/react${search}`));
+    rscCache.set(cacheKey, content);
   }
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.Fragment, {
+
+  // After RSC content has been committed, mount the TaxForm client component
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    mountTaxForm();
+  }, [version, search]);
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
     children: (0,react__WEBPACK_IMPORTED_MODULE_0__.use)(content)
   });
+}
+function mountTaxForm() {
+  const container = document.getElementById("tax-form-root");
+  if (!container) return;
+
+  // Avoid remounting if already mounted
+  if (container.__mounted) return;
+  const products = JSON.parse(container.getAttribute("data-products") || "[]");
+  const states = JSON.parse(container.getAttribute("data-states") || "[]");
+  const years = JSON.parse(container.getAttribute("data-years") || "[]");
+
+  // Pre-fill from current URL params if present
+  const params = new URLSearchParams(window.location.search);
+  const productId = params.get("productId") || undefined;
+  const stateCode = params.get("stateCode") || undefined;
+  const year = params.get("year") ? parseInt(params.get("year"), 10) : undefined;
+  const quantity = params.get("quantity") ? parseInt(params.get("quantity"), 10) : undefined;
+  const initialValues = {
+    productId,
+    stateCode,
+    year,
+    quantity
+  };
+  const formRoot = (0,react_dom_client__WEBPACK_IMPORTED_MODULE_2__.createRoot)(container);
+  container.__mounted = true;
+  const onCalculate = ({
+    productId,
+    stateCode,
+    year,
+    quantity
+  }) => {
+    const params = new URLSearchParams({
+      productId,
+      stateCode,
+      year: String(year),
+      quantity: String(quantity)
+    });
+    const url = `?${params.toString()}`;
+    window.history.pushState(null, "", url);
+    window.dispatchEvent(new Event("rsc:navigate"));
+  };
+  formRoot.render(/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_components_TaxForm_client_jsx__WEBPACK_IMPORTED_MODULE_3__["default"], {
+    products: products,
+    states: states,
+    years: years,
+    onCalculate: onCalculate,
+    initialValues: initialValues
+  }));
 }
 })();
 

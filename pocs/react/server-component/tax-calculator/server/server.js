@@ -15,7 +15,8 @@ const { renderToPipeableStream } = require("react-server-dom-webpack/server");
 const express = require("express");
 
 const React = require("react");
-const ReactApp = require("../src/App").default;
+const ReactApp = require("../src/components/App.server.jsx").default;
+const { calculateTax } = require("../src/data/taxData.js");
 
 const app = express();
 
@@ -33,8 +34,23 @@ app.get("/react", (req, res) => {
     "utf8"
   );
   const moduleMap = JSON.parse(manifest);
+
+  let calculationResult = null;
+  try {
+    const { productId, stateCode, year, quantity } = req.query || {};
+    if (productId && stateCode && year && quantity) {
+      const parsedYear = parseInt(year, 10);
+      const parsedQty = parseInt(quantity, 10);
+      if (!Number.isNaN(parsedYear) && !Number.isNaN(parsedQty)) {
+        calculationResult = calculateTax(productId, stateCode, parsedYear, parsedQty);
+      }
+    }
+  } catch (e) {
+    // If calculation fails, keep result null and continue rendering
+  }
+
   const { pipe } = renderToPipeableStream(
-    React.createElement(ReactApp),
+    React.createElement(ReactApp, { calculationResult }),
     moduleMap
   );
   pipe(res);

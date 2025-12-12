@@ -2,13 +2,13 @@
 
 import { useState } from 'react';
 
-export default function TaxForm({ products, states, years, onCalculate }) {
-  const [formData, setFormData] = useState({
-    productId: products[0]?.id || '',
-    stateCode: states[0]?.code || '',
-    year: years[years.length - 1] || 2025,
-    quantity: 1,
-  });
+export default function TaxForm({ products, states, years, onCalculate, initialValues }) {
+  const [formData, setFormData] = useState(() => ({
+    productId: initialValues?.productId ?? products[0]?.id ?? '',
+    stateCode: initialValues?.stateCode ?? states[0]?.code ?? '',
+    year: initialValues?.year ?? years[years.length - 1] ?? 2025,
+    quantity: initialValues?.quantity ?? 1,
+  }));
 
   const handleSubmit = (e) => {
     e.preventDefault();
