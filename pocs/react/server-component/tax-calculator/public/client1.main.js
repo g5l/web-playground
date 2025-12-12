@@ -21,8 +21,7 @@ __webpack_require__.r(__webpack_exports__);
 function TaxForm({
   products,
   states,
-  years,
-  onCalculate
+  years
 }) {
   const [formData, setFormData] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
     productId: products[0]?.id || '',
@@ -30,10 +29,6 @@ function TaxForm({
     year: years[years.length - 1] || 2025,
     quantity: 1
   });
-  const handleSubmit = e => {
-    e.preventDefault();
-    onCalculate(formData);
-  };
   const handleChange = e => {
     const {
       name,
@@ -45,7 +40,8 @@ function TaxForm({
     }));
   };
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("form", {
-    onSubmit: handleSubmit,
+    method: "GET",
+    action: "/",
     className: "tax-form",
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
       className: "tax-form__group",

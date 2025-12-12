@@ -38,16 +38,12 @@ app.get("/react", (req, res) => {
   let calculationResult = null;
   try {
     const { productId, stateCode, year, quantity } = req.query || {};
-    if (productId && stateCode && year && quantity) {
-      const parsedYear = parseInt(year, 10);
-      const parsedQty = parseInt(quantity, 10);
-      if (!Number.isNaN(parsedYear) && !Number.isNaN(parsedQty)) {
-        calculationResult = calculateTax(productId, stateCode, parsedYear, parsedQty);
-      }
+    if (productId && stateCode && year) {
+      const y = Number(year);
+      const q = quantity ? Number(quantity) : 1;
+      calculationResult = calculateTax(productId, stateCode, y, q);
     }
-  } catch (e) {
-    // If calculation fails, keep result null and continue rendering
-  }
+  } catch (e) {}
 
   const { pipe } = renderToPipeableStream(
     React.createElement(ReactApp, { calculationResult }),

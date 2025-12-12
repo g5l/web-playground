@@ -1,17 +1,17 @@
 {
-  "file:///Users/gabrieldebona/Code/web-playground/pocs/react/server-component/tax-calculator/src/components/TaxForm.client.jsx": {
-    "id": "./src/components/TaxForm.client.jsx",
-    "chunks": [
-      "main",
-      "main.js"
-    ],
-    "name": "*"
-  },
   "file:///Users/gabrieldebona/Code/web-playground/pocs/react/server-component/tax-calculator/src/Counter.js": {
     "id": "./src/Counter.js",
     "chunks": [
       "client0",
       "client0.main.js"
+    ],
+    "name": "*"
+  },
+  "file:///Users/gabrieldebona/Code/web-playground/pocs/react/server-component/tax-calculator/src/components/TaxForm.client.jsx": {
+    "id": "./src/components/TaxForm.client.jsx",
+    "chunks": [
+      "client1",
+      "client1.main.js"
     ],
     "name": "*"
   }

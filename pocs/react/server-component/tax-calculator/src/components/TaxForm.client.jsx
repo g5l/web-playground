@@ -2,18 +2,13 @@
 
 import { useState } from 'react';
 
-export default function TaxForm({ products, states, years, onCalculate, initialValues }) {
-  const [formData, setFormData] = useState(() => ({
-    productId: initialValues?.productId ?? products[0]?.id ?? '',
-    stateCode: initialValues?.stateCode ?? states[0]?.code ?? '',
-    year: initialValues?.year ?? years[years.length - 1] ?? 2025,
-    quantity: initialValues?.quantity ?? 1,
-  }));
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onCalculate(formData);
-  };
+export default function TaxForm({ products, states, years }) {
+  const [formData, setFormData] = useState({
+    productId: products[0]?.id || '',
+    stateCode: states[0]?.code || '',
+    year: years[years.length - 1] || 2025,
+    quantity: 1,
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,7 +19,7 @@ export default function TaxForm({ products, states, years, onCalculate, initialV
   };
 
   return (
-    <form onSubmit={handleSubmit} className="tax-form">
+    <form method="GET" action="/" className="tax-form">
       <div className="tax-form__group">
         <label htmlFor="productId" className="tax-form__label">
           Product:

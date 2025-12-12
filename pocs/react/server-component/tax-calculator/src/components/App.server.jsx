@@ -1,4 +1,5 @@
 import TaxResult from './TaxResult.server.jsx';
+import TaxForm from './TaxForm.client.jsx';
 import { products, states, years } from '../data/taxData.js';
 
 export default function App({ calculationResult }) {
@@ -12,12 +13,7 @@ export default function App({ calculationResult }) {
       <div className="content">
         <div className="card">
           <h2>Calculate Tax</h2>
-          <div
-            id="tax-form-root"
-            data-products={JSON.stringify(products)}
-            data-states={JSON.stringify(states)}
-            data-years={JSON.stringify(years)}
-          />
+          <TaxForm products={products} states={states} years={years} />
         </div>
 
         <div className="card">
