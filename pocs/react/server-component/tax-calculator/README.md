@@ -1,5 +1,8 @@
 # Tax Calculator (React Server Components Demo)
 
+<img width="781" height="679" alt="image" src="https://github.com/user-attachments/assets/dec6edeb-d954-48ff-950a-8f3c116661c7" />
+
+
 A small demo app that showcases React Server Components (RSC) working with a client-side form that submits via GET and renders the result with a Server Component. It uses an Express server to stream the RSC tree and Webpack to build the client bundle and client manifest.
 
 ## Features
