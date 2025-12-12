@@ -117,6 +117,8 @@ out
 .nuxt
 dist
 
+.idea/
+
 # Gatsby files
 
 .cache/

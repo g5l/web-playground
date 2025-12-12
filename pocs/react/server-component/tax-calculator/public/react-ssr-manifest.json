@@ -1,0 +1,20 @@
+{
+  "moduleLoading": {
+    "prefix": "auto",
+    "crossOrigin": null
+  },
+  "moduleMap": {
+    "./src/Counter.js": {
+      "*": {
+        "specifier": "file:///Users/gabrieldebona/Code/web-playground/pocs/react/server-component/tax-calculator/src/Counter.js",
+        "name": "*"
+      }
+    },
+    "./src/components/TaxForm.client.jsx": {
+      "*": {
+        "specifier": "file:///Users/gabrieldebona/Code/web-playground/pocs/react/server-component/tax-calculator/src/components/TaxForm.client.jsx",
+        "name": "*"
+      }
+    }
+  }
+}

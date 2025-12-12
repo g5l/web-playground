@@ -15,7 +15,7 @@ webpack(
     module: {
       rules: [
         {
-          test: /\.js$/,
+          test: /\.[jt]sx?$/,
           use: "babel-loader",
           exclude: /node_modules/,
         },
