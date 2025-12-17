@@ -1,5 +1,6 @@
-import React from 'react';
-import GridLayoutLib, { WidthProvider } from 'react-grid-layout';
+import React, { useState } from 'react';
+import GridLayoutLib from 'react-grid-layout';
+import { WidthProvider } from 'react-grid-layout/legacy';
 
 const GridLayout = WidthProvider(GridLayoutLib);
 
@@ -13,11 +14,10 @@ const initialLayout = [
 ];
 
 export default function BasicGrid() {
-  const [layout, setLayout] = React.useState(initialLayout);
+  const [layout, setLayout] = useState(initialLayout);
 
   return (
     <section>
-      <p className="note">Drag and resize items. Layout updates are logged to the console.</p>
       <GridLayout
         className="layout"
         layout={layout}
@@ -28,7 +28,6 @@ export default function BasicGrid() {
         compactType="vertical"
         onLayoutChange={(next) => {
           setLayout(next);
-          // eslint-disable-next-line no-console
           console.log('layout:', next);
         }}
       >
@@ -41,4 +40,3 @@ export default function BasicGrid() {
     </section>
   );
 }
-

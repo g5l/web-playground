@@ -21,6 +21,8 @@ Two small examples using `react-grid-layout` with a modern React setup (Vite). N
 
 1. Install dependencies: `npm install`
 2. Start dev server: `npm run dev`
-3. Open the URL printed in the terminal
+3. Open the URL printed in the terminal (typically http://localhost:5173)
+
+If you previously saw `vite: command not found`, it means dependencies weren't installed yet. Running `npm install` fixes it.
 
 CSS from `react-grid-layout` and `react-resizable` is imported in `src/main.jsx`.

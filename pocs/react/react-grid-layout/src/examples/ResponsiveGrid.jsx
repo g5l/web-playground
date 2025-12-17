@@ -1,5 +1,6 @@
-import React from 'react';
-import { Responsive, WidthProvider } from 'react-grid-layout';
+import React, { useState } from 'react';
+import { Responsive } from 'react-grid-layout';
+import { WidthProvider } from 'react-grid-layout/legacy';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
@@ -31,11 +32,12 @@ const layouts = {
 };
 
 export default function ResponsiveGrid() {
-  const [bp, setBp] = React.useState('lg');
+  const [bp, setBp] = useState('lg');
+
+  const items = ['a', 'b', 'c', 'd', 'e'];
 
   return (
     <section>
-      <p className="note">Current breakpoint: <strong>{bp}</strong>. Resize the window.</p>
       <ResponsiveGridLayout
         className="layout"
         layouts={layouts}
@@ -47,7 +49,7 @@ export default function ResponsiveGrid() {
         onBreakpointChange={(next) => setBp(next)}
         onLayoutChange={(l, all) => console.log('layouts:', all)}
       >
-        {['a','b','c','d','e'].map((k) => (
+        {items.map((k) => (
           <div key={k} className="grid-item">
             <span className="label">Item {k.toUpperCase()}</span>
           </div>
@@ -56,4 +58,3 @@ export default function ResponsiveGrid() {
     </section>
   );
 }
-
