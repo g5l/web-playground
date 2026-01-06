@@ -1,0 +1,13 @@
+{
+  "name": "own-tailwind",
+  "version": "1.0.0",
+  "description": "My own Tailwind CSS",
+  "main": "build.js",
+  "scripts": {
+    "build": "node build.js",
+    "test": "node test/verify-bundle.js"
+  },
+  "keywords": ["css", "tailwind", "utility-css"],
+  "author": "",
+  "license": "MIT"
+}
