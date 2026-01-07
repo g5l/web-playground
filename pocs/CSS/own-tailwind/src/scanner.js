@@ -25,7 +25,7 @@ function getAllFiles(dirPath, extensions, fileList = []) {
 
 function extractClasses(content) {
   const classes = new Set();
-  
+
   const patterns = [
     /class\s*=\s*"([^"]*)"/g,
     /class\s*=\s*'([^']*)'/g,
@@ -35,9 +35,12 @@ function extractClasses(content) {
 
   for (const pattern of patterns) {
     let match;
+    
     while ((match = pattern.exec(content)) !== null) {
       const classString = match[1];
-      const individualClasses = classString.split(/\s+/).filter(c => c.length > 0);
+      console.log({classString});
+      const individualClasses = classString.split(/\s+/);
+      console.log({individualClasses});
       for (const cls of individualClasses) {
         classes.add(cls);
       }
@@ -54,7 +57,7 @@ function scanFiles(paths, extensions = ['.html', '.jsx', '.tsx', '.vue', '.js', 
     const fullPath = path.resolve(inputPath);
 
     if (!fs.existsSync(fullPath)) {
-      console.warn(`Warning: Path does not exist: ${fullPath}`);
+      console.warn(`Path does not exist: ${fullPath}`);
       continue;
     }
 
@@ -66,10 +69,10 @@ function scanFiles(paths, extensions = ['.html', '.jsx', '.tsx', '.vue', '.js', 
     } else {
       filesToScan = [fullPath];
     }
-    
+
     for (const file of filesToScan) {
-      console.log(`Scanning: ${file}`);
       const content = fs.readFileSync(file, 'utf-8');
+      console.log({content});
       const classes = extractClasses(content);
 
       for (const cls of classes) {
@@ -78,8 +81,7 @@ function scanFiles(paths, extensions = ['.html', '.jsx', '.tsx', '.vue', '.js', 
     }
   }
 
-  console.log(`\nFound ${allClasses.size} unique classes`);
   return allClasses;
 }
 
-module.exports = { scanFiles, extractClasses };
+module.exports = {scanFiles};
