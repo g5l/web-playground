@@ -9,6 +9,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <TamboProvider
       apiKey={import.meta.env.VITE_TAMBO_API_KEY}
       components={tamboComponents}
+      userKey="demo-user"
     >
       <App />
     </TamboProvider>
