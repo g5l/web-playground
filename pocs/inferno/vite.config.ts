@@ -2,8 +2,8 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   esbuild: {
-    jsxFactory: 'Inferno.createElement',
-    jsxFragment: 'Inferno.Fragment'
+    jsxFactory: 'createElement',
+    jsxFragment: 'Fragment'
   },
   server: {
     port: 5173

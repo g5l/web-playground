@@ -1,4 +1,5 @@
 import { render } from 'inferno';
+import { createElement } from 'inferno-create-element';
 import { App } from './App';
 import './styles.css';
 

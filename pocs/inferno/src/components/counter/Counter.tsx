@@ -1,29 +1,38 @@
-import { useState } from 'inferno-hooks';
+import { Component } from 'inferno';
+import { createElement } from 'inferno-create-element';
 
-export default function Counter() {
-  const [count, setCount] = useState(0);
-  const [step, setStep] = useState(1);
-  
-  return (
-    <div className="counter">
-      <div className="display">Count: <strong>{count}</strong></div>
-      
-      <div className="controls">
-        <button onClick={() => setCount(c => c - step)}>-{step}</button>
-        <button onClick={() => setCount(c => c + step)}>+{step}</button>
-        
-        <label>
-          Step:
-          <input
-            type="number"
-            value={step}
-            onInput={(e: any) => setStep(Number(e.target.value) || 1)}
-            style={{ width: 60, marginLeft: 8 }}
-          />
-        </label>
-        
-        <button onClick={() => setCount(0)}>Reset</button>
+interface CounterState {
+  count: number;
+  step: number;
+}
+
+export default class Counter extends Component<{}, CounterState> {
+  state = { count: 0, step: 1 };
+
+  render() {
+    const { count, step } = this.state;
+
+    return (
+      <div className="counter">
+        <div className="display">Count: <strong>{count}</strong></div>
+
+        <div className="controls">
+          <button onClick={() => this.setState({ count: count - step })}>-{step}</button>
+          <button onClick={() => this.setState({ count: count + step })}>+{step}</button>
+
+          <label>
+            Step:
+            <input
+              type="number"
+              value={step}
+              onInput={(e: any) => this.setState({ step: Number(e.target.value) || 1 })}
+              style={{ width: '60px', marginLeft: '8px' }}
+            />
+          </label>
+
+          <button onClick={() => this.setState({ count: 0 })}>Reset</button>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }

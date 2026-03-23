@@ -1,4 +1,4 @@
-import { useState } from 'inferno-hooks';
+import { Component } from 'inferno';
 import { createElement } from 'inferno-create-element';
 
 const PALETTE = [
@@ -31,31 +31,39 @@ function Swatch({ color, isActive, onSelect }: {
   });
 }
 
-export default function ColorPicker() {
-  const [selected, setSelected] = useState(PALETTE[0]);
+interface ColorPickerState {
+  selected: typeof PALETTE[number];
+}
 
-  return createElement('div', { style: { maxWidth: 320 } },
-    createElement('div', {
-      style: {
-        height: 80,
-        borderRadius: 8,
-        backgroundColor: selected.hex,
-        marginBottom: 16,
-        transition: 'background-color 0.3s',
-      },
-    }),
-    createElement('div', { style: { display: 'flex', gap: 10, justifyContent: 'center' } },
-      ...PALETTE.map(color =>
-        createElement(Swatch, {
-          key: color.hex,
-          color,
-          isActive: color.hex === selected.hex,
-          onSelect: () => setSelected(color),
-        }),
+export default class ColorPicker extends Component<{}, ColorPickerState> {
+  state = { selected: PALETTE[0] };
+
+  render() {
+    const { selected } = this.state;
+
+    return createElement('div', { style: { maxWidth: 320 } },
+      createElement('div', {
+        style: {
+          height: 80,
+          borderRadius: 8,
+          backgroundColor: selected.hex,
+          marginBottom: 16,
+          transition: 'background-color 0.3s',
+        },
+      }),
+      createElement('div', { style: { display: 'flex', gap: 10, justifyContent: 'center' } },
+        ...PALETTE.map(color =>
+          createElement(Swatch, {
+            key: color.hex,
+            color,
+            isActive: color.hex === selected.hex,
+            onSelect: () => this.setState({ selected: color }),
+          }),
+        ),
       ),
-    ),
-    createElement('p', { style: { textAlign: 'center', marginTop: 12, fontFamily: 'monospace' } },
-      `${selected.name} — ${selected.hex}`,
-    ),
-  );
+      createElement('p', { style: { textAlign: 'center', marginTop: 12, fontFamily: 'monospace' } },
+        `${selected.name} — ${selected.hex}`,
+      ),
+    );
+  }
 }
