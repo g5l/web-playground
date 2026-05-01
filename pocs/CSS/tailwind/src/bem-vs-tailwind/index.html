@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BEM/SCSS vs Tailwind</title>
+  <script type="module" src="/main.js"></script>
+  <link rel="stylesheet" href="./card.scss" />
+</head>
+<body class="bg-slate-100 min-h-screen font-sans antialiased">
+
+  <header class="bg-white border-b border-slate-200 px-6 py-5">
+    <div class="max-w-5xl mx-auto">
+      <p class="text-xs font-semibold uppercase tracking-widest text-indigo-500 mb-1">POC · CSS Mental Models</p>
+      <h1 class="text-2xl font-bold text-slate-900">Naming vs Composing</h1>
+      <p class="mt-1 text-sm text-slate-500">
+        Same card. BEM/SCSS names every element; Tailwind composes utilities inline.
+        Neither is wrong — they optimise for different costs.
+      </p>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-2 gap-10">
+
+    <!-- BEM -->
+    <section class="space-y-6">
+      <div>
+        <span class="text-xs font-bold uppercase tracking-widest text-slate-400">BEM + SCSS</span>
+      </div>
+
+      <article class="card card--featured">
+        <div class="card__header">
+          <div class="card__avatar">SC</div>
+          <span class="card__badge">Featured</span>
+        </div>
+        <div class="card__body">
+          <h2 class="card__name">Sarah Chen</h2>
+          <p class="card__role">Senior Product Designer</p>
+          <p class="card__bio">Crafting interfaces that get out of the way, focused on design systems.</p>
+        </div>
+        <div class="card__footer">
+          <div class="card__stats">
+            <div class="card__stat">
+              <span class="card__stat-value">128</span>
+              <span class="card__stat-label">Projects</span>
+            </div>
+            <div class="card__stat">
+              <span class="card__stat-value">4.9</span>
+              <span class="card__stat-label">Rating</span>
+            </div>
+            <div class="card__stat">
+              <span class="card__stat-value">3.2k</span>
+              <span class="card__stat-label">Followers</span>
+            </div>
+          </div>
+          <button class="card__btn card__btn--primary">View Profile</button>
+        </div>
+      </article>
+    </section>
+
+    <!-- Tailwind -->
+    <section class="space-y-6">
+      <div>
+        <span class="text-xs font-bold uppercase tracking-widest text-slate-400">Tailwind</span>
+      </div>
+
+      <article class="w-full max-w-[300px] bg-white rounded-2xl border border-indigo-200 overflow-hidden
+                      shadow-[0_0_0_3px_rgba(99,102,241,0.12),0_4px_16px_rgba(0,0,0,0.10)]">
+        <div class="relative flex justify-center bg-gradient-to-br from-indigo-100 to-sky-50 p-6">
+          <div class="size-[72px] rounded-full bg-gradient-to-br from-indigo-500 to-violet-500
+                      border-[3px] border-white shadow-[0_2px_8px_rgba(0,0,0,.15)]
+                      flex items-center justify-center text-white text-2xl font-bold">
+            SC
+          </div>
+          <span class="absolute top-3 right-3 bg-indigo-500 text-white text-[.6875rem] font-bold
+                       px-[.65rem] py-[.3rem] rounded-full uppercase tracking-[.06em]">
+            Featured
+          </span>
+        </div>
+        <div class="px-6 pt-5 pb-4 text-center">
+          <h2 class="text-[1.125rem] font-bold text-slate-900 mb-[.2rem]">Sarah Chen</h2>
+          <p class="text-[.8125rem] text-slate-400 mb-3">Senior Product Designer</p>
+          <p class="text-sm text-slate-600 leading-relaxed">Crafting interfaces that get out of the way, focused on design systems.</p>
+        </div>
+        <div class="px-6 pt-4 pb-6 border-t border-slate-100">
+          <div class="flex justify-around mb-4">
+            <div class="flex flex-col items-center gap-[.15rem]">
+              <span class="text-base font-bold text-slate-900">128</span>
+              <span class="text-[.6875rem] text-slate-400 uppercase tracking-[.04em]">Projects</span>
+            </div>
+            <div class="flex flex-col items-center gap-[.15rem]">
+              <span class="text-base font-bold text-slate-900">4.9</span>
+              <span class="text-[.6875rem] text-slate-400 uppercase tracking-[.04em]">Rating</span>
+            </div>
+            <div class="flex flex-col items-center gap-[.15rem]">
+              <span class="text-base font-bold text-slate-900">3.2k</span>
+              <span class="text-[.6875rem] text-slate-400 uppercase tracking-[.04em]">Followers</span>
+            </div>
+          </div>
+          <button class="block w-full py-[.65rem] rounded-lg bg-indigo-500 text-white text-sm font-semibold
+                         cursor-pointer transition-all hover:bg-indigo-600 hover:-translate-y-px
+                         hover:shadow-[0_4px_10px_rgba(99,102,241,.35)] active:translate-y-0 active:shadow-none">
+            View Profile
+          </button>
+        </div>
+      </article>
+    </section>
+
+  </main>
+
+</body>
+</html>
