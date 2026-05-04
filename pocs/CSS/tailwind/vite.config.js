@@ -10,8 +10,9 @@ export default defineConfig({
     emptyOutDir: true,
     rollupOptions: {
       input: {
-        main:              resolve(__dirname, 'src/index.html'),
-        'bem-vs-tailwind': resolve(__dirname, 'src/bem-vs-tailwind/index.html'),
+        main:               resolve(__dirname, 'src/index.html'),
+        'bem-vs-tailwind':  resolve(__dirname, 'src/bem-vs-tailwind/index.html'),
+        'variant-prefixes': resolve(__dirname, 'src/variant-prefixes/index.html'),
       },
     },
   },

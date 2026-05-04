@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Variant Prefixes — Tailwind POC</title>
+  <script type="module" src="/main.js"></script>
+</head>
+<body class="bg-slate-100 min-h-screen font-sans antialiased dark:bg-slate-950 transition-colors duration-200">
+
+  <header class="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-6 py-5 sticky top-0 z-10 transition-colors duration-200">
+    <div class="max-w-3xl mx-auto flex items-center justify-between gap-4">
+      <div>
+        <p class="text-xs font-semibold uppercase tracking-widest text-indigo-500 mb-1">POC · CSS Mental Models</p>
+        <h1 class="text-2xl font-bold text-slate-900 dark:text-white">Variant Prefixes</h1>
+        <p class="mt-1 text-sm text-slate-500 dark:text-slate-400 hidden sm:block">
+          Stack hover:, focus-visible:, md:, dark:, disabled:, aria-*, data-[*]:, and [&amp;>p]: on one element.
+        </p>
+      </div>
+      <button
+        id="darkToggle"
+        title="Toggle dark mode"
+        class="size-9 rounded-lg flex items-center justify-center shrink-0
+               bg-slate-100 dark:bg-slate-800
+               text-slate-500 dark:text-slate-400
+               hover:bg-slate-200 dark:hover:bg-slate-700
+               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-1
+               transition-colors cursor-pointer"
+      >
+        <svg id="iconSun" class="size-5 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
+        </svg>
+        <svg id="iconMoon" class="size-5 dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="max-w-3xl mx-auto px-6 py-10 space-y-16">
+
+    <!-- ============================================================
+         1. ORDERING RULE
+         ============================================================ -->
+    <section class="space-y-5">
+      <div>
+        <h2 class="text-lg font-bold text-slate-900 dark:text-white">The ordering rule</h2>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">
+          Responsive prefixes produce <code class="bg-slate-200 dark:bg-slate-800 px-1 rounded text-slate-700 dark:text-slate-300">@media</code> wrappers.
+          State prefixes produce pseudo-selectors. Their position in the class string is convention only —
+          Tailwind always emits correct CSS regardless of order.
+        </p>
+      </div>
+
+      <div class="bg-slate-900 dark:bg-slate-800/80 rounded-xl p-5 space-y-5 text-sm font-mono">
+
+        <div class="space-y-2">
+          <p class="text-slate-400 text-xs font-sans uppercase tracking-widest">State only</p>
+          <div class="text-slate-200">
+            <span class="text-sky-400">hover:</span><span>bg-indigo-500</span>
+          </div>
+          <p class="text-slate-500 text-xs font-sans">&#8594; CSS</p>
+          <div class="text-slate-400 text-xs">
+            .<span class="text-sky-400">hover\:bg-indigo-500</span>:<span class="text-sky-400">hover</span> { background-color: ... }
+          </div>
+        </div>
+
+        <div class="border-t border-slate-700/60"></div>
+
+        <div class="space-y-2">
+          <p class="text-slate-400 text-xs font-sans uppercase tracking-widest">Responsive wraps state</p>
+          <div class="text-slate-200">
+            <span class="text-emerald-400">md:</span><span class="text-sky-400">hover:</span><span>bg-violet-500</span>
+          </div>
+          <p class="text-slate-500 text-xs font-sans">&#8594; CSS</p>
+          <div class="text-slate-400 text-xs leading-5">
+            <span class="text-emerald-400">@media (min-width: 768px)</span> {<br>
+            &nbsp;&nbsp;.<span class="text-emerald-400">md\:</span><span class="text-sky-400">hover\:bg-violet-500</span>:<span class="text-sky-400">hover</span> { background-color: ... }<br>
+            }
+          </div>
+        </div>
+
+        <div class="border-t border-slate-700/60"></div>
+
+        <div class="space-y-2">
+          <p class="text-slate-400 text-xs font-sans uppercase tracking-widest">dark: wraps state</p>
+          <div class="text-slate-200">
+            <span class="text-violet-400">dark:</span><span class="text-sky-400">hover:</span><span>bg-slate-700</span>
+          </div>
+          <p class="text-slate-500 text-xs font-sans">&#8594; CSS</p>
+          <div class="text-slate-400 text-xs leading-5">
+            <span class="text-violet-400">:where(.dark, .dark *)</span> .<span class="text-violet-400">dark\:</span><span class="text-sky-400">hover\:bg-slate-700</span>:<span class="text-sky-400">hover</span> { ... }
+          </div>
+        </div>
+
+        <div class="border-t border-slate-700/60"></div>
+
+        <div class="space-y-2">
+          <p class="text-slate-400 text-xs font-sans uppercase tracking-widest">Arbitrary data attribute</p>
+          <div class="text-slate-200">
+            <span class="text-amber-400">data-[state=open]:</span><span>opacity-100</span>
+          </div>
+          <p class="text-slate-500 text-xs font-sans">&#8594; CSS</p>
+          <div class="text-slate-400 text-xs">
+            .<span class="text-amber-400">data-\[state\=open\]\:opacity-100</span>[<span class="text-amber-400">data-state="open"</span>] { opacity: 1 }
+          </div>
+        </div>
+
+      </div>
+
+      <p class="text-xs text-slate-400 dark:text-slate-500">
+        Convention: base &#8594; state &#8594; responsive. Write
+        <code class="bg-slate-200 dark:bg-slate-800 px-1 rounded text-slate-600 dark:text-slate-300">hover:bg-indigo-500 md:hover:bg-violet-500</code>,
+        not the reverse. The class string reads "what happens, then where it applies."
+      </p>
+    </section>
+
+    <!-- ============================================================
+         2. hover + focus-visible + active + disabled
+         ============================================================ -->
+    <section class="space-y-5">
+      <div>
+        <h2 class="text-lg font-bold text-slate-900 dark:text-white">hover: &nbsp;·&nbsp; focus-visible: &nbsp;·&nbsp; active: &nbsp;·&nbsp; disabled:</h2>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">
+          Tab into the enabled button to see the keyboard-only
+          <code class="bg-slate-200 dark:bg-slate-800 px-1 rounded text-slate-700 dark:text-slate-300">focus-visible:</code> ring.
+          The disabled button stacks <code class="bg-slate-200 dark:bg-slate-800 px-1 rounded text-slate-700 dark:text-slate-300">disabled:</code> last
+          so it wins over <code class="bg-slate-200 dark:bg-slate-800 px-1 rounded text-slate-700 dark:text-slate-300">hover:</code>.
+        </p>
+      </div>
+
+      <div class="flex flex-wrap gap-4 items-center p-8 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800">
+        <button
+          class="px-5 py-2.5 rounded-lg bg-indigo-500 text-white text-sm font-semibold cursor-pointer
+                 transition-all
+                 hover:bg-indigo-600 hover:shadow-[0_4px_10px_rgba(99,102,241,.45)]
+                 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2
+                 active:scale-95 active:shadow-none"
+        >
+          Enabled
+        </button>
+
+        <button
+          disabled
+          class="px-5 py-2.5 rounded-lg bg-indigo-500 text-white text-sm font-semibold
+                 transition-all
+                 hover:bg-indigo-600 hover:shadow-[0_4px_10px_rgba(99,102,241,.45)]
+                 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2
+                 active:scale-95 active:shadow-none
+                 disabled:opacity-40 disabled:cursor-not-allowed disabled:pointer-events-none"
+        >
+          Disabled
+        </button>
+      </div>
+
+      <pre class="bg-slate-900 dark:bg-slate-800/80 rounded-xl p-5 text-sm font-mono overflow-x-auto leading-7"><code><span class="text-white">bg-indigo-500 text-white px-5 py-2.5 rounded-lg transition-all</span>
+
+<span class="text-sky-400">hover:bg-indigo-600</span>
+<span class="text-sky-400">hover:shadow-[0_4px_10px_rgba(99,102,241,.45)]</span>
+<span class="text-rose-400">focus-visible:outline-none</span>
+<span class="text-rose-400">focus-visible:ring-2</span>
+<span class="text-rose-400">focus-visible:ring-indigo-400</span>
+<span class="text-rose-400">focus-visible:ring-offset-2</span>
+<span class="text-orange-400">active:scale-95</span>
+<span class="text-orange-400">active:shadow-none</span>
+<span class="text-slate-500">disabled:opacity-40</span>
+<span class="text-slate-500">disabled:cursor-not-allowed</span>
+<span class="text-slate-500">disabled:pointer-events-none</span></code></pre>
+    </section>
+
+    <!-- ============================================================
+         3. md: stacked with hover:
+         ============================================================ -->
+    <section class="space-y-5">
+      <div>
+        <h2 class="text-lg font-bold text-slate-900 dark:text-white">md: stacked with hover:</h2>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">
+          Same element, different hover color at each breakpoint.
+          Resize the window below 768 px to watch the switch.
+          <code class="bg-slate-200 dark:bg-slate-800 px-1 rounded text-slate-700 dark:text-slate-300">md:hover:</code>
+          reads: "at &#8805; 768 px AND when hovering."
+        </p>
+      </div>
+
+      <div
+        class="p-6 bg-white dark:bg-slate-900 rounded-xl border-2 border-slate-200 dark:border-slate-800 transition-all duration-200 select-none
+               hover:border-sky-400 hover:shadow-md hover:shadow-sky-100
+               md:hover:border-violet-400 md:hover:shadow-md md:hover:shadow-violet-100"
+      >
+        <div class="flex items-center gap-3 text-sm font-medium">
+          <span class="inline-flex items-center gap-1.5 text-sky-600 dark:text-sky-400">
+            <span class="size-2 rounded-full bg-sky-400"></span>
+            &lt; 768 px: sky border on hover
+          </span>
+          <span class="text-slate-300 dark:text-slate-600">·</span>
+          <span class="inline-flex items-center gap-1.5 text-violet-600 dark:text-violet-400">
+            <span class="size-2 rounded-full bg-violet-400"></span>
+            &#8805; 768 px: violet border on hover
+          </span>
+        </div>
+      </div>
+
+      <pre class="bg-slate-900 dark:bg-slate-800/80 rounded-xl p-5 text-sm font-mono overflow-x-auto leading-7"><code><span class="text-white">border-2 border-slate-200 transition-all</span>
+
+<span class="text-sky-400">hover:border-sky-400</span>
+<span class="text-sky-400">hover:shadow-md</span>
+
+<span class="text-emerald-400">md:</span><span class="text-sky-400">hover:border-violet-400</span>
+<span class="text-emerald-400">md:</span><span class="text-sky-400">hover:shadow-md</span>
+
+<span class="text-slate-500">/* md: wraps hover: — responsive is the outer condition */</span></code></pre>
+    </section>
+
+    <!-- ============================================================
+         4. dark: stacked with hover:
+         ============================================================ -->
+    <section class="space-y-5">
+      <div>
+        <h2 class="text-lg font-bold text-slate-900 dark:text-white">dark: stacked with hover:</h2>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">
+          Toggle dark mode with the header button and hover over the card.
+          Four conditions, one element: base, hover, dark base, dark hover.
+        </p>
+      </div>
+
+      <div
+        class="p-6 rounded-xl border cursor-default transition-all duration-200
+               bg-white text-slate-900 border-slate-200
+               hover:bg-slate-50 hover:border-slate-300 hover:shadow-sm
+               dark:bg-slate-800 dark:text-white dark:border-slate-700
+               dark:hover:bg-slate-700 dark:hover:border-slate-600"
+      >
+        <p class="font-semibold text-sm mb-1">Hover me in light and dark mode</p>
+        <p class="text-sm text-slate-500 dark:text-slate-400">
+          Light: white &#8594; slate-50 on hover.&nbsp; Dark: slate-800 &#8594; slate-700 on hover.
+        </p>
+      </div>
+
+      <pre class="bg-slate-900 dark:bg-slate-800/80 rounded-xl p-5 text-sm font-mono overflow-x-auto leading-7"><code><span class="text-white">bg-white text-slate-900 border-slate-200</span>
+<span class="text-sky-400">hover:bg-slate-50 hover:border-slate-300</span>
+
+<span class="text-violet-400">dark:bg-slate-800</span>
+<span class="text-violet-400">dark:text-white</span>
+<span class="text-violet-400">dark:border-slate-700</span>
+<span class="text-violet-400">dark:</span><span class="text-sky-400">hover:bg-slate-700</span>
+<span class="text-violet-400">dark:</span><span class="text-sky-400">hover:border-slate-600</span></code></pre>
+    </section>
+
+    <!-- ============================================================
+         5. aria-expanded: + group-aria-expanded:
+         ============================================================ -->
+    <section class="space-y-5">
+      <div>
+        <h2 class="text-lg font-bold text-slate-900 dark:text-white">aria-expanded:</h2>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">
+          JS sets the attribute; Tailwind's variant fires. No class list manipulation.
+          The label color uses <code class="bg-slate-200 dark:bg-slate-800 px-1 rounded text-slate-700 dark:text-slate-300">aria-expanded:</code> directly on the button.
+          The chevron uses <code class="bg-slate-200 dark:bg-slate-800 px-1 rounded text-slate-700 dark:text-slate-300">group-aria-expanded:</code> inherited from the parent.
+        </p>
+      </div>
+
+      <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+        <button
+          id="accordionTrigger"
+          aria-expanded="false"
+          aria-controls="accordionPanel"
+          class="group w-full flex items-center justify-between px-5 py-4 text-left cursor-pointer
+                 text-slate-800 dark:text-white font-medium text-sm
+                 hover:bg-slate-50 dark:hover:bg-slate-800/60
+                 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-indigo-400
+                 aria-expanded:text-indigo-600 dark:aria-expanded:text-indigo-400
+                 transition-colors"
+        >
+          Click to expand
+          <svg
+            class="size-4 text-slate-400 transition-transform duration-200 group-aria-expanded:rotate-180"
+            fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="m19 9-7 7-7-7" />
+          </svg>
+        </button>
+
+        <div
+          id="accordionPanel"
+          role="region"
+          class="px-5 pb-5 text-sm text-slate-500 dark:text-slate-400 border-t border-slate-100 dark:border-slate-800 hidden"
+        >
+          <p class="pt-4">
+            Content revealed. The button's <code class="bg-slate-100 dark:bg-slate-800 px-1 rounded">aria-expanded</code> attribute
+            drove both its own label color and the chevron rotation — zero class-list changes in JS.
+          </p>
+        </div>
+      </div>
+
+      <pre class="bg-slate-900 dark:bg-slate-800/80 rounded-xl p-5 text-sm font-mono overflow-x-auto leading-7"><code><span class="text-slate-400">/* button — has group + aria-expanded attr */</span>
+<span class="text-white">text-slate-800 hover:bg-slate-50 transition-colors</span>
+<span class="text-amber-400">aria-expanded:text-indigo-600</span>
+<span class="text-emerald-400">group</span>
+
+<span class="text-slate-400">/* chevron svg — no aria attr, inherits via group */</span>
+<span class="text-white">transition-transform duration-200</span>
+<span class="text-emerald-400">group-</span><span class="text-amber-400">aria-expanded:</span><span class="text-white">rotate-180</span></code></pre>
+    </section>
+
+    <!-- ============================================================
+         6. data-[state=open]:
+         ============================================================ -->
+    <section class="space-y-5">
+      <div>
+        <h2 class="text-lg font-bold text-slate-900 dark:text-white">data-[state=open]:</h2>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">
+          Arbitrary data-attribute variants let you mirror any state from your JS or headless UI
+          library directly into CSS — no conditional class strings needed.
+        </p>
+      </div>
+
+      <div class="space-y-3">
+        <div class="flex gap-2">
+          <button
+            id="panelOpen"
+            class="px-4 py-2 text-sm font-medium rounded-lg bg-indigo-500 text-white
+                   hover:bg-indigo-600 active:scale-95 transition-all cursor-pointer"
+          >
+            Open
+          </button>
+          <button
+            id="panelClose"
+            class="px-4 py-2 text-sm font-medium rounded-lg border
+                   bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700
+                   hover:bg-slate-50 dark:hover:bg-slate-700 active:scale-95 transition-all cursor-pointer"
+          >
+            Close
+          </button>
+        </div>
+
+        <div
+          id="dataPanel"
+          data-state="closed"
+          class="rounded-xl border border-slate-200 dark:border-slate-800 p-5 transition-all duration-200
+                 opacity-0 translate-y-2 pointer-events-none
+                 data-[state=open]:opacity-100 data-[state=open]:translate-y-0 data-[state=open]:pointer-events-auto
+                 bg-white dark:bg-slate-900"
+        >
+          <p class="text-sm font-semibold text-slate-800 dark:text-white mb-1">Panel is open</p>
+          <p class="text-sm text-slate-500 dark:text-slate-400">
+            Only <code class="bg-slate-100 dark:bg-slate-800 px-1 rounded">data-state</code> changed in JS.
+            Opacity, transform, and pointer-events all followed from the Tailwind variants.
+          </p>
+        </div>
+      </div>
+
+      <pre class="bg-slate-900 dark:bg-slate-800/80 rounded-xl p-5 text-sm font-mono overflow-x-auto leading-7"><code><span class="text-white">opacity-0 translate-y-2 pointer-events-none transition-all</span>
+
+<span class="text-amber-400">data-[state=open]:</span><span class="text-white">opacity-100</span>
+<span class="text-amber-400">data-[state=open]:</span><span class="text-white">translate-y-0</span>
+<span class="text-amber-400">data-[state=open]:</span><span class="text-white">pointer-events-auto</span>
+
+<span class="text-slate-500">/* JS: el.setAttribute('data-state', 'open') */</span></code></pre>
+    </section>
+
+    <!-- ============================================================
+         7. [&>p]: and [&:nth-child(3)]:
+         ============================================================ -->
+    <section class="space-y-5">
+      <div>
+        <h2 class="text-lg font-bold text-slate-900 dark:text-white">[&amp;>p]: &nbsp;·&nbsp; [&amp;:nth-child(3)]:</h2>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">
+          Arbitrary variants let you write any CSS selector where
+          <code class="bg-slate-200 dark:bg-slate-800 px-1 rounded text-slate-700 dark:text-slate-300">&amp;</code>
+          is the current element. Style children, siblings, or structural positions from the parent's class list.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+
+        <div class="space-y-3">
+          <p class="text-xs font-bold uppercase tracking-widest text-slate-400">[&amp;>p]: prose container</p>
+          <div
+            class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-5
+                   [&>p]:text-sm [&>p]:text-slate-600 [&>p]:leading-relaxed [&>p]:mb-3 [&>p:last-child]:mb-0"
+          >
+            <p>First paragraph. The container targets its direct &lt;p&gt; children with [&amp;>p]: variants.</p>
+            <p>Second paragraph. Line height, color, spacing — all from the parent's class list.</p>
+            <p>Third paragraph. No classes on the &lt;p&gt; tags themselves.</p>
+          </div>
+          <pre class="bg-slate-900 dark:bg-slate-800/80 rounded-lg p-4 text-xs font-mono overflow-x-auto leading-6"><code><span class="text-rose-400">[&>p]:</span><span class="text-white">text-sm</span>
+<span class="text-rose-400">[&>p]:</span><span class="text-white">text-slate-600</span>
+<span class="text-rose-400">[&>p]:</span><span class="text-white">leading-relaxed</span>
+<span class="text-rose-400">[&>p]:</span><span class="text-white">mb-3</span>
+<span class="text-rose-400">[&>p:last-child]:</span><span class="text-white">mb-0</span></code></pre>
+        </div>
+
+        <div class="space-y-3">
+          <p class="text-xs font-bold uppercase tracking-widest text-slate-400">[&amp;:nth-child(3)]: striped list</p>
+          <ul
+            class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden
+                   [&>li]:px-5 [&>li]:py-3 [&>li]:text-sm [&>li]:text-slate-700 [&>li]:dark:text-slate-300 [&>li]:border-b [&>li]:border-slate-100 [&>li]:dark:border-slate-800 [&>li:last-child]:border-b-0
+                   [&>li:nth-child(odd)]:bg-slate-50 [&>li:nth-child(odd)]:dark:bg-slate-800/40
+                   [&>li:nth-child(3)]:font-bold [&>li:nth-child(3)]:text-indigo-600 [&>li:nth-child(3)]:dark:text-indigo-400"
+          >
+            <li>Item one</li>
+            <li>Item two</li>
+            <li>Item three — nth-child(3) highlight</li>
+            <li>Item four</li>
+            <li>Item five</li>
+          </ul>
+          <pre class="bg-slate-900 dark:bg-slate-800/80 rounded-lg p-4 text-xs font-mono overflow-x-auto leading-6"><code><span class="text-rose-400">[&>li]:</span><span class="text-white">px-5 py-3 text-sm</span>
+<span class="text-rose-400">[&>li:nth-child(odd)]:</span><span class="text-white">bg-slate-50</span>
+<span class="text-rose-400">[&>li:nth-child(3)]:</span><span class="text-white">font-bold</span>
+<span class="text-rose-400">[&>li:nth-child(3)]:</span><span class="text-white">text-indigo-600</span></code></pre>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         8. THE MONSTER
+         ============================================================ -->
+    <section class="space-y-5">
+      <div>
+        <h2 class="text-lg font-bold text-slate-900 dark:text-white">The monster — everything stacked</h2>
+        <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">
+          One button. Every variant category. CSS-in-class means all conditions live inline,
+          no separate rule blocks. Use the controls to trigger individual variant layers.
+        </p>
+      </div>
+
+      <div class="p-8 bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 space-y-6">
+        <div class="flex flex-wrap items-center gap-4">
+          <button
+            id="monsterBtn"
+            aria-expanded="false"
+            data-variant="default"
+            class="px-5 py-2.5 text-sm font-semibold rounded-lg transition-all cursor-pointer
+
+                   bg-indigo-500 text-white
+                   hover:bg-indigo-600 hover:shadow-[0_4px_12px_rgba(99,102,241,.45)]
+                   focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 focus-visible:ring-offset-2
+                   active:scale-95 active:shadow-none
+                   disabled:opacity-40 disabled:cursor-not-allowed disabled:pointer-events-none
+
+                   md:rounded-xl md:px-6
+
+                   dark:bg-violet-600 dark:hover:bg-violet-500
+                   dark:focus-visible:ring-violet-400
+
+                   aria-expanded:bg-emerald-500 aria-expanded:hover:bg-emerald-600
+                   data-[variant=danger]:bg-red-500 data-[variant=danger]:hover:bg-red-600"
+          >
+            Stack them all
+          </button>
+
+          <div class="flex flex-wrap gap-2">
+            <button id="monsterToggleExpanded"
+              class="px-3 py-1.5 text-xs font-medium rounded-md
+                     bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400
+                     hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors cursor-pointer">
+              Toggle aria-expanded
+            </button>
+            <button id="monsterToggleDanger"
+              class="px-3 py-1.5 text-xs font-medium rounded-md
+                     bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400
+                     hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors cursor-pointer">
+              Toggle data-variant=danger
+            </button>
+            <button id="monsterToggleDisabled"
+              class="px-3 py-1.5 text-xs font-medium rounded-md
+                     bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400
+                     hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors cursor-pointer">
+              Toggle disabled
+            </button>
+          </div>
+        </div>
+
+        <div id="monsterState" class="flex flex-wrap gap-2 text-xs font-mono">
+          <span class="px-2 py-1 rounded bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400">aria-expanded: <span id="stateExpanded" class="text-slate-800 dark:text-white font-semibold">false</span></span>
+          <span class="px-2 py-1 rounded bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400">data-variant: <span id="stateVariant" class="text-slate-800 dark:text-white font-semibold">default</span></span>
+          <span class="px-2 py-1 rounded bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400">disabled: <span id="stateDisabled" class="text-slate-800 dark:text-white font-semibold">false</span></span>
+        </div>
+      </div>
+
+      <pre class="bg-slate-900 dark:bg-slate-800/80 rounded-xl p-5 text-sm font-mono overflow-x-auto leading-7"><code><span class="text-white">bg-indigo-500 text-white rounded-lg px-5 py-2.5 transition-all</span>
+<span class="text-sky-400">hover:bg-indigo-600 hover:shadow-[...]</span>
+<span class="text-rose-400">focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2</span>
+<span class="text-orange-400">active:scale-95</span>
+<span class="text-slate-500">disabled:opacity-40 disabled:cursor-not-allowed</span>
+
+<span class="text-emerald-400">md:rounded-xl md:px-6</span>
+
+<span class="text-violet-400">dark:bg-violet-600</span>
+<span class="text-violet-400">dark:</span><span class="text-sky-400">hover:bg-violet-500</span>
+
+<span class="text-amber-400">aria-expanded:bg-emerald-500</span>
+<span class="text-amber-400">aria-expanded:</span><span class="text-sky-400">hover:bg-emerald-600</span>
+<span class="text-amber-400">data-[variant=danger]:bg-red-500</span>
+<span class="text-amber-400">data-[variant=danger]:</span><span class="text-sky-400">hover:bg-red-600</span></code></pre>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+        <div class="flex items-center gap-1.5"><span class="size-3 rounded-sm bg-sky-400 shrink-0"></span><span class="text-slate-500 dark:text-slate-400">hover: / focus-visible: / active:</span></div>
+        <div class="flex items-center gap-1.5"><span class="size-3 rounded-sm bg-emerald-400 shrink-0"></span><span class="text-slate-500 dark:text-slate-400">md: (responsive)</span></div>
+        <div class="flex items-center gap-1.5"><span class="size-3 rounded-sm bg-violet-400 shrink-0"></span><span class="text-slate-500 dark:text-slate-400">dark:</span></div>
+        <div class="flex items-center gap-1.5"><span class="size-3 rounded-sm bg-amber-400 shrink-0"></span><span class="text-slate-500 dark:text-slate-400">aria-* / data-[*]:</span></div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // Dark mode
+    document.getElementById('darkToggle').addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+    });
+
+    // Accordion (aria-expanded)
+    const accordionTrigger = document.getElementById('accordionTrigger');
+    const accordionPanel = document.getElementById('accordionPanel');
+    accordionTrigger.addEventListener('click', () => {
+      const expanded = accordionTrigger.getAttribute('aria-expanded') === 'true';
+      accordionTrigger.setAttribute('aria-expanded', String(!expanded));
+      accordionPanel.classList.toggle('hidden', expanded);
+    });
+
+    // Data-state panel
+    const dataPanel = document.getElementById('dataPanel');
+    document.getElementById('panelOpen').addEventListener('click', () => {
+      dataPanel.setAttribute('data-state', 'open');
+    });
+    document.getElementById('panelClose').addEventListener('click', () => {
+      dataPanel.setAttribute('data-state', 'closed');
+    });
+
+    // Monster controls
+    const monsterBtn = document.getElementById('monsterBtn');
+    const stateExpanded = document.getElementById('stateExpanded');
+    const stateVariant = document.getElementById('stateVariant');
+    const stateDisabled = document.getElementById('stateDisabled');
+
+    document.getElementById('monsterToggleExpanded').addEventListener('click', () => {
+      const expanded = monsterBtn.getAttribute('aria-expanded') === 'true';
+      monsterBtn.setAttribute('aria-expanded', String(!expanded));
+      stateExpanded.textContent = String(!expanded);
+    });
+
+    document.getElementById('monsterToggleDanger').addEventListener('click', () => {
+      const current = monsterBtn.getAttribute('data-variant');
+      const next = current === 'danger' ? 'default' : 'danger';
+      monsterBtn.setAttribute('data-variant', next);
+      stateVariant.textContent = next;
+    });
+
+    document.getElementById('monsterToggleDisabled').addEventListener('click', () => {
+      const isDisabled = monsterBtn.disabled;
+      if (isDisabled) {
+        monsterBtn.removeAttribute('disabled');
+        stateDisabled.textContent = 'false';
+      } else {
+        monsterBtn.setAttribute('disabled', '');
+        stateDisabled.textContent = 'true';
+      }
+    });
+  </script>
+
+</body>
+</html>
