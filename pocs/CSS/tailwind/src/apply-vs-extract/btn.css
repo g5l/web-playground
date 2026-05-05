@@ -1,0 +1,18 @@
+/* Required in Tailwind v4: tells @apply where to resolve utilities from,
+   without re-importing the full stylesheet */
+@reference "tailwindcss";
+
+/* Outside @layer — unlayered styles beat ALL layered utility classes */
+.btn-primary {
+  @apply px-5 py-2.5 rounded-lg bg-indigo-500 text-white text-sm font-semibold
+         hover:bg-indigo-600 transition-all cursor-pointer;
+}
+.btn-teal { @apply bg-teal-500 hover:bg-teal-600; }
+
+/* Inside @layer components — @layer utilities has higher priority, so overrides work */
+@layer components {
+  .btn-layer {
+    @apply px-5 py-2.5 rounded-lg bg-indigo-500 text-white text-sm font-semibold
+           hover:bg-indigo-600 transition-all cursor-pointer;
+  }
+}

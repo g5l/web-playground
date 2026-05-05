@@ -13,6 +13,7 @@ export default defineConfig({
         main:               resolve(__dirname, 'src/index.html'),
         'bem-vs-tailwind':  resolve(__dirname, 'src/bem-vs-tailwind/index.html'),
         'variant-prefixes': resolve(__dirname, 'src/variant-prefixes/index.html'),
+        'apply-vs-extract': resolve(__dirname, 'src/apply-vs-extract/index.html'),
       },
     },
   },

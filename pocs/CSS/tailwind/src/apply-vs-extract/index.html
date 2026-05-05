@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>@apply vs Extract — Tailwind POC</title>
+  <script type="module" src="/main.js"></script>
+  <link rel="stylesheet" href="./btn.css" />
+</head>
+<body class="bg-slate-100 min-h-screen font-sans antialiased">
+<div class="max-w-5xl mx-auto px-6 py-10 space-y-12">
+
+  <header class="space-y-1">
+    <p class="text-xs font-semibold uppercase tracking-widest text-indigo-500">POC · CSS Mental Models</p>
+    <h1 class="text-2xl font-bold text-slate-900">@apply, @layer, and when to extract</h1>
+    <p class="text-sm text-slate-500 max-w-2xl mt-1">Same button. Three models. Notice what breaks when a designer asks for a one-off variant.</p>
+  </header>
+
+  <div class="grid md:grid-cols-3 gap-6 items-start">
+
+    <section class="bg-white rounded-xl border border-slate-200 p-5 space-y-3">
+      <h2 class="text-xs font-bold uppercase tracking-widest text-slate-400">1 · @apply (outside @layer)</h2>
+      <div class="flex gap-2 flex-wrap">
+        <button class="btn-primary">Base</button>
+        <button class="btn-primary bg-red-500">+ bg-red-500</button>
+      </div>
+      <p class="text-xs text-amber-700 bg-amber-50 rounded p-2 leading-relaxed">Override <strong>loses</strong>. Unlayered styles beat all layered utility classes — <code>bg-red-500</code> never fires.</p>
+      <pre class="bg-slate-900 text-slate-300 text-xs rounded-lg p-3 overflow-x-auto leading-5"><code>@reference "tailwindcss"; /* v4 */
+.btn-primary {
+  @apply px-5 py-2.5 rounded-lg
+    bg-indigo-500 text-white
+    hover:bg-indigo-600 ...;
+}</code></pre>
+    </section>
+
+    <section class="bg-white rounded-xl border border-slate-200 p-5 space-y-3">
+      <h2 class="text-xs font-bold uppercase tracking-widest text-slate-400">2 · @apply in @layer components</h2>
+      <div class="flex gap-2 flex-wrap">
+        <button class="btn-layer">Base</button>
+        <button class="btn-layer bg-red-500">+ bg-red-500</button>
+      </div>
+      <p class="text-xs text-emerald-700 bg-emerald-50 rounded p-2 leading-relaxed">Override <strong>wins</strong>. <code>@layer utilities</code> outranks <code>@layer components</code>. But now the HTML is doing CSS work anyway.</p>
+      <pre class="bg-slate-900 text-slate-300 text-xs rounded-lg p-3 overflow-x-auto leading-5"><code>@layer components {
+  .btn-layer {
+    @apply px-5 py-2.5 ...;
+  }
+}</code></pre>
+    </section>
+
+    <section class="bg-white rounded-xl border border-slate-200 p-5 space-y-3">
+      <h2 class="text-xs font-bold uppercase tracking-widest text-slate-400">3 · Inline utilities (component)</h2>
+      <div class="flex gap-2 flex-wrap">
+        <button class="px-5 py-2.5 rounded-lg bg-indigo-500 text-white text-sm font-semibold hover:bg-indigo-600 transition-all">Base</button>
+        <button class="px-5 py-2.5 rounded-lg bg-red-500 text-white text-sm font-semibold hover:bg-red-600 transition-all">Danger</button>
+      </div>
+      <p class="text-xs text-sky-700 bg-sky-50 rounded p-2 leading-relaxed">No override needed. Variants are <strong>props</strong>. The component owns the mapping — zero CSS written per variant.</p>
+      <pre class="bg-slate-900 text-slate-300 text-xs rounded-lg p-3 overflow-x-auto leading-5"><code>// React
+&lt;Button /&gt;
+&lt;Button variant="danger" /&gt;
+// resolves to a different
+// class string, not new CSS</code></pre>
+    </section>
+
+  </div>
+
+  <section class="space-y-4">
+    <div>
+      <h2 class="text-base font-bold text-slate-900">The one-off variant problem</h2>
+      <p class="text-sm text-slate-500 mt-1">Designer wants a teal CTA on one page. What does each model cost?</p>
+    </div>
+    <div class="grid md:grid-cols-3 gap-4">
+
+      <div class="bg-white rounded-xl border-2 border-amber-200 p-4 space-y-2">
+        <p class="text-xs font-bold text-amber-700 uppercase tracking-widest">@apply: write a new rule</p>
+        <button class="btn-primary btn-teal">Teal CTA</button>
+        <p class="text-xs text-slate-500">Required: <code class="bg-slate-100 px-1 rounded">.btn-teal&nbsp;{&nbsp;@apply bg-teal-500;&nbsp;}</code> — CSS grows with every designer request.</p>
+      </div>
+
+      <div class="bg-white rounded-xl border-2 border-sky-200 p-4 space-y-2">
+        <p class="text-xs font-bold text-sky-700 uppercase tracking-widest">@layer: override inline</p>
+        <button class="btn-layer bg-teal-500 hover:bg-teal-600">Teal CTA</button>
+        <p class="text-xs text-slate-500">Needed: <code class="bg-slate-100 px-1 rounded">class="btn-layer bg-teal-500 hover:bg-teal-600"</code> — back to writing utilities. So why extract at all?</p>
+      </div>
+
+      <div class="bg-white rounded-xl border-2 border-emerald-200 p-4 space-y-2">
+        <p class="text-xs font-bold text-emerald-700 uppercase tracking-widest">Component: a prop</p>
+        <button class="px-5 py-2.5 rounded-lg bg-teal-500 text-white text-sm font-semibold hover:bg-teal-600 transition-all">Teal CTA</button>
+        <p class="text-xs text-slate-500">Needed: <code class="bg-slate-100 px-1 rounded">&lt;Button color="teal" /&gt;</code> — zero CSS. Propagates everywhere. One place to change.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <p class="text-xs text-slate-400 pb-4 max-w-2xl border-t border-slate-200 pt-6">
+    <strong class="text-slate-600">Verdict:</strong> <code>@apply</code> outside <code>@layer</code> creates specificity landmines. Inside <code>@layer components</code> is better but every override pushes you back to writing utilities. The component model is the answer — variants become props, not CSS rules, and refactors touch one file.
+  </p>
+
+</div>
+</body>
+</html>
