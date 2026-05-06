@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Class Detection — Tailwind POC</title>
+  <script type="module" src="/main.js"></script>
+</head>
+<body class="bg-slate-100 min-h-screen font-sans antialiased">
+<div class="max-w-3xl mx-auto px-6 py-10 space-y-10">
+
+  <header class="space-y-1">
+    <p class="text-xs font-semibold uppercase tracking-widest text-indigo-500">POC · Tailwind CSS</p>
+    <h1 class="text-2xl font-bold text-slate-900">Detecting Classes in Source Files</h1>
+    <p class="text-sm text-slate-500 mt-1">Tailwind tokenizes source as plain text — not code. A class must exist as a complete, unbroken string at build time, or be force-generated via <code>@source inline()</code>.</p>
+  </header>
+
+  <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 text-sm text-amber-800">
+    <strong>The rule:</strong> &nbsp;<code class="bg-amber-100 px-1 rounded">'bg-' + color + '-500'</code>
+    is <em>three</em> tokens, none matching a class. &nbsp;<code class="bg-amber-100 px-1 rounded">'bg-red-500'</code>
+    is <em>one</em> token that does. &nbsp;Click each swatch and watch "css:" flip.
+  </div>
+
+  <div class="grid md:grid-cols-3 gap-5 items-start">
+
+    <section class="bg-white rounded-xl border border-slate-200 p-5 space-y-3">
+      <h2 class="text-xs font-bold uppercase tracking-widest text-red-500">1 · Dynamic (broken)</h2>
+      <div id="brokenSwatches" class="flex gap-1.5 flex-wrap"></div>
+      <div id="brokenPreview" class="h-12 rounded-lg border-2 border-dashed border-slate-200"></div>
+      <p id="brokenStatus" class="text-xs text-slate-400 font-mono">—</p>
+      <pre class="bg-slate-900 text-slate-300 text-xs rounded-lg p-3 overflow-x-auto leading-5"><code>// split across tokens at build time
+const cls = 'bg-' + c + '-700'
+el.className = cls  // class exists,
+                    // CSS does not</code></pre>
+    </section>
+
+    <section class="bg-white rounded-xl border border-slate-200 p-5 space-y-3">
+      <h2 class="text-xs font-bold uppercase tracking-widest text-emerald-600">2 · Lookup table (works)</h2>
+      <div id="lookupSwatches" class="flex gap-1.5 flex-wrap"></div>
+      <div id="lookupPreview" class="h-12 rounded-lg"></div>
+      <p id="lookupStatus" class="text-xs text-slate-400 font-mono">—</p>
+      <pre class="bg-slate-900 text-slate-300 text-xs rounded-lg p-3 overflow-x-auto leading-5"><code>const map = {
+  red:   'bg-red-500',   // ✓ literal
+  blue:  'bg-blue-500',  // ✓ literal
+  green: 'bg-green-500', // ✓ literal
+  amber: 'bg-amber-500', // ✓ literal
+}</code></pre>
+    </section>
+
+    <section class="bg-white rounded-xl border border-slate-200 p-5 space-y-3">
+      <h2 class="text-xs font-bold uppercase tracking-widest text-violet-600">3 · @source inline (works)</h2>
+      <div id="inlineSwatches" class="flex gap-1.5 flex-wrap"></div>
+      <div id="inlinePreview" class="h-12 rounded-lg"></div>
+      <p id="inlineStatus" class="text-xs text-slate-400 font-mono">—</p>
+      <pre class="bg-slate-900 text-slate-300 text-xs rounded-lg p-3 overflow-x-auto leading-5"><code>/* tailwind.css — brace expansion */
+@source inline(
+  "bg-{fuchsia,lime,sky,pink}-500"
+);
+// same dynamic JS as demo 1,
+// but Tailwind pre-generated them</code></pre>
+    </section>
+
+  </div>
+
+</div>
+<script>
+  const $ = id => document.getElementById(id)
+  const hasBg = el => getComputedStyle(el).backgroundColor !== 'rgba(0, 0, 0, 0)'
+
+  function swatch(label) {
+    const b = document.createElement('button')
+    b.textContent = label
+    b.className = 'px-2 py-1 text-xs rounded bg-slate-100 hover:bg-slate-200 cursor-pointer font-medium'
+    return b
+  }
+
+  // Demo 1: dynamic — class string only forms at runtime, Tailwind never saw it
+  const pfx = 'bg-'
+  ;['orange', 'teal', 'cyan', 'rose'].forEach(c => {
+    const b = swatch(c)
+    b.onclick = () => {
+      const cls = pfx + c + '-700'
+      $('brokenPreview').className = `h-12 rounded-lg border-2 border-dashed ${cls}`
+      $('brokenStatus').textContent = `${cls}  →  css: ${hasBg($('brokenPreview')) ? '✓ (was already in project)' : '✗ not generated'}`
+    }
+    $('brokenSwatches').appendChild(b)
+  })
+
+  // Demo 2: lookup — literals exist in this <script>, Tailwind scans and generates them
+  const map = { red: 'bg-red-500', blue: 'bg-blue-500', green: 'bg-green-500', amber: 'bg-amber-500' }
+  Object.entries(map).forEach(([c, cls]) => {
+    const b = swatch(c)
+    b.onclick = () => {
+      $('lookupPreview').className = `h-12 rounded-lg ${cls}`
+      $('lookupStatus').textContent = `${cls}  →  css: ✓`
+    }
+    $('lookupSwatches').appendChild(b)
+  })
+
+  // Demo 3: same dynamic build as demo 1 — works only because tailwind.css has
+  //   @source inline("bg-{fuchsia,lime,sky,pink}-500")
+  ;['fuchsia', 'lime', 'sky', 'pink'].forEach(c => {
+    const b = swatch(c)
+    b.onclick = () => {
+      const cls = pfx + c + '-500'
+      $('inlinePreview').className = `h-12 rounded-lg ${cls}`
+      $('inlineStatus').textContent = `${cls}  →  css: ${hasBg($('inlinePreview')) ? '✓' : '✗'}`
+    }
+    $('inlineSwatches').appendChild(b)
+  })
+</script>
+</body>
+</html>

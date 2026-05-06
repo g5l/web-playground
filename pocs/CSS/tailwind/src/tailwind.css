@@ -2,3 +2,7 @@
 
 /* Enable class-based dark mode so JS can toggle .dark on <html> */
 @custom-variant dark (&:where(.dark, .dark *));
+
+/* class-detection POC — force-generate these so the @source inline demo works
+   even though the full class strings never appear as literals in the HTML */
+@source inline("bg-{fuchsia,lime,sky,pink}-500");
