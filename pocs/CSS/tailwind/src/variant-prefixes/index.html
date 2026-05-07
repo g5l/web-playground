@@ -39,9 +39,6 @@
 
   <main class="max-w-3xl mx-auto px-6 py-10 space-y-16">
 
-    <!-- ============================================================
-         1. ORDERING RULE
-         ============================================================ -->
     <section class="space-y-5">
       <div>
         <h2 class="text-lg font-bold text-slate-900 dark:text-white">The ordering rule</h2>
@@ -115,9 +112,6 @@
       </p>
     </section>
 
-    <!-- ============================================================
-         2. hover + focus-visible + active + disabled
-         ============================================================ -->
     <section class="space-y-5">
       <div>
         <h2 class="text-lg font-bold text-slate-900 dark:text-white">hover: &nbsp;·&nbsp; focus-visible: &nbsp;·&nbsp; active: &nbsp;·&nbsp; disabled:</h2>
@@ -168,9 +162,6 @@
 <span class="text-slate-500">disabled:pointer-events-none</span></code></pre>
     </section>
 
-    <!-- ============================================================
-         3. md: stacked with hover:
-         ============================================================ -->
     <section class="space-y-5">
       <div>
         <h2 class="text-lg font-bold text-slate-900 dark:text-white">md: stacked with hover:</h2>
@@ -208,12 +199,9 @@
 <span class="text-emerald-400">md:</span><span class="text-sky-400">hover:border-violet-400</span>
 <span class="text-emerald-400">md:</span><span class="text-sky-400">hover:shadow-md</span>
 
-<span class="text-slate-500">/* md: wraps hover: — responsive is the outer condition */</span></code></pre>
+</code></pre>
     </section>
 
-    <!-- ============================================================
-         4. dark: stacked with hover:
-         ============================================================ -->
     <section class="space-y-5">
       <div>
         <h2 class="text-lg font-bold text-slate-900 dark:text-white">dark: stacked with hover:</h2>
@@ -246,9 +234,6 @@
 <span class="text-violet-400">dark:</span><span class="text-sky-400">hover:border-slate-600</span></code></pre>
     </section>
 
-    <!-- ============================================================
-         5. aria-expanded: + group-aria-expanded:
-         ============================================================ -->
     <section class="space-y-5">
       <div>
         <h2 class="text-lg font-bold text-slate-900 dark:text-white">aria-expanded:</h2>
@@ -292,19 +277,14 @@
         </div>
       </div>
 
-      <pre class="bg-slate-900 dark:bg-slate-800/80 rounded-xl p-5 text-sm font-mono overflow-x-auto leading-7"><code><span class="text-slate-400">/* button — has group + aria-expanded attr */</span>
-<span class="text-white">text-slate-800 hover:bg-slate-50 transition-colors</span>
+      <pre class="bg-slate-900 dark:bg-slate-800/80 rounded-xl p-5 text-sm font-mono overflow-x-auto leading-7"><code><span class="text-white">text-slate-800 hover:bg-slate-50 transition-colors</span>
 <span class="text-amber-400">aria-expanded:text-indigo-600</span>
 <span class="text-emerald-400">group</span>
 
-<span class="text-slate-400">/* chevron svg — no aria attr, inherits via group */</span>
 <span class="text-white">transition-transform duration-200</span>
 <span class="text-emerald-400">group-</span><span class="text-amber-400">aria-expanded:</span><span class="text-white">rotate-180</span></code></pre>
     </section>
 
-    <!-- ============================================================
-         6. data-[state=open]:
-         ============================================================ -->
     <section class="space-y-5">
       <div>
         <h2 class="text-lg font-bold text-slate-900 dark:text-white">data-[state=open]:</h2>
@@ -355,12 +335,9 @@
 <span class="text-amber-400">data-[state=open]:</span><span class="text-white">translate-y-0</span>
 <span class="text-amber-400">data-[state=open]:</span><span class="text-white">pointer-events-auto</span>
 
-<span class="text-slate-500">/* JS: el.setAttribute('data-state', 'open') */</span></code></pre>
+</code></pre>
     </section>
 
-    <!-- ============================================================
-         7. [&>p]: and [&:nth-child(3)]:
-         ============================================================ -->
     <section class="space-y-5">
       <div>
         <h2 class="text-lg font-bold text-slate-900 dark:text-white">[&amp;>p]: &nbsp;·&nbsp; [&amp;:nth-child(3)]:</h2>
@@ -413,9 +390,6 @@
       </div>
     </section>
 
-    <!-- ============================================================
-         8. THE MONSTER
-         ============================================================ -->
     <section class="space-y-5">
       <div>
         <h2 class="text-lg font-bold text-slate-900 dark:text-white">The monster — everything stacked</h2>
@@ -506,12 +480,10 @@
   </main>
 
   <script>
-    // Dark mode
     document.getElementById('darkToggle').addEventListener('click', () => {
       document.documentElement.classList.toggle('dark');
     });
 
-    // Accordion (aria-expanded)
     const accordionTrigger = document.getElementById('accordionTrigger');
     const accordionPanel = document.getElementById('accordionPanel');
     accordionTrigger.addEventListener('click', () => {
@@ -520,7 +492,6 @@
       accordionPanel.classList.toggle('hidden', expanded);
     });
 
-    // Data-state panel
     const dataPanel = document.getElementById('dataPanel');
     document.getElementById('panelOpen').addEventListener('click', () => {
       dataPanel.setAttribute('data-state', 'open');
@@ -529,7 +500,6 @@
       dataPanel.setAttribute('data-state', 'closed');
     });
 
-    // Monster controls
     const monsterBtn = document.getElementById('monsterBtn');
     const stateExpanded = document.getElementById('stateExpanded');
     const stateVariant = document.getElementById('stateVariant');

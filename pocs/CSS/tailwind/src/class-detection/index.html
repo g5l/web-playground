@@ -74,7 +74,6 @@ el.className = cls  // class exists,
     return b
   }
 
-  // Demo 1: dynamic — class string only forms at runtime, Tailwind never saw it
   const pfx = 'bg-'
   ;['orange', 'teal', 'cyan', 'rose'].forEach(c => {
     const b = swatch(c)
@@ -86,7 +85,6 @@ el.className = cls  // class exists,
     $('brokenSwatches').appendChild(b)
   })
 
-  // Demo 2: lookup — literals exist in this <script>, Tailwind scans and generates them
   const map = { red: 'bg-red-500', blue: 'bg-blue-500', green: 'bg-green-500', amber: 'bg-amber-500' }
   Object.entries(map).forEach(([c, cls]) => {
     const b = swatch(c)
@@ -97,8 +95,6 @@ el.className = cls  // class exists,
     $('lookupSwatches').appendChild(b)
   })
 
-  // Demo 3: same dynamic build as demo 1 — works only because tailwind.css has
-  //   @source inline("bg-{fuchsia,lime,sky,pink}-500")
   ;['fuchsia', 'lime', 'sky', 'pink'].forEach(c => {
     const b = swatch(c)
     b.onclick = () => {
