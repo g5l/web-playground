@@ -47,14 +47,6 @@ The button's `aria-expanded` attribute drives its label color via `aria-expanded
 
 An arbitrary data-attribute variant. JS sets `data-state` to `"open"` or `"closed"`. Opacity, transform, and pointer-events all follow from the Tailwind variant without a conditional class string.
 
-### [&>p]: and [&:nth-child(3)]:
-
-Arbitrary variants using `&` as the current element. Style direct children or specific structural positions from the parent's class list, with no classes on the children themselves.
-
-### The monster button
-
-Every variant category on one element, with live toggles for `aria-expanded`, `data-variant=danger`, and `disabled`.
-
 ## Files
 
 - `index.html` — all sections with live demos and code blocks showing the exact Tailwind classes used
