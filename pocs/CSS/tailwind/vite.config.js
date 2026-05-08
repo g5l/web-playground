@@ -4,6 +4,7 @@ import { resolve } from 'path'
 
 export default defineConfig({
   root: 'src',
+  base: process.env.VITE_BASE ?? '/',
   plugins: [tailwindcss()],
   build: {
     outDir: '../dist',
