@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>vDOM Reconciler POC</title>
+  <style>
+    body  { font-family: monospace; padding: 20px; max-width: 560px; }
+    button { margin: 0 4px 8px 0; padding: 4px 10px; cursor: pointer; }
+    .row  { display: flex; gap: 10px; align-items: center; padding: 4px 8px;
+            border: 1px solid #ccc; margin: 2px 0; border-radius: 3px; }
+    .hint { font-size: 0.85em; color: #555; line-height: 1.5; margin: 6px 0 12px; }
+    .mode { font-weight: bold; margin: 8px 0 2px; }
+  </style>
+</head>
+<body>
+  <h2>Virtual DOM Reconciler — Learning POC</h2>
+  <p style="font-size:0.85em;color:#555">
+    Open the browser console to see every DOM mutation logged.
+  </p>
+  <div id="app"></div>
+
+  <script type="module">
+    import { createElement as h, update } from './vdom.js';
+
+    // ── State ──────────────────────────────────────────────────────────────
+    let nextId = 4;
+    let items  = [
+      { id: 1, label: 'Item A' },
+      { id: 2, label: 'Item B' },
+      { id: 3, label: 'Item C' },
+    ];
+    let useKeys = true;
+
+    // ── Stable handler references ──────────────────────────────────────────
+    // Defined once so updateDom sees the same function objects on every
+    // re-render — no unnecessary removeEventListener/addEventListener churn.
+    const act = {
+      addTop:      () => { items = [{ id: nextId, label: `Item ${nextId++}` }, ...items]; go(); },
+      addBottom:   () => { items = [...items, { id: nextId, label: `Item ${nextId++}` }]; go(); },
+      removeFirst: () => { if (items.length) { items = items.slice(1);    go(); } },
+      removeLast:  () => { if (items.length) { items = items.slice(0,-1); go(); } },
+      shuffle:     () => { items = [...items].sort(() => Math.random() - 0.5); go(); },
+      toggle:      () => { useKeys = !useKeys; go(); },
+    };
+
+    // ── Virtual tree builder ───────────────────────────────────────────────
+    function buildTree() {
+      const rows = items.map(item => {
+        // THE KEY DEMO — the single most important thing to try:
+        //   1. Switch to UNKEYED mode.
+        //   2. Type something into the first input box.
+        //   3. Click "Add to top".
+        //   Result: the typed text stays at DOM index 0 (now labelled "Item X")
+        //   because the reconciler pairs nodes by position. The text followed
+        //   the DOM node, not the data item. That is the keys bug.
+        //
+        //   In KEYED mode the same steps keep the typed text with "Item A"
+        //   because the reconciler matches by key=item.id and only inserts one
+        //   new DOM node at the top. Check the console: keyed mode logs one
+        //   CREATE; unkeyed logs N UPDATE attr calls + one CREATE.
+        const rowProps = useKeys
+          ? { key: item.id, className: 'row' }
+          : { className: 'row' };
+
+        return h('div', rowProps,
+          h('span', {}, item.label),
+          // No 'value' prop: the reconciler never writes to input.value, so
+          // whatever the user typed is owned entirely by the DOM node.
+          h('input', { type: 'text', placeholder: 'type here...' })
+        );
+      });
+
+      return h('div', {},
+        h('div', {},
+          h('button', { onClick: act.addTop      }, 'Add to top'),
+          h('button', { onClick: act.addBottom   }, 'Add to bottom'),
+          h('button', { onClick: act.removeFirst }, 'Remove first'),
+          h('button', { onClick: act.removeLast  }, 'Remove last'),
+          h('button', { onClick: act.shuffle     }, 'Shuffle'),
+          h('button', { onClick: act.toggle },
+            useKeys ? 'Switch to UNKEYED' : 'Switch to KEYED'
+          ),
+        ),
+        h('p', { className: 'mode' }, useKeys ? 'Mode: KEYED' : 'Mode: UNKEYED'),
+        h('p', { className: 'hint' },
+          'Type in an input, then click "Add to top". ' +
+          'KEYED: typed text follows its item. ' +
+          'UNKEYED: text stays at index 0 (wrong item). ' +
+          'Console shows every DOM mutation — ' +
+          'keyed prepend = 1 CREATE, unkeyed prepend = N UPDATEs + 1 CREATE.'
+        ),
+        h('div', {}, ...rows)
+      );
+    }
+
+    // ── Render loop ────────────────────────────────────────────────────────
+    let prevTree = null;
+    const container = document.getElementById('app');
+
+    function go() {
+      const next = buildTree();
+      // update() treats prevTree=null as an initial mount (Case 3 in the reconciler).
+      update(prevTree, next, container);
+      prevTree = next;
+    }
+
+    go(); // initial render
+  </script>
+</body>
+</html>
