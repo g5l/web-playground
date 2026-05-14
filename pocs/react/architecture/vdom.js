@@ -1,5 +1,3 @@
-// Element creation
-
 export function createElement(type, props, ...children) {
   return {
     type,
@@ -16,8 +14,6 @@ function createTextElement(text) {
   return { type: 'TEXT_ELEMENT', props: { nodeValue: String(text), children: [] } };
 }
 
-// Initial mount
-
 function createDom(element) {
   const dom =
     element.type === 'TEXT_ELEMENT'
@@ -33,8 +29,6 @@ function createDom(element) {
 export function render(element, container) {
   container.appendChild(createDom(element));
 }
-
-// Prop diffing
 
 const isEvent = k => k.startsWith('on');
 const isProp  = k => k !== 'children' && k !== 'key' && !isEvent(k);
@@ -73,10 +67,7 @@ export function updateDom(dom, prev = {}, next = {}) {
   }
 }
 
-// Reconciler
-
 export function update(prevEl, nextEl, container) {
-
   if (!prevEl && !nextEl) return;
 
   if (prevEl && !nextEl) {
@@ -84,7 +75,7 @@ export function update(prevEl, nextEl, container) {
     console.log(`REMOVE node <${prevEl.type}>`);
     return;
   }
-  
+
   if (!prevEl && nextEl) {
     container.appendChild(createDom(nextEl));
     console.log(`CREATE node <${nextEl.type}>`);
@@ -96,7 +87,7 @@ export function update(prevEl, nextEl, container) {
     console.log(`REPLACE <${prevEl.type}> -> <${nextEl.type}>`);
     return;
   }
-  
+
   nextEl._dom = prevEl._dom;
 
   if (nextEl.type === 'TEXT_ELEMENT') {
@@ -106,7 +97,7 @@ export function update(prevEl, nextEl, container) {
     }
     return;
   }
-  
+
   updateDom(nextEl._dom, prevEl.props, nextEl.props);
   reconcileChildren(prevEl, nextEl);
 }
@@ -119,7 +110,38 @@ function diffUnkeyed(prev, next, dom) {
 }
 
 function diffKeyed(prev, next, dom) {
-  diffUnkeyed(prev, next, dom);
+  const prevByKey = new Map(prev.map(c => [c.props.key, c]));
+
+  const used = new Set();
+  for (const nextChild of next) {
+    const key = nextChild.props.key;
+    const prevChild = prevByKey.get(key);
+    if (prevChild) {
+      used.add(key);
+      nextChild._dom = prevChild._dom;
+      updateDom(nextChild._dom, prevChild.props, nextChild.props);
+      reconcileChildren(prevChild, nextChild);
+    } else {
+      createDom(nextChild);
+      console.log(`CREATE node key="${key}"`);
+    }
+  }
+
+  for (const prevChild of prev) {
+    if (!used.has(prevChild.props.key)) {
+      dom.removeChild(prevChild._dom);
+      console.log(`REMOVE node key="${prevChild.props.key}"`);
+    }
+  }
+
+  for (let i = 0; i < next.length; i++) {
+    const child  = next[i];
+    const domAtI = dom.childNodes[i];
+    if (domAtI !== child._dom) {
+      dom.insertBefore(child._dom, domAtI ?? null);
+      if (used.has(child.props.key)) console.log(`MOVE node key="${child.props.key}"`);
+    }
+  }
 }
 
 function reconcileChildren(prevEl, nextEl) {
