@@ -1,0 +1,110 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum MatchPhase {
+  GROUP
+  ROUND_OF_32
+  ROUND_OF_16
+  QUARTER_FINAL
+  SEMI_FINAL
+  THIRD_PLACE
+  FINAL
+}
+
+enum MatchStatus {
+  SCHEDULED
+  LOCKED
+  LIVE
+  FINISHED
+  CANCELLED
+}
+
+enum BetCategory {
+  EXACT
+  WINNER_PLUS_ONE_SCORE
+  WINNER_ONLY
+  ONE_SCORE_ONLY
+  ZERO
+}
+
+model User {
+  id             String   @id @default(cuid())
+  firstName      String
+  lastName       String
+  displaySuffix  String?
+  normalizedName String   @unique
+  isAdmin        Boolean  @default(false)
+  passwordHash   String?
+  createdAt      DateTime @default(now())
+  bets           Bet[]
+}
+
+model Team {
+  id          String  @id
+  name        String
+  flagEmoji   String?
+  group       String?
+  homeMatches Match[] @relation("HomeTeam")
+  awayMatches Match[] @relation("AwayTeam")
+}
+
+model Match {
+  id               String      @id @default(cuid())
+  externalRef      String?     @unique
+  phase            MatchPhase
+  groupName        String?
+  matchNumber      Int         @unique
+  homeTeamId       String?
+  awayTeamId       String?
+  homeTeam         Team?       @relation("HomeTeam", fields: [homeTeamId], references: [id])
+  awayTeam         Team?       @relation("AwayTeam", fields: [awayTeamId], references: [id])
+  homePlaceholder  String?
+  awayPlaceholder  String?
+  venue            String?
+  kickoffAt        DateTime
+  lockAt           DateTime
+  status           MatchStatus @default(SCHEDULED)
+  homeScore        Int?
+  awayScore        Int?
+  advancingTeamId  String?
+  pointsComputedAt DateTime?
+  bets             Bet[]
+
+  @@index([kickoffAt])
+  @@index([status])
+}
+
+model Bet {
+  id              String       @id @default(cuid())
+  userId          String
+  matchId         String
+  homeScore       Int
+  awayScore       Int
+  advancingTeamId String?
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  pointsAwarded   Int?
+  basePoints      Int?
+  category        BetCategory?
+
+  user  User  @relation(fields: [userId], references: [id])
+  match Match @relation(fields: [matchId], references: [id])
+
+  @@unique([userId, matchId])
+  @@index([matchId])
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  actorId   String?
+  action    String
+  payload   Json
+  createdAt DateTime @default(now())
+}

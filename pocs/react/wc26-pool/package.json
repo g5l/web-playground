@@ -8,7 +8,12 @@
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "seed": "tsx prisma/seed.ts",
+    "seed:teams": "tsx scripts/seed-teams.ts"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
     "@mantine/core": "^7.17.0",
@@ -41,6 +46,7 @@
     "prettier": "^3.0.0",
     "prisma": "^6.0.0",
     "typescript": "^5",
+    "tsx": "^4.0.0",
     "vitest": "^2.0.0"
   }
 }
