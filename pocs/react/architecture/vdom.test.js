@@ -137,3 +137,134 @@ describe('update: base cases', () => {
     expect(original.id).toBe('y');
   });
 });
+
+// unkeyed diff
+
+describe('unkeyed diff', () => {
+  let container;
+  beforeEach(() => { container = document.createElement('div'); });
+
+  it('updates children pairwise by index', () => {
+    const prev = createElement('ul', null, createElement('li', null, 'a'), createElement('li', null, 'b'));
+    render(prev, container);
+    const next = createElement('ul', null, createElement('li', null, 'x'), createElement('li', null, 'y'));
+    update(prev, next, container);
+    const items = container.querySelectorAll('li');
+    expect(items[0].textContent).toBe('x');
+    expect(items[1].textContent).toBe('y');
+  });
+
+  it('appends when next has more children', () => {
+    const prev = createElement('ul', null, createElement('li', null, 'a'));
+    render(prev, container);
+    const next = createElement('ul', null, createElement('li', null, 'a'), createElement('li', null, 'b'));
+    update(prev, next, container);
+    expect(container.querySelectorAll('li').length).toBe(2);
+  });
+
+  it('removes when prev has more children', () => {
+    const prev = createElement('ul', null, createElement('li', null, 'a'), createElement('li', null, 'b'));
+    render(prev, container);
+    const next = createElement('ul', null, createElement('li', null, 'a'));
+    update(prev, next, container);
+    expect(container.querySelectorAll('li').length).toBe(1);
+  });
+
+  it('DOM node at index 0 keeps typed content after a prepend (the keys bug)', () => {
+    const prev = createElement('ul', null,
+      createElement('li', null, createElement('input', { type: 'text' })),
+    );
+    render(prev, container);
+    container.querySelector('input').value = 'typed';
+
+    const next = createElement('ul', null,
+      createElement('li', null, createElement('input', { type: 'text' })),
+      createElement('li', null, createElement('input', { type: 'text' })),
+    );
+    update(prev, next, container);
+
+    const inputs = container.querySelectorAll('input');
+    expect(inputs[0].value).toBe('typed'); // follows DOM node, not data item
+    expect(inputs[1].value).toBe('');
+  });
+});
+
+// keyed diff
+
+describe('keyed diff', () => {
+  let container;
+  beforeEach(() => { container = document.createElement('div'); });
+
+  function renderList(keys) {
+    const el = createElement('ul', null, ...keys.map(k => createElement('li', { key: k }, String(k))));
+    render(el, container);
+    return el;
+  }
+
+  it('prepend: inserts one new node, reuses all others', () => {
+    const prev = renderList([1, 2, 3]);
+    const original = [...container.querySelectorAll('li')];
+    const next = createElement('ul', null,
+      createElement('li', { key: 0 }, '0'),
+      createElement('li', { key: 1 }, '1'),
+      createElement('li', { key: 2 }, '2'),
+      createElement('li', { key: 3 }, '3'),
+    );
+    update(prev, next, container);
+    const updated = [...container.querySelectorAll('li')];
+    expect(updated[1]).toBe(original[0]);
+    expect(updated[2]).toBe(original[1]);
+    expect(updated[3]).toBe(original[2]);
+  });
+
+  it('removes nodes whose keys are absent from next', () => {
+    const prev = renderList([1, 2, 3]);
+    const next = createElement('ul', null, createElement('li', { key: 1 }, '1'), createElement('li', { key: 3 }, '3'));
+    update(prev, next, container);
+    const items = container.querySelectorAll('li');
+    expect(items.length).toBe(2);
+    expect(items[0].textContent).toBe('1');
+    expect(items[1].textContent).toBe('3');
+  });
+
+  it('reorders without creating new DOM nodes', () => {
+    const prev = renderList([1, 2, 3]);
+    const original = [...container.querySelectorAll('li')];
+    const next = createElement('ul', null,
+      createElement('li', { key: 3 }, '3'),
+      createElement('li', { key: 1 }, '1'),
+      createElement('li', { key: 2 }, '2'),
+    );
+    update(prev, next, container);
+    const reordered = [...container.querySelectorAll('li')];
+    expect(reordered[0]).toBe(original[2]);
+    expect(reordered[1]).toBe(original[0]);
+    expect(reordered[2]).toBe(original[1]);
+  });
+
+  it('typed input value follows its DOM node with keys (no keys bug)', () => {
+    const prev = createElement('ul', null,
+      createElement('li', { key: 1 }, createElement('input', { type: 'text' })),
+    );
+    render(prev, container);
+    container.querySelector('input').value = 'typed';
+    const next = createElement('ul', null,
+      createElement('li', { key: 2 }, createElement('input', { type: 'text' })),
+      createElement('li', { key: 1 }, createElement('input', { type: 'text' })),
+    );
+    update(prev, next, container);
+    const inputs = container.querySelectorAll('input');
+    expect(inputs[0].value).toBe('');
+    expect(inputs[1].value).toBe('typed');
+  });
+
+  it('warns and falls back to unkeyed on mixed lists', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    const prev = createElement('ul', null, createElement('li', { key: 1 }, 'a'), createElement('li', null, 'b'));
+    render(prev, container);
+    const next = createElement('ul', null, createElement('li', { key: 1 }, 'a'), createElement('li', null, 'b'));
+    update(prev, next, container);
+    expect(warn).toHaveBeenCalledWith(expect.stringContaining('Mixed keyed/unkeyed'));
+    warn.mockRestore();
+  });
+});
