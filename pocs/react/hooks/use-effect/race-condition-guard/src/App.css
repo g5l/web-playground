@@ -1,0 +1,144 @@
+.app {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.app-header {
+  margin-bottom: 32px;
+}
+
+.app-header h1 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+.app-header > p {
+  max-width: 680px;
+  margin-bottom: 20px;
+}
+
+.search-bar {
+  max-width: 400px;
+}
+
+/* Panels */
+
+.panels {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 20px;
+}
+
+.panel {
+  border-radius: 12px;
+  border: 1px solid #1e293b;
+  background: #131720;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.panel-broken {
+  border-color: #7f1d1d;
+}
+
+.panel-safe {
+  border-color: #14532d;
+}
+
+.panel-header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.panel-header h2 {
+  color: #e2e8f0;
+}
+
+.panel-header p {
+  font-size: 0.875rem;
+}
+
+.panel-header code {
+  font-family: 'Fira Code', 'Cascadia Code', monospace;
+  background: #1e293b;
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  color: #a5b4fc;
+}
+
+/* Result list */
+
+.result-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-height: 60px;
+}
+
+.result-list li {
+  padding: 6px 10px;
+  background: #1e293b;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+.result-list li.stale {
+  background: #450a0a;
+  color: #fca5a5;
+}
+
+.stale-tag {
+  font-size: 0.75rem;
+  opacity: 0.8;
+  margin-left: 6px;
+}
+
+.empty {
+  color: #475569;
+  font-style: italic;
+  font-size: 0.875rem;
+}
+
+/* Event log */
+
+.event-log {
+  background: #0d1117;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 0.75rem;
+  font-family: 'Fira Code', 'Cascadia Code', monospace;
+  min-height: 100px;
+  max-height: 200px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.log-empty {
+  color: #374151;
+  font-style: italic;
+  font-size: 0.75rem;
+}
+
+.log-entry {
+  padding: 2px 0;
+  line-height: 1.5;
+}
+
+.log-info {
+  color: #64748b;
+}
+
+.log-warn {
+  color: #f59e0b;
+}
+
+.log-success {
+  color: #4ade80;
+}
