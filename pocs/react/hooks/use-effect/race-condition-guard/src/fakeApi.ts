@@ -34,13 +34,10 @@ const FRUIT_DB: Record<string, string[]> = {
   z: ['Ziziphus', 'Zucchini'],
 }
 
-// Returns results with a simulated random delay so that shorter queries
-// sometimes resolve *after* longer ones, triggering the race condition.
 export function fakeSearch(
   query: string,
   signal?: AbortSignal,
 ): Promise<SearchResult[]> {
-  // Short queries get a longer delay to make the race obvious.
   const baseDelay = query.length <= 1 ? 1800 : query.length <= 2 ? 900 : 300
   const jitter = Math.random() * 400
   const delay = baseDelay + jitter

@@ -32,8 +32,6 @@ function EventLog({ entries }: { entries: LogEntry[] }) {
   )
 }
 
-// Panel 1: Broken (no guard)
-
 function BrokenSearch({ query }: { query: string }) {
   const [results, setResults] = useState<SearchResult[]>([])
   const { entries, log } = useLog()
@@ -45,7 +43,6 @@ function BrokenSearch({ query }: { query: string }) {
       log(`Resolved "${query}" (${data[0]?.delayMs ?? 0}ms) — painting UI`, 'warn')
       setResults(data)
     })
-    // No cleanup: every response overwrites the state regardless of order.
   }, [query, log])
 
   return (
@@ -60,8 +57,6 @@ function BrokenSearch({ query }: { query: string }) {
     </div>
   )
 }
-
-// Panel 2: Fixed with AbortController
 
 function AbortSearch({ query }: { query: string }) {
   const [results, setResults] = useState<SearchResult[]>([])
@@ -103,14 +98,10 @@ function AbortSearch({ query }: { query: string }) {
   )
 }
 
-// Panel 3: Fixed with ignore flag (for APIs that don't support abort)
-
 function IgnoreFlagSearch({ query }: { query: string }) {
   const [results, setResults] = useState<SearchResult[]>([])
   const { entries, log } = useLog()
-  // Track the request number so the log can show which fetch "won".
   const reqRef = useRef(0)
-
   useEffect(() => {
     if (!query) { setResults([]); return }
     let ignore = false
