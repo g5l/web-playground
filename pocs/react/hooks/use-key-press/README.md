@@ -66,7 +66,7 @@ function ArrowControls() {
 
 ## Key name reference
 
-Key names follow the [`KeyboardEvent.key`](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values) spec:
+Key names follow the [`KeyboardEvent.key`](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/key/Key_Values) spec. Full list: https://developer.mozilla.org/en-US/docs/Web/API/UI_Events/Keyboard_event_key_values
 
 | Key | Value |
 |-----|-------|
