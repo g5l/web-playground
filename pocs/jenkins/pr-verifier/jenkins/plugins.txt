@@ -1,0 +1,4 @@
+github-branch-source:latest
+workflow-aggregator:latest
+credentials-binding:latest
+git:latest
