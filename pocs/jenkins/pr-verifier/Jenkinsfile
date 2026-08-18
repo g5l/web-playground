@@ -1,0 +1,57 @@
+pipeline {
+    agent any
+
+    options {
+        // Don't let a hung PR check run forever and block the queue
+        timeout(time: 10, unit: 'MINUTES')
+        // Keep only recent builds — this is a POC, not prod retention policy
+        buildDiscarder(logRotator(numToKeepStr: '10'))
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // Multibranch Pipeline already checks out the PR's commit for us,
+                // but this stage exists explicitly so the pipeline reads top-to-bottom
+                // as: checkout -> install -> lint -> test.
+                echo "Verifying commit: ${env.GIT_COMMIT}"
+            }
+        }
+
+        stage('Install') {
+            steps {
+                dir('sample-app') {
+                    sh 'npm install'
+                }
+            }
+        }
+
+        stage('Lint') {
+            steps {
+                dir('sample-app') {
+                    sh 'npm run lint'
+                }
+            }
+        }
+
+        stage('Test') {
+            steps {
+                dir('sample-app') {
+                    sh 'npm test'
+                }
+            }
+        }
+    }
+
+    post {
+        // These hooks are what let us extend this into a real GitHub status
+        // update later (Step 4) — success/failure notification points already
+        // exist here, we just need to add the "post to GitHub" call in them.
+        success {
+            echo 'PR verification passed.'
+        }
+        failure {
+            echo 'PR verification failed.'
+        }
+    }
+}
