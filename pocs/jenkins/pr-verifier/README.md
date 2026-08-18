@@ -2,6 +2,9 @@
 
 A self-contained local Jenkins setup that runs a verification pipeline against every pull request.
 
+<img width="1502" height="901" alt="image" src="https://github.com/user-attachments/assets/fb5f6cb1-be51-4e28-a370-1018ebb3b59f" />
+
+
 ## Components
 
 | Component | Responsibility |
